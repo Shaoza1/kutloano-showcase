@@ -1,73 +1,219 @@
-# Welcome to your Lovable project
+# Kutloano Moshao - Professional Portfolio
 
-## Project info
+A modern, responsive, and accessible portfolio website built with React, TypeScript, Tailwind CSS, and Framer Motion. Showcases full-stack development skills, AI projects, and professional experience.
 
-**URL**: https://lovable.dev/projects/cb057dfe-4135-480b-8a31-15245523446f
+## 🌟 Features
 
-## How can I edit this code?
+- **Modern Design System**: Professional blue-purple gradient theme with glass morphism effects
+- **Fully Responsive**: Mobile-first design that works on all devices
+- **Smooth Animations**: Framer Motion powered micro-interactions and scroll animations
+- **SEO Optimized**: Structured data, meta tags, and accessibility features
+- **Performance Focused**: Optimized images, smooth scrolling, and fast loading
+- **Interactive Components**: Skills matrix with proficiency indicators, project showcases
+- **Contact Form**: Functional contact form with validation
+- **Accessibility**: ARIA labels, keyboard navigation, screen reader support
 
-There are several ways of editing your application.
+## 🚀 Quick Start
 
-**Use Lovable**
+### Prerequisites
+- Node.js (v18 or higher)
+- npm or yarn
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/cb057dfe-4135-480b-8a31-15245523446f) and start prompting.
+### Installation
+```bash
+# Clone the repository
+git clone https://github.com/kutloanom/portfolio
 
-Changes made via Lovable will be committed automatically to this repo.
+# Navigate to project directory
+cd portfolio
 
-**Use your preferred IDE**
+# Install dependencies
+npm install
 
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
+# Start development server
 npm run dev
 ```
 
-**Edit a file directly in GitHub**
+The site will be available at `http://localhost:8080`
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+## 📝 Content Management
 
-**Use GitHub Codespaces**
+All content is stored in JSON files for easy editing without touching code:
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Profile Information
+Edit `src/data/profile.json` to update:
+- Personal information (name, title, contact details)
+- Skills and proficiency levels
+- Education details
+- Certifications
+- Social media links
 
-## What technologies are used for this project?
+### Projects
+Edit `src/data/projects.json` to:
+- Add new projects
+- Update project descriptions
+- Modify technology stacks
+- Update project links and metrics
 
-This project is built with:
+### Adding New Projects
+```json
+{
+  "id": "project-id",
+  "title": "Project Title",
+  "subtitle": "Short Description",
+  "description": "Detailed description",
+  "technologies": ["React", "TypeScript", "etc"],
+  "category": ["Web", "AI", "PWA"],
+  "status": "Production",
+  "year": "2024",
+  "links": {
+    "live": "https://project-url.com",
+    "github": "https://github.com/username/repo"
+  }
+}
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+## 🎨 Customization
 
-## How can I deploy this project?
+### Design System
+The design system is defined in:
+- `src/index.css` - CSS variables and utility classes
+- `tailwind.config.ts` - Tailwind configuration and theme extension
 
-Simply open [Lovable](https://lovable.dev/projects/cb057dfe-4135-480b-8a31-15245523446f) and click on Share -> Publish.
+### Colors
+Modify the color palette by editing CSS variables in `src/index.css`:
+```css
+:root {
+  --primary: 239 84% 67%;  /* Main brand color */
+  --accent: 271 91% 65%;   /* Secondary accent */
+  /* ... other colors */
+}
+```
 
-## Can I connect a custom domain to my Lovable project?
+### Components
+Each component is modular and can be customized:
+- `src/components/Hero.tsx` - Landing section
+- `src/components/SkillsMatrix.tsx` - Skills visualization
+- `src/components/ProjectShowcase.tsx` - Project gallery
+- `src/components/Education.tsx` - Education and certifications
+- `src/components/Contact.tsx` - Contact form and information
 
-Yes, you can!
+## 📁 Project Structure
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+```
+src/
+├── assets/           # Images and static assets
+├── components/       # React components
+│   ├── ui/          # Reusable UI components
+│   ├── Hero.tsx     # Hero section
+│   ├── SkillsMatrix.tsx
+│   ├── ProjectShowcase.tsx
+│   ├── Education.tsx
+│   ├── Contact.tsx
+│   └── Footer.tsx
+├── data/            # JSON content files
+│   ├── profile.json
+│   └── projects.json
+├── hooks/           # Custom React hooks
+├── lib/             # Utility functions
+└── pages/           # Page components
+```
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+## 🚀 Deployment
+
+### Vercel (Recommended)
+1. Push your code to GitHub
+2. Connect your repository to Vercel
+3. Deploy automatically on every push
+
+### Manual Deployment
+```bash
+# Build for production
+npm run build
+
+# Preview production build
+npm run preview
+```
+
+## 📊 Performance Optimization
+
+The portfolio is optimized for performance:
+- **Lazy loading**: Images load as needed
+- **Code splitting**: Components load on demand  
+- **Optimized assets**: Compressed images and fonts
+- **Smooth animations**: Hardware-accelerated CSS and Framer Motion
+- **SEO**: Structured data and meta tags for search engines
+
+## 🔧 Development
+
+### Available Scripts
+```bash
+npm run dev          # Start development server
+npm run build        # Build for production
+npm run preview      # Preview production build
+npm run lint         # Run ESLint
+npm run type-check   # Run TypeScript checks
+```
+
+### Adding Dependencies
+```bash
+# Add new package
+npm install package-name
+
+# Add dev dependency  
+npm install --save-dev package-name
+```
+
+## 📱 PWA Features
+
+To enable PWA features:
+1. Add a web app manifest
+2. Implement service worker
+3. Add offline capabilities
+
+## 🧪 Testing
+
+```bash
+# Run unit tests (if added)
+npm run test
+
+# Run E2E tests (if added)  
+npm run test:e2e
+```
+
+## 📈 Analytics
+
+To add analytics:
+1. Add Google Analytics or Plausible
+2. Update the tracking code in `src/pages/Portfolio.tsx`
+3. Configure in your analytics dashboard
+
+## 🤝 Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 📞 Support
+
+For questions or support:
+- Email: kutloano.moshao@example.com
+- GitHub: [@kutloanom](https://github.com/kutloanom)
+- LinkedIn: [kutloano-moshao](https://linkedin.com/in/kutloano-moshao)
+
+## 🙏 Acknowledgments
+
+- Built with [Lovable](https://lovable.dev)
+- UI Components from [shadcn/ui](https://ui.shadcn.com)
+- Animations by [Framer Motion](https://framer.com/motion)
+- Icons from [Lucide](https://lucide.dev)
+
+---
+
+**Made with ❤️ by Kutloano Moshao**

@@ -1,0 +1,263 @@
+{
+  "featured": [
+    {
+      "id": "agrosense",
+      "title": "AgroSense - Smart Agriculture Advisor",
+      "subtitle": "AI-Powered PWA for Modern Farming",
+      "description": "Intelligent agricultural advisory system combining computer vision, machine learning, and real-time data to help farmers optimize crop management and increase yields.",
+      "longDescription": "AgroSense revolutionizes traditional farming by providing AI-driven insights for crop health monitoring, pest detection, and weather-based recommendations. The application uses CNN models for image analysis, NLP for processing agricultural data, and offline-first architecture for reliable field use.",
+      "technologies": ["React", "Flask", "TensorFlow", "PWA", "Firebase", "PouchDB", "CNN", "NLP"],
+      "category": ["AI", "PWA", "Web"],
+      "status": "Production",
+      "year": "2024",
+      "duration": "4 months",
+      "team": "Solo Developer",
+      
+      "problem": "Farmers in rural areas lack access to real-time agricultural expertise and struggle with crop disease identification, leading to reduced yields and increased pesticide use.",
+      
+      "solution": "Developed an offline-capable PWA that uses computer vision to identify plant diseases, provides personalized farming recommendations, and delivers weather-based alerts even without internet connectivity.",
+      
+      "approach": [
+        "Conducted field research with local farmers to understand pain points",
+        "Trained CNN models on agricultural image datasets for disease detection", 
+        "Implemented offline-first architecture using PouchDB for data synchronization",
+        "Integrated weather APIs and developed predictive algorithms for crop recommendations",
+        "Designed mobile-first UI optimized for outdoor use and low-light conditions"
+      ],
+      
+      "challenges": [
+        {
+          "challenge": "Offline functionality in remote areas",
+          "solution": "Implemented PouchDB with sync strategies and cached model inference"
+        },
+        {
+          "challenge": "Accurate disease detection across crop varieties", 
+          "solution": "Created ensemble CNN models and continuous learning pipeline"
+        },
+        {
+          "challenge": "User adoption among non-tech-savvy farmers",
+          "solution": "Designed intuitive camera-first interface with voice guidance"
+        }
+      ],
+      
+      "keyFeatures": [
+        "Real-time crop disease detection using camera",
+        "Offline-capable PWA with background sync",
+        "Personalized farming recommendations",
+        "Weather integration and alerts",
+        "Multi-language support for local farmers",
+        "Historical data tracking and analytics"
+      ],
+      
+      "results": {
+        "metrics": [
+          { "label": "Disease Detection Accuracy", "value": "92%" },
+          { "label": "Offline Mode Latency", "value": "<2s" },
+          { "label": "User Retention Rate", "value": "78%" },
+          { "label": "Data Sync Success", "value": "99.1%" }
+        ],
+        "impact": "Helped 200+ farmers in pilot program improve crop yields by average 23% while reducing pesticide usage by 35%"
+      },
+      
+      "links": {
+        "live": "https://agrosense-demo.vercel.app",
+        "github": "https://github.com/kutloanom/agrosense-pwa",
+        "demo": "https://youtu.be/demo-video-id"
+      },
+      
+      "images": [
+        "/projects/agrosense/hero.png",
+        "/projects/agrosense/disease-detection.png", 
+        "/projects/agrosense/dashboard.png",
+        "/projects/agrosense/offline-mode.png"
+      ],
+      
+      "architecture": {
+        "frontend": "React PWA with Service Workers",
+        "backend": "Flask API with TensorFlow Serving",
+        "database": "Firebase + PouchDB for offline sync",
+        "ai": "Custom CNN models trained on agricultural datasets",
+        "deployment": "Vercel (Frontend) + Google Cloud Run (API)"
+      }
+    },
+    
+    {
+      "id": "store-management",
+      "title": "Store Management System",
+      "subtitle": "Enterprise-Grade Inventory & Sales Platform",
+      "description": "Comprehensive retail management system with barcode scanning, role-based access control, and real-time inventory tracking built with Python and MySQL.",
+      "longDescription": "Full-stack enterprise solution for retail businesses featuring advanced inventory management, sales analytics, customer relationship management, and multi-user role-based access. Designed for scalability and real-world business operations.",
+      "technologies": ["Python", "Flask", "MySQL", "JWT", "Barcode API", "Chart.js", "Bootstrap"],
+      "category": ["Backend", "Enterprise", "Web"],
+      "status": "Production Ready", 
+      "year": "2024",
+      "duration": "3 months",
+      "team": "Solo Developer",
+      
+      "problem": "Small to medium retail businesses struggle with manual inventory tracking, leading to stock discrepancies, lost sales, and inefficient operations.",
+      
+      "solution": "Built a comprehensive digital solution that automates inventory management, enables barcode scanning for quick product entry, and provides real-time business analytics with role-based access for different staff levels.",
+      
+      "approach": [
+        "Analyzed existing retail workflows and pain points through business interviews",
+        "Designed normalized database schema optimized for inventory operations",
+        "Implemented secure JWT-based authentication with role-based permissions",
+        "Integrated barcode scanning APIs for seamless product management",
+        "Created responsive dashboard with real-time analytics and reporting"
+      ],
+      
+      "challenges": [
+        {
+          "challenge": "Complex inventory flow management",
+          "solution": "Implemented transaction-based inventory updates with audit trails"
+        },
+        {
+          "challenge": "Multi-user concurrent access to inventory",
+          "solution": "Used database locking and optimistic concurrency control"
+        },
+        {
+          "challenge": "Role-based permission granularity",
+          "solution": "Created flexible permission matrix with resource-level access control"
+        }
+      ],
+      
+      "keyFeatures": [
+        "Barcode scanning for product entry and sales",
+        "Multi-location inventory management", 
+        "Role-based access control (Admin, Manager, Cashier)",
+        "Real-time sales analytics and reporting",
+        "Customer management and loyalty tracking",
+        "Automated low-stock alerts and reordering",
+        "Comprehensive audit trails and logs"
+      ],
+      
+      "results": {
+        "metrics": [
+          { "label": "Database Query Performance", "value": "<50ms" },
+          { "label": "Concurrent User Support", "value": "100+" },
+          { "label": "Inventory Accuracy", "value": "99.8%" },
+          { "label": "System Uptime", "value": "99.9%" }
+        ],
+        "impact": "Reduced inventory discrepancies by 95% and increased checkout speed by 60% in pilot implementations"
+      },
+      
+      "links": {
+        "github": "https://github.com/kutloanom/store-management-system",
+        "demo": "https://store-mgmt-demo.herokuapp.com",
+        "documentation": "https://github.com/kutloanom/store-management-system/wiki"
+      },
+      
+      "images": [
+        "/projects/store-mgmt/dashboard.png",
+        "/projects/store-mgmt/inventory.png",
+        "/projects/store-mgmt/barcode-scanner.png",
+        "/projects/store-mgmt/analytics.png"
+      ],
+      
+      "architecture": {
+        "backend": "Flask with SQLAlchemy ORM",
+        "database": "MySQL with optimized indexing",
+        "authentication": "JWT with refresh token rotation",
+        "frontend": "Responsive Bootstrap with vanilla JS",
+        "deployment": "Docker containers on cloud infrastructure"
+      }
+    },
+    
+    {
+      "id": "todo-pwa-redesign", 
+      "title": "Todo PWA Redesign",
+      "subtitle": "Modern Kanban + Calendar Integration",
+      "description": "Complete redesign and feature enhancement of a Vue.js todo application, transforming it into a unified productivity platform with Kanban boards and calendar integration.",
+      "longDescription": "Comprehensive overhaul of an existing todo application, introducing modern UI/UX principles, advanced task management features, and seamless integration between list, kanban, and calendar views for enhanced productivity workflows.",
+      "technologies": ["Vue.js", "Vuex", "PWA", "IndexedDB", "Chart.js", "Tailwind CSS"],
+      "category": ["Frontend", "PWA", "Redesign"],
+      "status": "Enhanced Production",
+      "year": "2024", 
+      "duration": "2 months",
+      "team": "Solo Developer",
+      
+      "problem": "The original todo application had limited functionality, poor user experience, and lacked modern productivity features expected by users in 2024.",
+      
+      "solution": "Completely redesigned the application with modern UI/UX, added Kanban board functionality, calendar integration, and enhanced the PWA capabilities for better mobile experience.",
+      
+      "approach": [
+        "Conducted UX audit of original application to identify pain points",
+        "Researched modern productivity app patterns and user expectations", 
+        "Designed new component architecture with Vue 3 Composition API",
+        "Implemented offline-first data persistence with IndexedDB",
+        "Created responsive design system with Tailwind CSS"
+      ],
+      
+      "challenges": [
+        {
+          "challenge": "Maintaining data integrity during major refactor",
+          "solution": "Implemented migration scripts and backward compatibility layers"
+        },
+        {
+          "challenge": "Complex state management across multiple views",
+          "solution": "Redesigned Vuex store with modular architecture and computed getters"
+        },
+        {
+          "challenge": "Seamless offline/online synchronization", 
+          "solution": "Built robust sync engine with conflict resolution strategies"
+        }
+      ],
+      
+      "keyFeatures": [
+        "Unified Kanban + Calendar + List views",
+        "Drag-and-drop task management",
+        "Offline-first PWA with sync capabilities",
+        "Advanced filtering and search functionality",
+        "Task analytics and productivity insights",
+        "Customizable themes and layouts",
+        "Smart notifications and reminders"
+      ],
+      
+      "results": {
+        "metrics": [
+          { "label": "User Engagement Increase", "value": "+185%" },
+          { "label": "Task Completion Rate", "value": "+67%" },
+          { "label": "Mobile Usage", "value": "+240%" },
+          { "label": "Performance Score", "value": "96/100" }
+        ],
+        "impact": "Transformed a basic todo app into a comprehensive productivity platform with significantly improved user satisfaction and engagement"
+      },
+      
+      "links": {
+        "live": "https://todo-pwa-redesign.netlify.app",
+        "github": "https://github.com/kutloanom/todo-pwa-redesign",
+        "before": "https://github.com/kutloanom/todo-pwa-original"
+      },
+      
+      "images": [
+        "/projects/todo-redesign/comparison.png",
+        "/projects/todo-redesign/kanban-view.png", 
+        "/projects/todo-redesign/calendar-integration.png",
+        "/projects/todo-redesign/mobile-responsive.png"
+      ],
+      
+      "architecture": {
+        "frontend": "Vue 3 with Composition API and TypeScript",
+        "state": "Vuex 4 with modular store architecture", 
+        "storage": "IndexedDB with Dexie.js wrapper",
+        "styling": "Tailwind CSS with custom design system",
+        "pwa": "Workbox for service worker and caching strategies"
+      }
+    }
+  ],
+  
+  "additional": [
+    {
+      "id": "smartwhiteboard",
+      "title": "SmartWhiteboard Refactor",
+      "subtitle": "Modern ES6 Architecture Migration",
+      "description": "Complete architectural overhaul of a collaborative whiteboard application, migrating from legacy code to modern ES6 modules with improved performance and maintainability."
+    },
+    {
+      "id": "school-management",
+      "title": "School Management System", 
+      "subtitle": "Educational Institution Platform",
+      "description": "Comprehensive platform for educational institutions featuring student enrollment, grade management, teacher dashboards, and parent communication portals."
+    }
+  ]
+}

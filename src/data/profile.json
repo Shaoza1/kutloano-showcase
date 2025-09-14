@@ -1,0 +1,85 @@
+{
+  "name": "Kutloano Moshao",
+  "shortName": "Moshao",
+  "title": "BSc Hons (Computing) • Full-Stack & AI-Curious Developer",
+  "tagline": "Building intelligent, user-centered solutions with modern web technologies and AI integration",
+  "university": "Botho University",
+  "degree": "BSc Hons in Computing",
+  "graduationDate": "November 2025",
+  "location": "Botswana",
+  "email": "kutloano.moshao@example.com",
+  "phone": "+267 xxx xxx xxx",
+  "github": "https://github.com/kutloanom",
+  "linkedin": "https://linkedin.com/in/kutloano-moshao",
+  "portfolio": "https://kutloano-portfolio.vercel.app",
+  
+  "bio": "Passionate full-stack developer with a strong foundation in modern web technologies and emerging AI applications. Currently completing my Honours in Computing, I specialize in creating scalable web applications, progressive web apps, and intelligent systems that solve real-world problems.",
+  
+  "skills": {
+    "frontend": [
+      { "name": "React", "level": 85, "category": "frontend" },
+      { "name": "Vue.js", "level": 75, "category": "frontend" },
+      { "name": "Tailwind CSS", "level": 90, "category": "frontend" },
+      { "name": "TypeScript", "level": 80, "category": "frontend" },
+      { "name": "Progressive Web Apps", "level": 85, "category": "frontend" }
+    ],
+    "backend": [
+      { "name": "Python/Flask", "level": 85, "category": "backend" },
+      { "name": "Node.js", "level": 70, "category": "backend" },
+      { "name": "MySQL", "level": 80, "category": "backend" },
+      { "name": "Firebase", "level": 75, "category": "backend" },
+      { "name": "JWT Authentication", "level": 85, "category": "backend" }
+    ],
+    "ai": [
+      { "name": "Machine Learning", "level": 70, "category": "ai" },
+      { "name": "CNN/Computer Vision", "level": 75, "category": "ai" },
+      { "name": "Natural Language Processing", "level": 65, "category": "ai" },
+      { "name": "TensorFlow/Keras", "level": 70, "category": "ai" },
+      { "name": "Data Analysis", "level": 80, "category": "ai" }
+    ],
+    "tools": [
+      { "name": "Git/GitHub", "level": 85, "category": "tools" },
+      { "name": "Docker", "level": 65, "category": "tools" },
+      { "name": "Vercel/Netlify", "level": 80, "category": "tools" },
+      { "name": "Figma", "level": 70, "category": "tools" },
+      { "name": "VS Code", "level": 90, "category": "tools" }
+    ]
+  },
+  
+  "certifications": [
+    {
+      "name": "Cisco Intro to Cybersecurity",
+      "issuer": "Cisco Networking Academy",
+      "date": "2024",
+      "badgeUrl": "/badges/cisco-cybersecurity.png"
+    },
+    {
+      "name": "Python Essentials 1",
+      "issuer": "Cisco Networking Academy", 
+      "date": "2024",
+      "badgeUrl": "/badges/cisco-python.png"
+    }
+  ],
+  
+  "education": {
+    "modules": [
+      "Advanced Database Systems",
+      "Web Application Development", 
+      "Machine Learning Fundamentals",
+      "Software Engineering Principles",
+      "Computer Networks & Security",
+      "Mobile Application Development",
+      "Data Structures & Algorithms",
+      "Human-Computer Interaction",
+      "Project Management in IT",
+      "Research Methods in Computing"
+    ]
+  },
+  
+  "stats": {
+    "projectsCompleted": 8,
+    "technologiesMastered": 15,
+    "certificationsEarned": 2,
+    "yearsExperience": 3
+  }
+}
