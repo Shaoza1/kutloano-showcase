@@ -9,6 +9,8 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, MessageSquare, Send, Github, Linkedin, Calendar, Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { supabase } from "@/integrations/supabase/client";
+import { useAnalytics } from "@/hooks/useAnalytics";
 
 interface ContactProps {
   profile: {
@@ -22,21 +24,79 @@ interface ContactProps {
 export default function Contact({ profile }: ContactProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
+  const { trackCVDownload, trackContactFormSubmit } = useAnalytics();
+
+  const handleCVDownload = async () => {
+    try {
+      trackCVDownload();
+      const { data, error } = await supabase.functions.invoke('generate-cv-pdf');
+      
+      if (error) throw error;
+      
+      // For now, this downloads an HTML version - in production you'd want actual PDF
+      const blob = new Blob([data], { type: 'text/html' });
+      const url = window.URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'Kutloano_Moshao_CV.html';
+      document.body.appendChild(a);
+      a.click();
+      window.URL.revokeObjectURL(url);
+      document.body.removeChild(a);
+      
+      toast({
+        title: "CV Downloaded!",
+        description: "Your CV has been downloaded successfully.",
+      });
+    } catch (error) {
+      console.error('CV download error:', error);
+      toast({
+        title: "Download Error",
+        description: "Failed to download CV. Please try again.",
+        variant: "destructive",
+      });
+    }
+  };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setIsSubmitting(true);
     
-    // Simulate form submission
-    await new Promise(resolve => setTimeout(resolve, 2000));
-    
-    toast({
-      title: "Message sent!",
-      description: "Thank you for your message. I'll get back to you soon.",
-    });
-    
-    setIsSubmitting(false);
-    (e.target as HTMLFormElement).reset();
+    try {
+      const formData = new FormData(e.currentTarget);
+      const data = {
+        firstName: formData.get('firstName') as string,
+        lastName: formData.get('lastName') as string,
+        email: formData.get('email') as string,
+        subject: formData.get('subject') as string,
+        message: formData.get('message') as string,
+      };
+
+      const { error } = await supabase.functions.invoke('submit-contact', {
+        body: data
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      trackContactFormSubmit();
+      toast({
+        title: "Message sent!",
+        description: "Thank you for your message. I'll get back to you soon.",
+      });
+      
+      (e.target as HTMLFormElement).reset();
+    } catch (error: any) {
+      console.error('Contact form error:', error);
+      toast({
+        title: "Error sending message",
+        description: "Please try again or contact me directly via email.",
+        variant: "destructive",
+      });
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   return (
@@ -150,7 +210,12 @@ export default function Contact({ profile }: ContactProps) {
 
             {/* Download CV */}
             <div className="pt-8">
-              <Button size="lg" variant="outline" className="group w-full">
+              <Button 
+                size="lg" 
+                variant="outline" 
+                className="group w-full"
+                onClick={handleCVDownload}
+              >
                 <Download className="w-5 h-5 mr-2 group-hover:scale-110 transition-transform" />
                 Download CV (PDF)
               </Button>

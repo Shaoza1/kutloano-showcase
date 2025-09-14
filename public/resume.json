@@ -1,0 +1,187 @@
+{
+  "basics": {
+    "name": "Kutloano Moshao",
+    "label": "Full-Stack & AI-Curious Developer",
+    "image": "",
+    "email": "kutloano.moshao@example.com",
+    "phone": "+267 xxx xxx xxx",
+    "url": "https://kutloano-portfolio.vercel.app",
+    "summary": "Passionate full-stack developer with a strong foundation in modern web technologies and emerging AI applications. Currently completing my Honours in Computing, I specialize in creating scalable web applications, progressive web apps, and intelligent systems that solve real-world problems.",
+    "location": {
+      "address": "",
+      "postalCode": "",
+      "city": "",
+      "countryCode": "BW",
+      "region": "Botswana"
+    },
+    "profiles": [
+      {
+        "network": "GitHub",
+        "username": "kutloanom",
+        "url": "https://github.com/kutloanom"
+      },
+      {
+        "network": "LinkedIn",
+        "username": "kutloano-moshao",
+        "url": "https://linkedin.com/in/kutloano-moshao"
+      }
+    ]
+  },
+  "work": [
+    {
+      "name": "Freelance Developer",
+      "position": "Full-Stack Developer",
+      "url": "",
+      "startDate": "2022-01-01",
+      "endDate": "",
+      "summary": "Developing custom web applications and AI-powered solutions for various clients.",
+      "highlights": [
+        "Built 8+ production-ready applications using modern web technologies",
+        "Specialized in PWA development with offline-first architecture",
+        "Implemented machine learning solutions for agricultural and business applications",
+        "Achieved 95%+ client satisfaction through iterative development and clear communication"
+      ]
+    }
+  ],
+  "education": [
+    {
+      "institution": "Botho University",
+      "url": "https://bothouniversity.ac.bw",
+      "area": "Computing",
+      "studyType": "BSc Honours",
+      "startDate": "2021-01-01",
+      "endDate": "2025-11-01",
+      "score": "",
+      "courses": [
+        "Advanced Database Systems",
+        "Web Application Development",
+        "Machine Learning Fundamentals",
+        "Software Engineering Principles",
+        "Computer Networks & Security",
+        "Mobile Application Development",
+        "Data Structures & Algorithms",
+        "Human-Computer Interaction",
+        "Project Management in IT",
+        "Research Methods in Computing"
+      ]
+    }
+  ],
+  "certificates": [
+    {
+      "name": "Cisco Intro to Cybersecurity",
+      "date": "2024-01-01",
+      "issuer": "Cisco Networking Academy",
+      "url": ""
+    },
+    {
+      "name": "Python Essentials 1",
+      "date": "2024-01-01",
+      "issuer": "Cisco Networking Academy",
+      "url": ""
+    }
+  ],
+  "skills": [
+    {
+      "name": "Frontend Development",
+      "level": "Advanced",
+      "keywords": ["React", "Vue.js", "Tailwind CSS", "TypeScript", "Progressive Web Apps"]
+    },
+    {
+      "name": "Backend Development",
+      "level": "Advanced",
+      "keywords": ["Python", "Flask", "Node.js", "MySQL", "Firebase", "JWT Authentication"]
+    },
+    {
+      "name": "AI & Machine Learning",
+      "level": "Intermediate",
+      "keywords": ["Machine Learning", "Computer Vision", "CNN", "Natural Language Processing", "TensorFlow", "Keras", "Data Analysis"]
+    },
+    {
+      "name": "DevOps & Tools",
+      "level": "Intermediate",
+      "keywords": ["Git", "GitHub", "Docker", "Vercel", "Netlify", "Figma", "VS Code"]
+    }
+  ],
+  "projects": [
+    {
+      "name": "AgroSense - Smart Agriculture Advisor",
+      "description": "AI-powered PWA for modern farming with CNN-based disease detection, offline capabilities, and real-time weather integration",
+      "highlights": [
+        "92% disease detection accuracy using custom CNN models",
+        "Offline-first architecture with <2s latency",
+        "Helped 200+ farmers improve yields by 23%",
+        "Reduced pesticide usage by 35% in pilot program"
+      ],
+      "keywords": ["React", "Flask", "TensorFlow", "PWA", "Firebase", "Computer Vision"],
+      "startDate": "2024-01-01",
+      "endDate": "2024-05-01",
+      "url": "https://agrosense-demo.vercel.app",
+      "roles": ["Full-Stack Developer", "ML Engineer"],
+      "entity": "Personal Project",
+      "type": "application"
+    },
+    {
+      "name": "Store Management System",
+      "description": "Enterprise-grade inventory and sales platform with barcode scanning, role-based access control, and real-time analytics",
+      "highlights": [
+        "99.8% inventory accuracy with automated tracking",
+        "Support for 100+ concurrent users",
+        "Reduced checkout time by 60%",
+        "Comprehensive audit trails and reporting"
+      ],
+      "keywords": ["Python", "Flask", "MySQL", "JWT", "Barcode API", "Bootstrap"],
+      "startDate": "2024-02-01",
+      "endDate": "2024-05-01",
+      "url": "https://store-mgmt-demo.herokuapp.com",
+      "roles": ["Backend Developer", "Database Designer"],
+      "entity": "Client Project",
+      "type": "application"
+    },
+    {
+      "name": "Todo PWA Redesign",
+      "description": "Complete overhaul of Vue.js todo application with Kanban boards, calendar integration, and modern UI/UX",
+      "highlights": [
+        "185% increase in user engagement",
+        "67% improvement in task completion rates",
+        "240% increase in mobile usage",
+        "96/100 performance score"
+      ],
+      "keywords": ["Vue.js", "PWA", "IndexedDB", "Tailwind CSS", "Vuex"],
+      "startDate": "2024-03-01",
+      "endDate": "2024-05-01",
+      "url": "https://todo-pwa-redesign.netlify.app",
+      "roles": ["Frontend Developer", "UX Designer"],
+      "entity": "Redesign Project",
+      "type": "application"
+    }
+  ],
+  "languages": [
+    {
+      "language": "English",
+      "fluency": "Native speaker"
+    },
+    {
+      "language": "Setswana",
+      "fluency": "Native speaker"
+    }
+  ],
+  "interests": [
+    {
+      "name": "Artificial Intelligence",
+      "keywords": ["Machine Learning", "Computer Vision", "Natural Language Processing"]
+    },
+    {
+      "name": "Web Technologies",
+      "keywords": ["Progressive Web Apps", "Performance Optimization", "Accessibility"]
+    },
+    {
+      "name": "Open Source",
+      "keywords": ["Contributing", "Community Building", "Knowledge Sharing"]
+    }
+  ],
+  "meta": {
+    "canonical": "https://raw.githubusercontent.com/jsonresume/resume-schema/master/schema.json",
+    "version": "v1.0.0",
+    "lastModified": "2024-03-15T00:00:00.000Z"
+  }
+}
