@@ -138,6 +138,20 @@ export default function Hero({ profile }: HeroProps) {
               size="xl"
               variant="glass"
               className="group"
+              onClick={async () => {
+                try {
+                  const response = await fetch('https://zoigdqeywprtgtlfleua.supabase.co/functions/v1/generate-cv-pdf');
+                  const blob = await response.blob();
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = 'Kutloano_Moshao_CV.html';
+                  a.click();
+                  window.URL.revokeObjectURL(url);
+                } catch (error) {
+                  console.error('Failed to download CV:', error);
+                }
+              }}
             >
               <Download className="w-5 h-5 group-hover:scale-110 transition-transform" />
               Download CV

@@ -103,7 +103,25 @@ export default function Navigation({ profile }: NavigationProps) {
                 </motion.button>
               ))}
               
-              <Button size="sm" variant="outline" className="ml-4">
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className="ml-4"
+                onClick={async () => {
+                  try {
+                    const response = await fetch('https://zoigdqeywprtgtlfleua.supabase.co/functions/v1/generate-cv-pdf');
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'Kutloano_Moshao_CV.html';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                  } catch (error) {
+                    console.error('Failed to download CV:', error);
+                  }
+                }}
+              >
                 <Download className="w-4 h-4 mr-2" />
                 CV
               </Button>
@@ -147,7 +165,25 @@ export default function Navigation({ profile }: NavigationProps) {
               </motion.button>
             ))}
             
-            <Button size="sm" variant="outline" className="w-full">
+            <Button 
+              size="sm" 
+              variant="outline" 
+              className="w-full"
+              onClick={async () => {
+                try {
+                  const response = await fetch('https://zoigdqeywprtgtlfleua.supabase.co/functions/v1/generate-cv-pdf');
+                  const blob = await response.blob();
+                  const url = window.URL.createObjectURL(blob);
+                  const a = document.createElement('a');
+                  a.href = url;
+                  a.download = 'Kutloano_Moshao_CV.html';
+                  a.click();
+                  window.URL.revokeObjectURL(url);
+                } catch (error) {
+                  console.error('Failed to download CV:', error);
+                }
+              }}
+            >
               <Download className="w-4 h-4 mr-2" />
               Download CV
             </Button>

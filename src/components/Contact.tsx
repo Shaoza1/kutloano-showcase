@@ -29,12 +29,8 @@ export default function Contact({ profile }: ContactProps) {
   const handleCVDownload = async () => {
     try {
       trackCVDownload();
-      const { data, error } = await supabase.functions.invoke('generate-cv-pdf');
-      
-      if (error) throw error;
-      
-      // For now, this downloads an HTML version - in production you'd want actual PDF
-      const blob = new Blob([data], { type: 'text/html' });
+      const response = await fetch('https://zoigdqeywprtgtlfleua.supabase.co/functions/v1/generate-cv-pdf');
+      const blob = await response.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;

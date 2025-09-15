@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect } from "react";
+import { Toaster } from "@/components/ui/toaster";
 import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import SkillsMatrix from "@/components/SkillsMatrix";
@@ -10,11 +11,17 @@ import Blog from "@/components/Blog";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { useAnalytics } from "@/hooks/useAnalytics";
 import profileData from "@/data/profile.json";
 import projectsData from "@/data/projects.json";
 
 export default function Portfolio() {
+  const { trackPageView } = useAnalytics();
+
   useEffect(() => {
+    // Track page view
+    trackPageView('portfolio');
+    
     // Update document title for better SEO and accessibility
     document.title = `${profileData.name} - Full-Stack Developer Portfolio`;
     
@@ -90,6 +97,7 @@ export default function Portfolio() {
         {/* Footer */}
         <Footer profile={profileData} />
       </main>
+      <Toaster />
     </ThemeProvider>
   );
 }
