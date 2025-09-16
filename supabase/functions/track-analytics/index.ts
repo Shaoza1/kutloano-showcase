@@ -42,7 +42,10 @@ const handler = async (req: Request): Promise<Response> => {
         event_type: eventType,
         event_data: eventData || {},
         user_agent: req.headers.get("user-agent"),
-        ip_address: req.headers.get("x-forwarded-for") || req.headers.get("x-real-ip")
+        ip_address: req.headers.get("x-forwarded-for")?.split(',')[0].trim() || 
+                   req.headers.get("x-real-ip") || 
+                   req.headers.get("cf-connecting-ip") ||
+                   'unknown'
       });
 
     if (error) {

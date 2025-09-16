@@ -74,6 +74,72 @@ export type Database = {
         }
         Relationships: []
       }
+      cv_management: {
+        Row: {
+          created_at: string | null
+          file_path: string
+          file_size: number | null
+          filename: string
+          id: string
+          is_active: boolean | null
+          updated_at: string | null
+          upload_date: string | null
+          version: number | null
+        }
+        Insert: {
+          created_at?: string | null
+          file_path: string
+          file_size?: number | null
+          filename: string
+          id?: string
+          is_active?: boolean | null
+          updated_at?: string | null
+          upload_date?: string | null
+          version?: number | null
+        }
+        Update: {
+          created_at?: string | null
+          file_path?: string
+          file_size?: number | null
+          filename?: string
+          id?: string
+          is_active?: boolean | null
+          updated_at?: string | null
+          upload_date?: string | null
+          version?: number | null
+        }
+        Relationships: []
+      }
+      project_interactions: {
+        Row: {
+          created_at: string | null
+          id: string
+          interaction_type: string
+          ip_address: unknown | null
+          metadata: Json | null
+          project_id: string
+          visitor_session: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          id?: string
+          interaction_type: string
+          ip_address?: unknown | null
+          metadata?: Json | null
+          project_id: string
+          visitor_session?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          id?: string
+          interaction_type?: string
+          ip_address?: unknown | null
+          metadata?: Json | null
+          project_id?: string
+          visitor_session?: string | null
+        }
+        Relationships: []
+      }
       site_analytics: {
         Row: {
           created_at: string
@@ -97,6 +163,60 @@ export type Database = {
           event_type?: string
           id?: string
           ip_address?: unknown | null
+          user_agent?: string | null
+        }
+        Relationships: []
+      }
+      visitor_analytics: {
+        Row: {
+          actions: Json | null
+          browser: string | null
+          city: string | null
+          country: string | null
+          created_at: string | null
+          device_type: string | null
+          id: string
+          ip_address: unknown | null
+          os: string | null
+          page_views: number | null
+          referrer: string | null
+          session_id: string | null
+          time_on_site: unknown | null
+          updated_at: string | null
+          user_agent: string | null
+        }
+        Insert: {
+          actions?: Json | null
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          device_type?: string | null
+          id?: string
+          ip_address?: unknown | null
+          os?: string | null
+          page_views?: number | null
+          referrer?: string | null
+          session_id?: string | null
+          time_on_site?: unknown | null
+          updated_at?: string | null
+          user_agent?: string | null
+        }
+        Update: {
+          actions?: Json | null
+          browser?: string | null
+          city?: string | null
+          country?: string | null
+          created_at?: string | null
+          device_type?: string | null
+          id?: string
+          ip_address?: unknown | null
+          os?: string | null
+          page_views?: number | null
+          referrer?: string | null
+          session_id?: string | null
+          time_on_site?: unknown | null
+          updated_at?: string | null
           user_agent?: string | null
         }
         Relationships: []

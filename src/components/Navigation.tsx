@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Download } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 interface NavigationProps {
   profile: {
@@ -109,16 +110,32 @@ export default function Navigation({ profile }: NavigationProps) {
                 className="ml-4"
                 onClick={async () => {
                   try {
-                    const response = await fetch('https://zoigdqeywprtgtlfleua.supabase.co/functions/v1/generate-cv-pdf');
-                    const blob = await response.blob();
+                    const response = await supabase.functions.invoke('cv-upload');
+                    if (response.error) throw response.error;
+                    
+                    // Create download link
+                    const blob = new Blob([response.data], { type: 'application/pdf' });
                     const url = window.URL.createObjectURL(blob);
                     const a = document.createElement('a');
                     a.href = url;
-                    a.download = 'Kutloano_Moshao_CV.html';
+                    a.download = 'Kutloano_Moshao_CV.pdf';
                     a.click();
                     window.URL.revokeObjectURL(url);
                   } catch (error) {
                     console.error('Failed to download CV:', error);
+                    // Fallback to HTML CV
+                    try {
+                      const response = await fetch('https://zoigdqeywprtgtlfleua.supabase.co/functions/v1/generate-cv-pdf');
+                      const blob = await response.blob();
+                      const url = window.URL.createObjectURL(blob);
+                      const a = document.createElement('a');
+                      a.href = url;
+                      a.download = 'Kutloano_Moshao_CV.html';
+                      a.click();
+                      window.URL.revokeObjectURL(url);
+                    } catch (fallbackError) {
+                      console.error('Fallback also failed:', fallbackError);
+                    }
                   }
                 }}
               >
@@ -171,16 +188,32 @@ export default function Navigation({ profile }: NavigationProps) {
               className="w-full"
               onClick={async () => {
                 try {
-                  const response = await fetch('https://zoigdqeywprtgtlfleua.supabase.co/functions/v1/generate-cv-pdf');
-                  const blob = await response.blob();
+                  const response = await supabase.functions.invoke('cv-upload');
+                  if (response.error) throw response.error;
+                  
+                  // Create download link
+                  const blob = new Blob([response.data], { type: 'application/pdf' });
                   const url = window.URL.createObjectURL(blob);
                   const a = document.createElement('a');
                   a.href = url;
-                  a.download = 'Kutloano_Moshao_CV.html';
+                  a.download = 'Kutloano_Moshao_CV.pdf';
                   a.click();
                   window.URL.revokeObjectURL(url);
                 } catch (error) {
                   console.error('Failed to download CV:', error);
+                  // Fallback to HTML CV
+                  try {
+                    const response = await fetch('https://zoigdqeywprtgtlfleua.supabase.co/functions/v1/generate-cv-pdf');
+                    const blob = await response.blob();
+                    const url = window.URL.createObjectURL(blob);
+                    const a = document.createElement('a');
+                    a.href = url;
+                    a.download = 'Kutloano_Moshao_CV.html';
+                    a.click();
+                    window.URL.revokeObjectURL(url);
+                  } catch (fallbackError) {
+                    console.error('Fallback also failed:', fallbackError);
+                  }
                 }
               }}
             >

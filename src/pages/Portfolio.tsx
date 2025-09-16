@@ -10,6 +10,7 @@ import Education from "@/components/Education";
 import Blog from "@/components/Blog";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
+import PerformanceMonitor from "@/components/PerformanceMonitor";
 import { ThemeProvider } from "@/components/ThemeProvider";
 import { useAnalytics } from "@/hooks/useAnalytics";
 import profileData from "@/data/profile.json";
@@ -92,6 +93,9 @@ export default function Portfolio() {
           
           {/* Contact */}
           <Contact profile={profileData} />
+          
+          {/* Performance Monitor */}
+          <PerformanceMonitor />
         </div>
         
         {/* Footer */}

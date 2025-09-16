@@ -56,6 +56,12 @@ verify_jwt = false
 [functions.track-analytics]
 verify_jwt = false
 
+[functions.cv-upload]
+verify_jwt = false
+
+[functions.analytics-dashboard]
+verify_jwt = false
+
 [edge-runtime]
 policy = "per_worker"
 inspector_port = 8083
