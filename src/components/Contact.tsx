@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, MessageSquare, Send, Github, Linkedin, Calendar, Download } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, SUPABASE_URL } from "@/integrations/supabase/client";
 import { useAnalytics } from "@/hooks/useAnalytics";
 
 interface ContactProps {
@@ -29,12 +29,13 @@ export default function Contact({ profile }: ContactProps) {
   const handleCVDownload = async () => {
     try {
       trackCVDownload();
-      const response = await fetch('https://zoigdqeywprtgtlfleua.supabase.co/functions/v1/generate-cv-pdf');
-      const blob = await response.blob();
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/cv-upload`, { method: 'GET' });
+      if (!res.ok) throw new Error('Failed to fetch CV');
+      const blob = await res.blob();
       const url = window.URL.createObjectURL(blob);
       const a = document.createElement('a');
       a.href = url;
-      a.download = 'Kutloano_Moshao_CV.html';
+      a.download = 'Kutloano_Moshao_CV.pdf';
       document.body.appendChild(a);
       a.click();
       window.URL.revokeObjectURL(url);
@@ -46,11 +47,24 @@ export default function Contact({ profile }: ContactProps) {
       });
     } catch (error) {
       console.error('CV download error:', error);
-      toast({
-        title: "Download Error",
-        description: "Failed to download CV. Please try again.",
-        variant: "destructive",
-      });
+      try {
+        const response = await fetch(`${SUPABASE_URL}/functions/v1/generate-cv-pdf`);
+        const blob = await response.blob();
+        const url = window.URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = 'Kutloano_Moshao_CV.pdf';
+        document.body.appendChild(a);
+        a.click();
+        window.URL.revokeObjectURL(url);
+        document.body.removeChild(a);
+      } catch (fallbackError) {
+        toast({
+          title: "Download Error",
+          description: "Failed to download CV. Please try again.",
+          variant: "destructive",
+        });
+      }
     }
   };
 
