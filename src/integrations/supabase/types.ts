@@ -226,7 +226,14 @@ export type Database = {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      get_active_cv_info: {
+        Args: Record<PropertyKey, never>
+        Returns: {
+          filename: string
+          upload_date: string
+          version: number
+        }[]
+      }
     }
     Enums: {
       [_ in never]: never
