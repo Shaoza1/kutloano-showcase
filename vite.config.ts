@@ -16,4 +16,7 @@ export default defineConfig(({ mode }) => ({
       "@radix-ui/react-tooltip": path.resolve(__dirname, "./src/shims/radix-tooltip.tsx"),
     },
   },
+  optimizeDeps: {
+    exclude: ["@radix-ui/react-tooltip"],
+  },
 }));
