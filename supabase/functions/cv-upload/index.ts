@@ -3,8 +3,10 @@ import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
 const corsHeaders = {
   'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type',
+  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type, x-admin-key',
 };
+
+const ADMIN_KEY = Deno.env.get('ADMIN_DASHBOARD_KEY') ?? 'portfolio_admin_2024';
 
 interface Database {
   public: {
@@ -45,12 +47,7 @@ const handler = async (req: Request): Promise<Response> => {
   try {
     const supabaseClient = createClient<Database>(
       Deno.env.get('SUPABASE_URL') ?? '',
-      Deno.env.get('SUPABASE_ANON_KEY') ?? '',
-      {
-        global: {
-          headers: { Authorization: req.headers.get('Authorization')! },
-        },
-      }
+      Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
     );
 
     if (req.method === 'GET') {
@@ -106,6 +103,14 @@ const handler = async (req: Request): Promise<Response> => {
 
     if (req.method === 'POST') {
       // Upload new CV
+      const adminHeader = req.headers.get('x-admin-key');
+      if (adminHeader !== ADMIN_KEY) {
+        return new Response(
+          JSON.stringify({ error: 'Unauthorized' }),
+          { status: 401, headers: { ...corsHeaders, 'Content-Type': 'application/json' } }
+        );
+      }
+
       const formData = await req.formData();
       const file = formData.get('file') as File;
       const makeActive = formData.get('makeActive') === 'true';

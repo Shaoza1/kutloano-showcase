@@ -21,7 +21,7 @@ import {
   Monitor,
   Activity
 } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { supabase, SUPABASE_URL } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 
 interface AnalyticsData {
@@ -142,11 +142,20 @@ export default function AdminDashboard() {
       formData.append('file', file);
       formData.append('makeActive', 'true');
 
-      const response = await supabase.functions.invoke('cv-upload', {
-        body: formData
+      const res = await fetch(`${SUPABASE_URL}/functions/v1/cv-upload`, {
+        method: 'POST',
+        headers: {
+          'x-admin-key': ADMIN_KEY,
+        },
+        body: formData,
       });
 
-      if (response.error) throw response.error;
+      if (!res.ok) {
+        const err = await res.json().catch(() => ({}));
+        throw new Error(err.error || 'Failed to upload CV');
+      }
+
+      await res.json();
 
       toast({
         title: "Success",
