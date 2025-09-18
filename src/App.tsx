@@ -9,8 +9,11 @@ import AdminDashboard from "./components/AdminDashboard";
 
 const queryClient = new QueryClient();
 
+import Index from "./pages/Index";
+
 const router = createBrowserRouter([
-  { path: "/", element: <Portfolio /> },
+  { path: "/", element: <Index /> },
+  { path: "/portfolio", element: <Portfolio /> },
   { path: "/admin", element: <AdminDashboard /> },
   { path: "*", element: <NotFound /> },
 ]);
