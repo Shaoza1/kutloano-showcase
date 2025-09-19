@@ -6,7 +6,7 @@
       "subtitle": "AI-Powered PWA for Modern Farming",
       "description": "Intelligent agricultural advisory system combining computer vision, machine learning, and real-time data to help farmers optimize crop management and increase yields.",
       "longDescription": "AgroSense revolutionizes traditional farming by providing AI-driven insights for crop health monitoring, pest detection, and weather-based recommendations. The application uses CNN models for image analysis, NLP for processing agricultural data, and offline-first architecture for reliable field use.",
-      "technologies": ["React", "Flask", "TensorFlow", "PWA", "Firebase", "PouchDB", "CNN", "NLP"],
+      "technologies": ["React", "Flask", "TensorFlow", "PWA", "Supabase", "PouchDB", "CNN", "NLP"],
       "category": ["AI", "PWA", "Web"],
       "status": "Production",
       "year": "2024",
@@ -75,7 +75,7 @@
       "architecture": {
         "frontend": "React PWA with Service Workers",
         "backend": "Flask API with TensorFlow Serving",
-        "database": "Firebase + PouchDB for offline sync",
+        "database": "Supabase + PouchDB for offline sync",
         "ai": "Custom CNN models trained on agricultural datasets",
         "deployment": "Vercel (Frontend) + Google Cloud Run (API)"
       }
