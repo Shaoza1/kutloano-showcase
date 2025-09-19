@@ -3,7 +3,7 @@
     "name": "Kutloano Moshao",
     "label": "Full-Stack & AI-Curious Developer",
     "image": "",
-    "email": "kutloano.moshao@example.com",
+    "email": "kutloano.moshao111@gmail.com",
     "phone": "+267 xxx xxx xxx",
     "url": "https://kutloano-portfolio.vercel.app",
     "summary": "Passionate full-stack developer with a strong foundation in modern web technologies and emerging AI applications. Currently completing my Honours in Computing, I specialize in creating scalable web applications, progressive web apps, and intelligent systems that solve real-world problems.",
@@ -22,8 +22,8 @@
       },
       {
         "network": "LinkedIn",
-        "username": "kutloano-moshao",
-        "url": "https://linkedin.com/in/kutloano-moshao"
+        "username": "kutloano-moshao-3b9178372",
+        "url": "www.linkedin.com/in/kutloano-moshao-3b9178372"
       }
     ]
   },
@@ -69,13 +69,13 @@
   "certificates": [
     {
       "name": "Cisco Intro to Cybersecurity",
-      "date": "2024-01-01",
+      "date": "2025-01-01",
       "issuer": "Cisco Networking Academy",
       "url": ""
     },
     {
       "name": "Python Essentials 1",
-      "date": "2024-01-01",
+      "date": "2025-01-01",
       "issuer": "Cisco Networking Academy",
       "url": ""
     }
@@ -89,7 +89,7 @@
     {
       "name": "Backend Development",
       "level": "Advanced",
-      "keywords": ["Python", "Flask", "Node.js", "MySQL", "Firebase", "JWT Authentication"]
+      "keywords": ["Python", "Flask", "Node.js", "MySQL", "Supabase", "JWT Authentication"]
     },
     {
       "name": "AI & Machine Learning",

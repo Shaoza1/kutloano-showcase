@@ -7,10 +7,10 @@
   "degree": "BSc Hons in Computing",
   "graduationDate": "November 2025",
   "location": "Botswana",
-  "email": "kutloano.moshao@example.com",
+  "email": "kutloano.moshao111@gmail.com",
   "phone": "+267 xxx xxx xxx",
   "github": "https://github.com/kutloanom",
-  "linkedin": "https://linkedin.com/in/kutloano-moshao",
+  "linkedin": "www.linkedin.com/in/kutloano-moshao-3b9178372",
   "portfolio": "https://kutloano-portfolio.vercel.app",
   
   "bio": "Passionate full-stack developer with a strong foundation in modern web technologies and emerging AI applications. Currently completing my Honours in Computing, I specialize in creating scalable web applications, progressive web apps, and intelligent systems that solve real-world problems.",
@@ -27,7 +27,7 @@
       { "name": "Python/Flask", "level": 85, "category": "backend" },
       { "name": "Node.js", "level": 70, "category": "backend" },
       { "name": "MySQL", "level": 80, "category": "backend" },
-      { "name": "Firebase", "level": 75, "category": "backend" },
+      { "name": "Supabase", "level": 75, "category": "backend" },
       { "name": "JWT Authentication", "level": 85, "category": "backend" }
     ],
     "ai": [
@@ -50,13 +50,13 @@
     {
       "name": "Cisco Intro to Cybersecurity",
       "issuer": "Cisco Networking Academy",
-      "date": "2024",
+      "date": "2025",
       "badgeUrl": "/badges/cisco-cybersecurity.png"
     },
     {
       "name": "Python Essentials 1",
       "issuer": "Cisco Networking Academy", 
-      "date": "2024",
+      "date": "2025",
       "badgeUrl": "/badges/cisco-python.png"
     }
   ],
