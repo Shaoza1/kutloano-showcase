@@ -110,6 +110,380 @@ export type Database = {
         }
         Relationships: []
       }
+      portfolio_articles: {
+        Row: {
+          article_url: string | null
+          category: string[] | null
+          content: string | null
+          created_at: string
+          excerpt: string | null
+          featured_image_url: string | null
+          id: string
+          is_featured: boolean | null
+          is_published: boolean | null
+          pdf_url: string | null
+          publication_date: string | null
+          reading_time: number | null
+          sort_order: number | null
+          subtitle: string | null
+          tags: string[] | null
+          title: string
+          updated_at: string
+          view_count: number | null
+        }
+        Insert: {
+          article_url?: string | null
+          category?: string[] | null
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          pdf_url?: string | null
+          publication_date?: string | null
+          reading_time?: number | null
+          sort_order?: number | null
+          subtitle?: string | null
+          tags?: string[] | null
+          title: string
+          updated_at?: string
+          view_count?: number | null
+        }
+        Update: {
+          article_url?: string | null
+          category?: string[] | null
+          content?: string | null
+          created_at?: string
+          excerpt?: string | null
+          featured_image_url?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          pdf_url?: string | null
+          publication_date?: string | null
+          reading_time?: number | null
+          sort_order?: number | null
+          subtitle?: string | null
+          tags?: string[] | null
+          title?: string
+          updated_at?: string
+          view_count?: number | null
+        }
+        Relationships: []
+      }
+      portfolio_case_studies: {
+        Row: {
+          created_at: string
+          detailed_process: string | null
+          document_urls: string[] | null
+          future_improvements: string | null
+          id: string
+          image_gallery: string[] | null
+          interactive_demos: string[] | null
+          is_public: boolean | null
+          lessons_learned: string | null
+          methodology: string | null
+          overview: string | null
+          performance_metrics: Json | null
+          project_id: string | null
+          technical_specs: Json | null
+          title: string
+          updated_at: string
+          user_feedback: Json | null
+          video_urls: string[] | null
+        }
+        Insert: {
+          created_at?: string
+          detailed_process?: string | null
+          document_urls?: string[] | null
+          future_improvements?: string | null
+          id?: string
+          image_gallery?: string[] | null
+          interactive_demos?: string[] | null
+          is_public?: boolean | null
+          lessons_learned?: string | null
+          methodology?: string | null
+          overview?: string | null
+          performance_metrics?: Json | null
+          project_id?: string | null
+          technical_specs?: Json | null
+          title: string
+          updated_at?: string
+          user_feedback?: Json | null
+          video_urls?: string[] | null
+        }
+        Update: {
+          created_at?: string
+          detailed_process?: string | null
+          document_urls?: string[] | null
+          future_improvements?: string | null
+          id?: string
+          image_gallery?: string[] | null
+          interactive_demos?: string[] | null
+          is_public?: boolean | null
+          lessons_learned?: string | null
+          methodology?: string | null
+          overview?: string | null
+          performance_metrics?: Json | null
+          project_id?: string | null
+          technical_specs?: Json | null
+          title?: string
+          updated_at?: string
+          user_feedback?: Json | null
+          video_urls?: string[] | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "portfolio_case_studies_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "portfolio_projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      portfolio_certifications: {
+        Row: {
+          badge_image_url: string | null
+          created_at: string
+          credential_id: string | null
+          credential_url: string | null
+          description: string | null
+          expiry_date: string | null
+          id: string
+          is_active: boolean | null
+          issue_date: string
+          issuer: string
+          name: string
+          skills_gained: string[] | null
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          badge_image_url?: string | null
+          created_at?: string
+          credential_id?: string | null
+          credential_url?: string | null
+          description?: string | null
+          expiry_date?: string | null
+          id?: string
+          is_active?: boolean | null
+          issue_date: string
+          issuer: string
+          name: string
+          skills_gained?: string[] | null
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          badge_image_url?: string | null
+          created_at?: string
+          credential_id?: string | null
+          credential_url?: string | null
+          description?: string | null
+          expiry_date?: string | null
+          id?: string
+          is_active?: boolean | null
+          issue_date?: string
+          issuer?: string
+          name?: string
+          skills_gained?: string[] | null
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      portfolio_experience: {
+        Row: {
+          achievements: string[] | null
+          created_at: string
+          degree_type: string | null
+          description: string | null
+          end_date: string | null
+          gpa: number | null
+          id: string
+          is_active: boolean | null
+          is_current: boolean | null
+          location: string | null
+          organization: string
+          sort_order: number | null
+          start_date: string
+          technologies_used: string[] | null
+          title: string
+          type: string
+          updated_at: string
+        }
+        Insert: {
+          achievements?: string[] | null
+          created_at?: string
+          degree_type?: string | null
+          description?: string | null
+          end_date?: string | null
+          gpa?: number | null
+          id?: string
+          is_active?: boolean | null
+          is_current?: boolean | null
+          location?: string | null
+          organization: string
+          sort_order?: number | null
+          start_date: string
+          technologies_used?: string[] | null
+          title: string
+          type: string
+          updated_at?: string
+        }
+        Update: {
+          achievements?: string[] | null
+          created_at?: string
+          degree_type?: string | null
+          description?: string | null
+          end_date?: string | null
+          gpa?: number | null
+          id?: string
+          is_active?: boolean | null
+          is_current?: boolean | null
+          location?: string | null
+          organization?: string
+          sort_order?: number | null
+          start_date?: string
+          technologies_used?: string[] | null
+          title?: string
+          type?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      portfolio_projects: {
+        Row: {
+          approach: string[] | null
+          architecture: Json | null
+          case_study_url: string | null
+          category: string[]
+          challenges: Json | null
+          created_at: string
+          demo_video_url: string | null
+          description: string
+          duration: string | null
+          github_url: string | null
+          id: string
+          images: string[] | null
+          is_featured: boolean | null
+          key_features: string[] | null
+          live_demo_url: string | null
+          long_description: string | null
+          problem_statement: string | null
+          results: Json | null
+          solution_overview: string | null
+          sort_order: number | null
+          status: string
+          subtitle: string | null
+          team_info: string | null
+          technologies: string[]
+          title: string
+          updated_at: string
+          year: string
+        }
+        Insert: {
+          approach?: string[] | null
+          architecture?: Json | null
+          case_study_url?: string | null
+          category?: string[]
+          challenges?: Json | null
+          created_at?: string
+          demo_video_url?: string | null
+          description: string
+          duration?: string | null
+          github_url?: string | null
+          id?: string
+          images?: string[] | null
+          is_featured?: boolean | null
+          key_features?: string[] | null
+          live_demo_url?: string | null
+          long_description?: string | null
+          problem_statement?: string | null
+          results?: Json | null
+          solution_overview?: string | null
+          sort_order?: number | null
+          status?: string
+          subtitle?: string | null
+          team_info?: string | null
+          technologies?: string[]
+          title: string
+          updated_at?: string
+          year: string
+        }
+        Update: {
+          approach?: string[] | null
+          architecture?: Json | null
+          case_study_url?: string | null
+          category?: string[]
+          challenges?: Json | null
+          created_at?: string
+          demo_video_url?: string | null
+          description?: string
+          duration?: string | null
+          github_url?: string | null
+          id?: string
+          images?: string[] | null
+          is_featured?: boolean | null
+          key_features?: string[] | null
+          live_demo_url?: string | null
+          long_description?: string | null
+          problem_statement?: string | null
+          results?: Json | null
+          solution_overview?: string | null
+          sort_order?: number | null
+          status?: string
+          subtitle?: string | null
+          team_info?: string | null
+          technologies?: string[]
+          title?: string
+          updated_at?: string
+          year?: string
+        }
+        Relationships: []
+      }
+      portfolio_skills: {
+        Row: {
+          category: string
+          created_at: string
+          description: string | null
+          icon_name: string | null
+          id: string
+          is_active: boolean | null
+          level: number
+          name: string
+          sort_order: number | null
+          updated_at: string
+        }
+        Insert: {
+          category: string
+          created_at?: string
+          description?: string | null
+          icon_name?: string | null
+          id?: string
+          is_active?: boolean | null
+          level: number
+          name: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Update: {
+          category?: string
+          created_at?: string
+          description?: string | null
+          icon_name?: string | null
+          id?: string
+          is_active?: boolean | null
+          level?: number
+          name?: string
+          sort_order?: number | null
+          updated_at?: string
+        }
+        Relationships: []
+      }
       project_interactions: {
         Row: {
           created_at: string | null
