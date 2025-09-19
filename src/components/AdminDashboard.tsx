@@ -61,8 +61,21 @@ interface CVFile {
   file_size: number;
 }
 
+interface ContactSubmission {
+  id: string;
+  first_name: string;
+  last_name: string;
+  email: string;
+  subject: string;
+  message: string;
+  status: string;
+  created_at: string;
+  responded_at: string | null;
+}
+
 export default function AdminDashboard() {
   const [cvFiles, setCvFiles] = useState<CVFile[]>([]);
+  const [contactSubmissions, setContactSubmissions] = useState<ContactSubmission[]>([]);
   const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
   const [uploading, setUploading] = useState(false);
   const [timeframe, setTimeframe] = useState('7d');
@@ -75,6 +88,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     if (isAuthenticated) {
       fetchCVFiles();
+      fetchContactSubmissions();
       fetchAnalytics(timeframe);
     }
   }, [isAuthenticated, timeframe]);
@@ -109,6 +123,25 @@ export default function AdminDashboard() {
       toast({
         title: "Error",
         description: "Failed to fetch CV files",
+        variant: "destructive",
+      });
+    }
+  };
+
+  const fetchContactSubmissions = async () => {
+    try {
+      const { data, error } = await supabase
+        .from('contact_submissions')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+      if (error) throw error;
+      setContactSubmissions(data || []);
+    } catch (error) {
+      console.error('Error fetching contact submissions:', error);
+      toast({
+        title: "Error",
+        description: "Failed to fetch contact submissions",
         variant: "destructive",
       });
     }
@@ -207,6 +240,34 @@ export default function AdminDashboard() {
     }
   };
 
+  const markAsResponded = async (submissionId: string) => {
+    try {
+      const { error } = await supabase
+        .from('contact_submissions')
+        .update({ 
+          status: 'responded',
+          responded_at: new Date().toISOString()
+        })
+        .eq('id', submissionId);
+
+      if (error) throw error;
+
+      toast({
+        title: "Success",
+        description: "Marked as responded successfully!",
+      });
+
+      fetchContactSubmissions();
+    } catch (error) {
+      console.error('Error updating contact submission:', error);
+      toast({
+        title: "Error",
+        description: "Failed to update contact submission",
+        variant: "destructive",
+      });
+    }
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center p-6">
@@ -243,9 +304,10 @@ export default function AdminDashboard() {
         </div>
 
         <Tabs defaultValue="analytics" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-3">
+          <TabsList className="grid w-full grid-cols-4">
             <TabsTrigger value="analytics">Analytics</TabsTrigger>
             <TabsTrigger value="cv-management">CV Management</TabsTrigger>
+            <TabsTrigger value="contact-management">Contact Management</TabsTrigger>
             <TabsTrigger value="visitors">Visitor Insights</TabsTrigger>
           </TabsList>
 
@@ -397,6 +459,80 @@ export default function AdminDashboard() {
                   </CardContent>
                 </Card>
               ))}
+            </div>
+          </TabsContent>
+
+          <TabsContent value="contact-management" className="space-y-6">
+            <div className="flex justify-between items-center">
+              <h2 className="text-xl font-semibold">Contact Form Submissions</h2>
+              <Badge variant="outline">
+                {contactSubmissions.filter(c => c.status === 'new').length} New
+              </Badge>
+            </div>
+
+            <div className="grid gap-4">
+              {contactSubmissions.map((submission) => (
+                <Card key={submission.id} className={submission.status === 'new' ? 'border-primary' : ''}>
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-1">
+                          <div className="flex items-center gap-3">
+                            <h3 className="font-medium">
+                              {submission.first_name} {submission.last_name}
+                            </h3>
+                            <Badge 
+                              variant={submission.status === 'new' ? 'default' : 'secondary'}
+                              className={submission.status === 'new' ? 'bg-primary text-primary-foreground' : ''}
+                            >
+                              {submission.status}
+                            </Badge>
+                          </div>
+                          <div className="text-sm text-muted-foreground">
+                            {submission.email} • {new Date(submission.created_at).toLocaleString()}
+                          </div>
+                        </div>
+                        {submission.status === 'new' && (
+                          <Button
+                            variant="outline"
+                            size="sm"
+                            onClick={() => markAsResponded(submission.id)}
+                          >
+                            Mark as Responded
+                          </Button>
+                        )}
+                      </div>
+                      
+                      <div className="space-y-2">
+                        <div>
+                          <span className="font-medium">Subject: </span>
+                          <span>{submission.subject}</span>
+                        </div>
+                        <div>
+                          <span className="font-medium">Message:</span>
+                          <p className="mt-1 text-sm bg-muted p-3 rounded-lg">
+                            {submission.message}
+                          </p>
+                        </div>
+                      </div>
+                      
+                      {submission.responded_at && (
+                        <div className="text-sm text-muted-foreground">
+                          Responded: {new Date(submission.responded_at).toLocaleString()}
+                        </div>
+                      )}
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+              
+              {contactSubmissions.length === 0 && (
+                <Card>
+                  <CardContent className="p-6 text-center text-muted-foreground">
+                    No contact submissions yet.
+                  </CardContent>
+                </Card>
+              )}
             </div>
           </TabsContent>
 
