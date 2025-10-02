@@ -1,980 +1,1338 @@
-"use client";
-
-import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
-import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
+import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
-import {
-  Upload,
-  Download,
-  Eye,
-  Users,
-  FileText,
-  Mail,
-  TrendingUp,
-  Calendar,
-  Globe,
-  Smartphone,
-  Monitor,
-  Activity,
-  Plus,
-  Edit2,
-  Trash2,
-  Save,
-  X,
-  Code,
-  Award,
-  BookOpen,
-  Briefcase,
-  GraduationCap,
-  Video,
-  Github,
-  ExternalLink
-} from "lucide-react";
-import { supabase, SUPABASE_URL } from "@/integrations/supabase/client";
+import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
+import { Loader2, Plus, Pencil, Trash2, Upload, Eye, Download, BarChart } from "lucide-react";
+import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
+import * as React from "react";
+import { useForm, Controller } from "react-hook-form";
 
-// Interface definitions
-interface Project {
-  id: string;
-  title: string;
-  subtitle: string;
-  description: string;
-  long_description?: string;
-  technologies: string[];
-  category: string[];
-  status: string;
-  year: string;
-  duration?: string;
-  team_info?: string;
-  problem_statement?: string;
-  solution_overview?: string;
-  approach?: string[];
-  challenges?: any[];
-  key_features?: string[];
-  results?: any;
-  demo_video_url?: string;
-  live_demo_url?: string;
-  github_url?: string;
-  case_study_url?: string;
-  images?: string[];
-  architecture?: any;
-  is_featured: boolean;
-  sort_order: number;
-  created_at: string;
-  updated_at: string;
-}
-
-interface Skill {
-  id: string;
-  name: string;
-  level: number;
-  category: 'frontend' | 'backend' | 'ai' | 'tools';
-  icon_name?: string;
-  description?: string;
-  sort_order: number;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
-}
-
-interface Certification {
-  id: string;
-  name: string;
-  issuer: string;
-  issue_date: string;
-  expiry_date?: string;
-  credential_id?: string;
-  credential_url?: string;
-  badge_image_url?: string;
-  description?: string;
-  skills_gained?: string[];
-  is_active: boolean;
-  sort_order: number;
-  created_at: string;
-  updated_at: string;
-}
-
-interface Experience {
-  id: string;
-  type: 'education' | 'work' | 'internship' | 'volunteer';
-  title: string;
-  organization: string;
-  location?: string;
-  start_date: string;
-  end_date?: string;
-  is_current: boolean;
-  description?: string;
-  achievements?: string[];
-  technologies_used?: string[];
-  gpa?: number;
-  degree_type?: string;
-  sort_order: number;
-  is_active: boolean;
-  created_at: string;
-  updated_at: string;
-}
-
-interface Article {
-  id: string;
-  title: string;
-  subtitle?: string;
-  content?: string;
-  excerpt?: string;
-  featured_image_url?: string;
-  article_url?: string;
-  pdf_url?: string;
-  category?: string[];
-  tags?: string[];
-  reading_time?: number;
-  publication_date?: string;
-  is_published: boolean;
-  is_featured: boolean;
-  view_count: number;
-  sort_order: number;
-  created_at: string;
-  updated_at: string;
-}
-
-interface CVFile {
-  id: string;
-  filename: string;
-  file_path: string;
-  upload_date: string;
-  is_active: boolean;
-  version: number;
-  file_size: number;
-}
-
-interface ContactSubmission {
-  id: string;
-  first_name: string;
-  last_name: string;
-  email: string;
-  subject: string;
-  message: string;
-  status: string;
-  created_at: string;
-  responded_at: string | null;
-}
-
-interface AnalyticsData {
-  summary: {
-    totalPageViews: number;
-    totalContacts: number;
-    totalCVDownloads: number;
-    totalProjectInteractions: number;
-    uniqueVisitors: number;
-  };
-  projectInteractions: Record<string, {
-    views: number;
-    demoClicks: number;
-    githubClicks: number;
-    likes: number;
-  }>;
-  visitors: Array<{
-    country: string;
-    city: string;
-    deviceType: string;
-    browser: string;
-    os: string;
-    pageViews: number;
-    timeOnSite: string;
-    timestamp: string;
-  }>;
-  timeframe: string;
-}
-
-export default function ComprehensiveAdminDashboard() {
-  // State for all data
-  const [projects, setProjects] = useState<Project[]>([]);
-  const [skills, setSkills] = useState<Skill[]>([]);
-  const [certifications, setCertifications] = useState<Certification[]>([]);
-  const [experiences, setExperiences] = useState<Experience[]>([]);
-  const [articles, setArticles] = useState<Article[]>([]);
-  const [cvFiles, setCvFiles] = useState<CVFile[]>([]);
-  const [contactSubmissions, setContactSubmissions] = useState<ContactSubmission[]>([]);
-  const [analytics, setAnalytics] = useState<AnalyticsData | null>(null);
-  
-  // UI state
-  const [uploading, setUploading] = useState(false);
-  const [timeframe, setTimeframe] = useState('7d');
-  const [isAuthenticated, setIsAuthenticated] = useState(false);
-  const [authKey, setAuthKey] = useState('');
-  const [editingItem, setEditingItem] = useState<any>(null);
-  const [editingType, setEditingType] = useState<string>('');
-  const [showCreateDialog, setShowCreateDialog] = useState(false);
-  const [createType, setCreateType] = useState<string>('');
-  
+function ProjectForm({ project, onSuccess }: { project?: any; onSuccess: () => void }) {
   const { toast } = useToast();
-  const ADMIN_KEY = 'kutloano_admin_2024';
+  const queryClient = useQueryClient();
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    defaultValues: project || {
+      title: "",
+      subtitle: "",
+      description: "",
+      live_demo_url: "",
+      github_url: "",
+      demo_video_url: "",
+      images: [],
+      sort_order: 0,
+      is_published: true,
+    },
+  });
 
-  useEffect(() => {
-    if (isAuthenticated) {
-      fetchAllData();
-      fetchAnalytics(timeframe);
-    }
-  }, [isAuthenticated, timeframe]);
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      if (project) {
+        const { error } = await supabase.from("portfolio_projects").update(data).eq("id", project.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from("portfolio_projects").insert(data);
+        if (error) throw error;
+      }
+    },
+    onSuccess: () => {
+      toast({ title: `Project ${project ? "updated" : "added"} successfully` });
+      queryClient.invalidateQueries({ queryKey: ["admin-projects"] });
+      onSuccess();
+      reset();
+    },
+  });
 
-  const handleAuth = () => {
-    if (authKey === ADMIN_KEY) {
-      setIsAuthenticated(true);
-      toast({
-        title: "Authentication successful",
-        description: "Welcome to your comprehensive admin dashboard!",
-      });
-    } else {
-      toast({
-        title: "Authentication failed",
-        description: "Invalid admin key",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const fetchAllData = async () => {
-    try {
-      const [
-        projectsRes,
-        skillsRes,
-        certificationsRes,
-        experiencesRes,
-        articlesRes,
-        cvRes,
-        contactRes
-      ] = await Promise.all([
-        supabase.from('portfolio_projects').select('*').order('sort_order', { ascending: false }),
-        supabase.from('portfolio_skills').select('*').order('category, sort_order'),
-        supabase.from('portfolio_certifications').select('*').order('issue_date', { ascending: false }),
-        supabase.from('portfolio_experience').select('*').order('start_date', { ascending: false }),
-        supabase.from('portfolio_articles').select('*').order('created_at', { ascending: false }),
-        supabase.from('cv_management').select('*').order('created_at', { ascending: false }),
-        supabase.from('contact_submissions').select('*').order('created_at', { ascending: false })
-      ]);
-
-      if (projectsRes.data) setProjects(projectsRes.data as any);
-      if (skillsRes.data) setSkills(skillsRes.data as any);
-      if (certificationsRes.data) setCertifications(certificationsRes.data as any);
-      if (experiencesRes.data) setExperiences(experiencesRes.data as any);
-      if (articlesRes.data) setArticles(articlesRes.data as any);
-      if (cvRes.data) setCvFiles(cvRes.data);
-      if (contactRes.data) setContactSubmissions(contactRes.data);
-    } catch (error) {
-      console.error('Error fetching data:', error);
-      toast({
-        title: "Error",
-        description: "Failed to fetch dashboard data",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const fetchAnalytics = async (period: string) => {
-    try {
-      const response = await supabase.functions.invoke('analytics-dashboard', {
-        body: { timeframe: period }
-      });
-      if (response.data) setAnalytics(response.data);
-    } catch (error) {
-      console.error('Error fetching analytics:', error);
-    }
-  };
-
-  // CRUD Operations
-  const createItem = async (type: string, data: any) => {
-    try {
-      const tableName = getTableName(type);
-      const { error } = await supabase.from(tableName).insert([data]);
-      
-      if (error) throw error;
-      
-      await fetchAllData();
-      setShowCreateDialog(false);
-      toast({
-        title: "Success",
-        description: `${type} created successfully!`,
-      });
-    } catch (error) {
-      console.error('Error creating item:', error);
-      toast({
-        title: "Error",
-        description: `Failed to create ${type}`,
-        variant: "destructive",
-      });
-    }
-  };
-
-  const updateItem = async (type: string, id: string, data: any) => {
-    try {
-      const tableName = getTableName(type);
-      const { error } = await supabase.from(tableName).update(data).eq('id', id);
-      
-      if (error) throw error;
-      
-      await fetchAllData();
-      setEditingItem(null);
-      setEditingType('');
-      toast({
-        title: "Success",
-        description: `${type} updated successfully!`,
-      });
-    } catch (error) {
-      console.error('Error updating item:', error);
-      toast({
-        title: "Error",
-        description: `Failed to update ${type}`,
-        variant: "destructive",
-      });
-    }
-  };
-
-  const deleteItem = async (type: string, id: string) => {
-    try {
-      const tableName = getTableName(type);
-      const { error } = await supabase.from(tableName).delete().eq('id', id);
-      
-      if (error) throw error;
-      
-      await fetchAllData();
-      toast({
-        title: "Success",
-        description: `${type} deleted successfully!`,
-      });
-    } catch (error) {
-      console.error('Error deleting item:', error);
-      toast({
-        title: "Error",
-        description: `Failed to delete ${type}`,
-        variant: "destructive",
-      });
-    }
-  };
-
-  const getTableName = (type: string): any => {
-    const mapping: Record<string, any> = {
-      'project': 'portfolio_projects',
-      'skill': 'portfolio_skills', 
-      'certification': 'portfolio_certifications',
-      'experience': 'portfolio_experience',
-      'article': 'portfolio_articles'
-    };
-    return mapping[type] || type;
-  };
-
-  // CV Management (existing functionality)
-  const handleFileUpload = async (event: React.ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-
-    setUploading(true);
-    try {
-      const formData = new FormData();
-      formData.append('file', file);
-      formData.append('makeActive', 'true');
-
-      const res = await fetch(`${SUPABASE_URL}/functions/v1/cv-upload`, {
-        method: 'POST',
-        headers: {
-          'x-admin-key': ADMIN_KEY,
-        },
-        body: formData,
-      });
-
-      if (!res.ok) throw new Error('Failed to upload CV');
-
-      await fetchAllData();
-      toast({
-        title: "Success",
-        description: "CV uploaded successfully!",
-      });
-    } catch (error) {
-      console.error('Error uploading CV:', error);
-      toast({
-        title: "Error",
-        description: "Failed to upload CV",
-        variant: "destructive",
-      });
-    } finally {
-      setUploading(false);
-    }
-  };
-
-  const setActiveCV = async (cvId: string) => {
-    try {
-      await supabase.from('cv_management').update({ is_active: false }).neq('id', '00000000-0000-0000-0000-000000000000');
-      const { error } = await supabase.from('cv_management').update({ is_active: true }).eq('id', cvId);
-      
-      if (error) throw error;
-      
-      await fetchAllData();
-      toast({
-        title: "Success",
-        description: "Active CV updated successfully!",
-      });
-    } catch (error) {
-      console.error('Error setting active CV:', error);
-      toast({
-        title: "Error",
-        description: "Failed to update active CV",
-        variant: "destructive",
-      });
-    }
-  };
-
-  const markAsResponded = async (submissionId: string) => {
-    try {
-      const { error } = await supabase
-        .from('contact_submissions')
-        .update({ 
-          status: 'responded',
-          responded_at: new Date().toISOString()
-        })
-        .eq('id', submissionId);
-
-      if (error) throw error;
-      
-      await fetchAllData();
-      toast({
-        title: "Success",
-        description: "Marked as responded successfully!",
-      });
-    } catch (error) {
-      console.error('Error updating contact submission:', error);
-      toast({
-        title: "Error",
-        description: "Failed to update contact submission",
-        variant: "destructive",
-      });
-    }
-  };
-
-  if (!isAuthenticated) {
-    return (
-      <div className="min-h-screen bg-background flex items-center justify-center p-6">
-        <Card className="w-full max-w-md">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl">Portfolio Admin Access</CardTitle>
-          </CardHeader>
-          <CardContent className="space-y-4">
-            <Input
-              type="password"
-              placeholder="Enter admin key"
-              value={authKey}
-              onChange={(e) => setAuthKey(e.target.value)}
-              onKeyDown={(e) => e.key === 'Enter' && handleAuth()}
-            />
-            <Button onClick={handleAuth} className="w-full">
-              Access Dashboard
-            </Button>
-          </CardContent>
-        </Card>
-      </div>
-    );
+  async function onSubmit(data: any) {
+    await mutation.mutateAsync(data);
   }
 
   return (
-    <div className="min-h-screen bg-background p-6">
-      <div className="max-w-7xl mx-auto space-y-8">
-        <div className="flex justify-between items-center">
-          <h1 className="text-3xl font-bold">Comprehensive Portfolio Admin Dashboard</h1>
-          <Button variant="outline" onClick={() => setIsAuthenticated(false)}>
-            Logout
-          </Button>
-        </div>
-
-        <Tabs defaultValue="analytics" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-8">
-            <TabsTrigger value="analytics">Analytics</TabsTrigger>
-            <TabsTrigger value="projects">Projects</TabsTrigger>
-            <TabsTrigger value="skills">Skills</TabsTrigger>
-            <TabsTrigger value="certifications">Certifications</TabsTrigger>
-            <TabsTrigger value="experience">Experience</TabsTrigger>
-            <TabsTrigger value="articles">Articles</TabsTrigger>
-            <TabsTrigger value="cv-management">CV Management</TabsTrigger>
-            <TabsTrigger value="contacts">Contacts</TabsTrigger>
-          </TabsList>
-
-          {/* Analytics Tab - Keep existing analytics */}
-          <TabsContent value="analytics" className="space-y-6">
-            <div className="flex gap-4 items-center">
-              <h2 className="text-xl font-semibold">Analytics Overview</h2>
-              <Select value={timeframe} onValueChange={setTimeframe}>
-                <SelectTrigger className="w-48">
-                  <SelectValue />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="24h">Last 24 Hours</SelectItem>
-                  <SelectItem value="7d">Last 7 Days</SelectItem>
-                  <SelectItem value="30d">Last 30 Days</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-
-            {analytics && (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Page Views</CardTitle>
-                    <Eye className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{analytics.summary.totalPageViews}</div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Unique Visitors</CardTitle>
-                    <Users className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{analytics.summary.uniqueVisitors}</div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">CV Downloads</CardTitle>
-                    <Download className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{analytics.summary.totalCVDownloads}</div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Contact Forms</CardTitle>
-                    <Mail className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{analytics.summary.totalContacts}</div>
-                  </CardContent>
-                </Card>
-                <Card>
-                  <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                    <CardTitle className="text-sm font-medium">Project Interactions</CardTitle>
-                    <Activity className="h-4 w-4 text-muted-foreground" />
-                  </CardHeader>
-                  <CardContent>
-                    <div className="text-2xl font-bold">{analytics.summary.totalProjectInteractions}</div>
-                  </CardContent>
-                </Card>
-              </div>
-            )}
-          </TabsContent>
-
-          {/* Projects Tab */}
-          <TabsContent value="projects" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">Projects Management</h2>
-              <Button onClick={() => { setCreateType('project'); setShowCreateDialog(true); }}>
-                <Plus className="w-4 h-4 mr-2" />
-                Add Project
-              </Button>
-            </div>
-            
-            <div className="grid gap-4">
-              {projects.map((project) => (
-                <Card key={project.id}>
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-2 flex-1">
-                        <div className="flex items-center gap-3">
-                          <h3 className="font-medium">{project.title}</h3>
-                          {project.is_featured && <Badge>Featured</Badge>}
-                          <Badge variant="outline">{project.status}</Badge>
-                        </div>
-                        <p className="text-sm text-muted-foreground">{project.description}</p>
-                        <div className="flex gap-2 flex-wrap">
-                          {project.technologies.map((tech) => (
-                            <Badge key={tech} variant="secondary">{tech}</Badge>
-                          ))}
-                        </div>
-                        <div className="flex gap-4 text-sm">
-                          {project.demo_video_url && (
-                            <a href={project.demo_video_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-blue-600">
-                              <Video className="w-4 h-4" />
-                              Demo Video
-                            </a>
-                          )}
-                          {project.github_url && (
-                            <a href={project.github_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-blue-600">
-                              <Github className="w-4 h-4" />
-                              GitHub
-                            </a>
-                          )}
-                          {project.live_demo_url && (
-                            <a href={project.live_demo_url} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1 text-blue-600">
-                              <ExternalLink className="w-4 h-4" />
-                              Live Demo
-                            </a>
-                          )}
-                        </div>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm" onClick={() => { setEditingItem(project); setEditingType('project'); }}>
-                          <Edit2 className="w-4 h-4" />
-                        </Button>
-                        <Button variant="outline" size="sm" onClick={() => deleteItem('project', project.id)}>
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          {/* Skills Tab */}
-          <TabsContent value="skills" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">Skills Management</h2>
-              <Button onClick={() => { setCreateType('skill'); setShowCreateDialog(true); }}>
-                <Plus className="w-4 h-4 mr-2" />
-                Add Skill
-              </Button>
-            </div>
-            
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-              {['frontend', 'backend', 'ai', 'tools'].map((category) => (
-                <Card key={category}>
-                  <CardHeader>
-                    <CardTitle className="capitalize">{category} Skills</CardTitle>
-                  </CardHeader>
-                  <CardContent className="space-y-3">
-                    {skills.filter(skill => skill.category === category).map((skill) => (
-                      <div key={skill.id} className="flex items-center justify-between">
-                        <div className="flex-1">
-                          <div className="flex items-center justify-between">
-                            <span className="text-sm font-medium">{skill.name}</span>
-                            <div className="flex gap-1">
-                              <Button variant="ghost" size="sm" onClick={() => { setEditingItem(skill); setEditingType('skill'); }}>
-                                <Edit2 className="w-3 h-3" />
-                              </Button>
-                              <Button variant="ghost" size="sm" onClick={() => deleteItem('skill', skill.id)}>
-                                <Trash2 className="w-3 h-3" />
-                              </Button>
-                            </div>
-                          </div>
-                          <div className="w-full bg-muted rounded-full h-2">
-                            <div 
-                              className="bg-primary h-2 rounded-full" 
-                              style={{ width: `${skill.level}%` }}
-                            />
-                          </div>
-                          <span className="text-xs text-muted-foreground">{skill.level}%</span>
-                        </div>
-                      </div>
-                    ))}
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          {/* Certifications Tab */}
-          <TabsContent value="certifications" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">Certifications Management</h2>
-              <Button onClick={() => { setCreateType('certification'); setShowCreateDialog(true); }}>
-                <Plus className="w-4 h-4 mr-2" />
-                Add Certification
-              </Button>
-            </div>
-            
-            <div className="grid gap-4">
-              {certifications.map((cert) => (
-                <Card key={cert.id}>
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-2 flex-1">
-                        <div className="flex items-center gap-3">
-                          <Award className="w-5 h-5 text-primary" />
-                          <h3 className="font-medium">{cert.name}</h3>
-                          {!cert.is_active && <Badge variant="outline">Inactive</Badge>}
-                        </div>
-                        <p className="text-sm text-muted-foreground">
-                          {cert.issuer} • {new Date(cert.issue_date).getFullYear()}
-                        </p>
-                        {cert.credential_url && (
-                          <a href={cert.credential_url} target="_blank" rel="noopener noreferrer" className="text-sm text-blue-600">
-                            View Credential
-                          </a>
-                        )}
-                      </div>
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm" onClick={() => { setEditingItem(cert); setEditingType('certification'); }}>
-                          <Edit2 className="w-4 h-4" />
-                        </Button>
-                        <Button variant="outline" size="sm" onClick={() => deleteItem('certification', cert.id)}>
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          {/* Experience Tab */}
-          <TabsContent value="experience" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">Experience & Education Management</h2>
-              <Button onClick={() => { setCreateType('experience'); setShowCreateDialog(true); }}>
-                <Plus className="w-4 h-4 mr-2" />
-                Add Experience/Education
-              </Button>
-            </div>
-            
-            <div className="grid gap-4">
-              {experiences.map((exp) => (
-                <Card key={exp.id}>
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-2 flex-1">
-                        <div className="flex items-center gap-3">
-                          {exp.type === 'education' ? <GraduationCap className="w-5 h-5 text-primary" /> : <Briefcase className="w-5 h-5 text-primary" />}
-                          <h3 className="font-medium">{exp.title}</h3>
-                          <Badge variant="outline" className="capitalize">{exp.type}</Badge>
-                          {exp.is_current && <Badge>Current</Badge>}
-                        </div>
-                        <p className="text-sm text-muted-foreground">
-                          {exp.organization} • {exp.location}
-                        </p>
-                        <p className="text-sm">
-                          {new Date(exp.start_date).getFullYear()} - {exp.end_date ? new Date(exp.end_date).getFullYear() : 'Present'}
-                        </p>
-                        {exp.description && <p className="text-sm">{exp.description}</p>}
-                      </div>
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm" onClick={() => { setEditingItem(exp); setEditingType('experience'); }}>
-                          <Edit2 className="w-4 h-4" />
-                        </Button>
-                        <Button variant="outline" size="sm" onClick={() => deleteItem('experience', exp.id)}>
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          {/* Articles Tab */}
-          <TabsContent value="articles" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">Articles & Blog Management</h2>
-              <Button onClick={() => { setCreateType('article'); setShowCreateDialog(true); }}>
-                <Plus className="w-4 h-4 mr-2" />
-                Add Article
-              </Button>
-            </div>
-            
-            <div className="grid gap-4">
-              {articles.map((article) => (
-                <Card key={article.id}>
-                  <CardContent className="p-6">
-                    <div className="flex items-start justify-between">
-                      <div className="space-y-2 flex-1">
-                        <div className="flex items-center gap-3">
-                          <BookOpen className="w-5 h-5 text-primary" />
-                          <h3 className="font-medium">{article.title}</h3>
-                          {article.is_published ? <Badge>Published</Badge> : <Badge variant="outline">Draft</Badge>}
-                          {article.is_featured && <Badge>Featured</Badge>}
-                        </div>
-                        {article.subtitle && <p className="text-sm text-muted-foreground">{article.subtitle}</p>}
-                        {article.excerpt && <p className="text-sm">{article.excerpt}</p>}
-                        <div className="flex gap-4 text-sm">
-                          {article.article_url && (
-                            <a href={article.article_url} target="_blank" rel="noopener noreferrer" className="text-blue-600">
-                              View Article
-                            </a>
-                          )}
-                          {article.pdf_url && (
-                            <a href={article.pdf_url} target="_blank" rel="noopener noreferrer" className="text-blue-600">
-                              Download PDF
-                            </a>
-                          )}
-                          <span>Views: {article.view_count}</span>
-                        </div>
-                      </div>
-                      <div className="flex gap-2">
-                        <Button variant="outline" size="sm" onClick={() => { setEditingItem(article); setEditingType('article'); }}>
-                          <Edit2 className="w-4 h-4" />
-                        </Button>
-                        <Button variant="outline" size="sm" onClick={() => deleteItem('article', article.id)}>
-                          <Trash2 className="w-4 h-4" />
-                        </Button>
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          {/* CV Management Tab - Keep existing */}
-          <TabsContent value="cv-management" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">CV Management</h2>
-              <div className="flex gap-4">
-                <input
-                  type="file"
-                  accept=".pdf,.doc,.docx"
-                  onChange={handleFileUpload}
-                  disabled={uploading}
-                  className="hidden"
-                  id="cv-upload"
-                />
-                <Button onClick={() => document.getElementById('cv-upload')?.click()} disabled={uploading}>
-                  <Upload className="w-4 h-4 mr-2" />
-                  {uploading ? 'Uploading...' : 'Upload New CV'}
-                </Button>
-              </div>
-            </div>
-
-            <div className="grid gap-4">
-              {cvFiles.map((cv) => (
-                <Card key={cv.id}>
-                  <CardContent className="p-6">
-                    <div className="flex items-center justify-between">
-                      <div className="space-y-1">
-                        <div className="flex items-center gap-3">
-                          <h3 className="font-medium">{cv.filename}</h3>
-                          {cv.is_active && <Badge className="bg-green-100 text-green-800">Active</Badge>}
-                        </div>
-                        <div className="text-sm text-muted-foreground">
-                          Version {cv.version} • {Math.round(cv.file_size / 1024)} KB • 
-                          Uploaded {new Date(cv.upload_date).toLocaleDateString()}
-                        </div>
-                      </div>
-                      <div className="flex gap-2">
-                        {!cv.is_active && (
-                          <Button variant="outline" size="sm" onClick={() => setActiveCV(cv.id)}>
-                            Set Active
-                          </Button>
-                        )}
-                      </div>
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-            </div>
-          </TabsContent>
-
-          {/* Contacts Tab - Keep existing */}
-          <TabsContent value="contacts" className="space-y-6">
-            <div className="flex justify-between items-center">
-              <h2 className="text-xl font-semibold">Contact Form Submissions</h2>
-              <Badge variant="outline">
-                {contactSubmissions.filter(c => c.status === 'new').length} New
-              </Badge>
-            </div>
-
-            <div className="grid gap-4">
-              {contactSubmissions.map((submission) => (
-                <Card key={submission.id} className={submission.status === 'new' ? 'border-primary' : ''}>
-                  <CardContent className="p-6">
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="space-y-1">
-                          <div className="flex items-center gap-3">
-                            <h3 className="font-medium">{submission.first_name} {submission.last_name}</h3>
-                            <Badge variant={submission.status === 'new' ? 'default' : 'secondary'}>
-                              {submission.status}
-                            </Badge>
-                          </div>
-                          <div className="text-sm text-muted-foreground">
-                            {submission.email} • {new Date(submission.created_at).toLocaleString()}
-                          </div>
-                        </div>
-                        {submission.status === 'new' && (
-                          <Button variant="outline" size="sm" onClick={() => markAsResponded(submission.id)}>
-                            Mark as Responded
-                          </Button>
-                        )}
-                      </div>
-                      
-                      <div className="space-y-2">
-                        <div>
-                          <span className="font-medium">Subject: </span>
-                          <span>{submission.subject}</span>
-                        </div>
-                        <div>
-                          <span className="font-medium">Message:</span>
-                          <p className="mt-1 text-sm bg-muted p-3 rounded-lg">{submission.message}</p>
-                        </div>
-                      </div>
-                      
-                      {submission.responded_at && (
-                        <div className="text-sm text-muted-foreground">
-                          Responded: {new Date(submission.responded_at).toLocaleString()}
-                        </div>
-                      )}
-                    </div>
-                  </CardContent>
-                </Card>
-              ))}
-              
-              {contactSubmissions.length === 0 && (
-                <Card>
-                  <CardContent className="p-6 text-center text-muted-foreground">
-                    No contact submissions yet.
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          </TabsContent>
-        </Tabs>
-
-        {/* Create/Edit Dialog - Basic implementation */}
-        <Dialog open={showCreateDialog || !!editingItem} onOpenChange={(open) => {
-          if (!open) {
-            setShowCreateDialog(false);
-            setEditingItem(null);
-            setEditingType('');
-            setCreateType('');
-          }
-        }}>
-          <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-            <DialogHeader>
-              <DialogTitle>
-                {editingItem ? `Edit ${editingType}` : `Create New ${createType}`}
-              </DialogTitle>
-            </DialogHeader>
-            
-            <div className="space-y-4">
-              <p className="text-sm text-muted-foreground">
-                This is a simplified dialog. You can expand this to include full form fields for each content type.
-              </p>
-              
-              <div className="flex gap-2">
-                <Button onClick={() => {
-                  setShowCreateDialog(false);
-                  setEditingItem(null);
-                }}>
-                  Cancel
-                </Button>
-                <Button onClick={() => {
-                  // Implement save logic here
-                  setShowCreateDialog(false);
-                  setEditingItem(null);
-                }}>
-                  Save
-                </Button>
-              </div>
-            </div>
-          </DialogContent>
-        </Dialog>
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <Label htmlFor="title">Title</Label>
+        <Input id="title" {...register("title", { required: "Title is required" })} />
+        {errors.title && <p className="text-destructive text-sm">{errors.title.message}</p>}
       </div>
+      <div>
+        <Label htmlFor="subtitle">Subtitle</Label>
+        <Input id="subtitle" {...register("subtitle")} />
+      </div>
+      <div>
+        <Label htmlFor="description">Description</Label>
+        <Textarea id="description" {...register("description")} />
+      </div>
+      <div>
+        <Label htmlFor="live_demo_url">Live Demo URL</Label>
+        <Input id="live_demo_url" {...register("live_demo_url")} />
+      </div>
+      <div>
+        <Label htmlFor="github_url">GitHub URL</Label>
+        <Input id="github_url" {...register("github_url")} />
+      </div>
+      <div>
+        <Label htmlFor="demo_video_url">Demo Video URL</Label>
+        <Input id="demo_video_url" {...register("demo_video_url")} />
+      </div>
+      <div>
+        <Label htmlFor="sort_order">Sort Order</Label>
+        <Input type="number" id="sort_order" {...register("sort_order", { valueAsNumber: true })} />
+      </div>
+      <div className="flex items-center space-x-2">
+        <Controller
+          control={control}
+          name="is_published"
+          render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
+        />
+        <Label>Published</Label>
+      </div>
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Plus className="mr-2 h-4 w-4" />}
+        {project ? "Update Project" : "Add Project"}
+      </Button>
+    </form>
+  );
+}
+
+function CaseStudyForm({
+  caseStudy,
+  projects,
+  onSuccess,
+}: {
+  caseStudy?: any;
+  projects: any[];
+  onSuccess: () => void;
+}) {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const {
+    register,
+    handleSubmit,
+    control,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    defaultValues: caseStudy || {
+      title: "",
+      project_id: projects.length > 0 ? projects[0].id : "",
+      description: "",
+      video_urls: [],
+      document_urls: [],
+      image_gallery: [],
+      sort_order: 0,
+      is_published: true,
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      if (caseStudy) {
+        const { error } = await supabase.from("portfolio_case_studies").update(data).eq("id", caseStudy.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from("portfolio_case_studies").insert(data);
+        if (error) throw error;
+      }
+    },
+    onSuccess: () => {
+      toast({ title: `Case study ${caseStudy ? "updated" : "added"} successfully` });
+      queryClient.invalidateQueries({ queryKey: ["admin-case-studies"] });
+      onSuccess();
+      reset();
+    },
+  });
+
+  async function onSubmit(data: any) {
+    // Ensure arrays are stored properly
+    if (typeof data.video_urls === "string") {
+      data.video_urls = data.video_urls.split(",").map((s: string) => s.trim()).filter(Boolean);
+    }
+    if (typeof data.document_urls === "string") {
+      data.document_urls = data.document_urls.split(",").map((s: string) => s.trim()).filter(Boolean);
+    }
+    if (typeof data.image_gallery === "string") {
+      data.image_gallery = data.image_gallery.split(",").map((s: string) => s.trim()).filter(Boolean);
+    }
+    await mutation.mutateAsync(data);
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <Label htmlFor="title">Title</Label>
+        <Input id="title" {...register("title", { required: "Title is required" })} />
+        {errors.title && <p className="text-destructive text-sm">{errors.title.message}</p>}
+      </div>
+      <div>
+        <Label htmlFor="project_id">Project</Label>
+        <Controller
+          control={control}
+          name="project_id"
+          render={({ field }) => (
+            <Select onValueChange={field.onChange} value={field.value}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select a project" />
+              </SelectTrigger>
+              <SelectContent>
+                {projects.map((p) => (
+                  <SelectItem key={p.id} value={p.id}>
+                    {p.title}
+                  </SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          )}
+        />
+      </div>
+      <div>
+        <Label htmlFor="description">Description</Label>
+        <Textarea id="description" {...register("description")} />
+      </div>
+      <div>
+        <Label htmlFor="video_urls">Video URLs (comma separated)</Label>
+        <Textarea id="video_urls" {...register("video_urls")} />
+      </div>
+      <div>
+        <Label htmlFor="document_urls">Document URLs (comma separated)</Label>
+        <Textarea id="document_urls" {...register("document_urls")} />
+      </div>
+      <div>
+        <Label htmlFor="image_gallery">Image URLs (comma separated)</Label>
+        <Textarea id="image_gallery" {...register("image_gallery")} />
+      </div>
+      <div>
+        <Label htmlFor="sort_order">Sort Order</Label>
+        <Input type="number" id="sort_order" {...register("sort_order", { valueAsNumber: true })} />
+      </div>
+      <div className="flex items-center space-x-2">
+        <Controller
+          control={control}
+          name="is_published"
+          render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
+        />
+        <Label>Published</Label>
+      </div>
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Plus className="mr-2 h-4 w-4" />}
+        {caseStudy ? "Update Case Study" : "Add Case Study"}
+      </Button>
+    </form>
+  );
+}
+
+export default function ComprehensiveAdminDashboard() {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const [activeTab, setActiveTab] = useState("projects");
+  const [editingItem, setEditingItem] = useState<any>(null);
+
+  // Fetch all data
+  const { data: projects } = useQuery({
+    queryKey: ["admin-projects"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("portfolio_projects").select("*").order("sort_order");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: skills } = useQuery({
+    queryKey: ["admin-skills"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("portfolio_skills").select("*").order("sort_order");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: certifications } = useQuery({
+    queryKey: ["admin-certifications"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("portfolio_certifications").select("*").order("sort_order");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: experience } = useQuery({
+    queryKey: ["admin-experience"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("portfolio_experience").select("*").order("sort_order");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: articles } = useQuery({
+    queryKey: ["admin-articles"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("portfolio_articles").select("*").order("sort_order");
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: caseStudies } = useQuery({
+    queryKey: ["admin-case-studies"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("portfolio_case_studies")
+        .select("*, portfolio_projects(title)")
+        .order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: cvFiles } = useQuery({
+    queryKey: ["admin-cv-files"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("cv_management").select("*").order("version", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: contactSubmissions } = useQuery({
+    queryKey: ["admin-contacts"],
+    queryFn: async () => {
+      const { data, error } = await supabase.from("contact_submissions").select("*").order("created_at", { ascending: false });
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  const { data: analytics } = useQuery({
+    queryKey: ["admin-analytics"],
+    queryFn: async () => {
+      const { data, error } = await supabase
+        .from("site_analytics")
+        .select("*")
+        .order("created_at", { ascending: false })
+        .limit(100);
+      if (error) throw error;
+      return data;
+    },
+  });
+
+  // Delete mutations
+  const deleteProjectMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("portfolio_projects").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-projects"] });
+      toast({ title: "Project deleted successfully" });
+    },
+  });
+
+  const deleteSkillMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("portfolio_skills").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-skills"] });
+      toast({ title: "Skill deleted successfully" });
+    },
+  });
+
+  const deleteCertificationMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("portfolio_certifications").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-certifications"] });
+      toast({ title: "Certification deleted successfully" });
+    },
+  });
+
+  const deleteExperienceMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("portfolio_experience").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-experience"] });
+      toast({ title: "Experience deleted successfully" });
+    },
+  });
+
+  const deleteArticleMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("portfolio_articles").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-articles"] });
+      toast({ title: "Article deleted successfully" });
+    },
+  });
+
+  const deleteCaseStudyMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("portfolio_case_studies").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-case-studies"] });
+      toast({ title: "Case study deleted successfully" });
+    },
+  });
+
+  const deleteCvMutation = useMutation({
+    mutationFn: async (id: string) => {
+      const { error } = await supabase.from("cv_management").delete().eq("id", id);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["admin-cv-files"] });
+      toast({ title: "CV file deleted successfully" });
+    },
+  });
+
+  return (
+    <div className="container mx-auto py-10">
+      <h1 className="text-4xl font-bold mb-8">Portfolio Admin Dashboard</h1>
+
+      <Tabs value={activeTab} onValueChange={setActiveTab}>
+        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-9">
+          <TabsTrigger value="projects">Projects</TabsTrigger>
+          <TabsTrigger value="case-studies">Case Studies</TabsTrigger>
+          <TabsTrigger value="skills">Skills</TabsTrigger>
+          <TabsTrigger value="certifications">Certs</TabsTrigger>
+          <TabsTrigger value="experience">Experience</TabsTrigger>
+          <TabsTrigger value="articles">Articles</TabsTrigger>
+          <TabsTrigger value="cv">CV</TabsTrigger>
+          <TabsTrigger value="contacts">Contacts</TabsTrigger>
+          <TabsTrigger value="analytics">Analytics</TabsTrigger>
+        </TabsList>
+
+        {/* PROJECTS TAB */}
+        <TabsContent value="projects">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle>Manage Projects</CardTitle>
+                <CardDescription>Add videos, live demos, GitHub links, and images</CardDescription>
+              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Project
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Add New Project</DialogTitle>
+                  </DialogHeader>
+                  <ProjectForm onSuccess={() => queryClient.invalidateQueries({ queryKey: ["admin-projects"] })} />
+                </DialogContent>
+              </Dialog>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {projects?.map((project) => (
+                  <Card key={project.id}>
+                    <CardContent className="pt-6">
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                          <h3 className="font-bold text-lg">{project.title}</h3>
+                          <p className="text-sm text-muted-foreground">{project.subtitle}</p>
+                          <div className="mt-2 space-y-1 text-sm">
+                            {project.live_demo_url && <p>🔗 Live Demo: {project.live_demo_url}</p>}
+                            {project.github_url && <p>💻 GitHub: {project.github_url}</p>}
+                            {project.demo_video_url && <p>🎥 Video: {project.demo_video_url}</p>}
+                            {project.images && project.images.length > 0 && <p>🖼️ Images: {project.images.length}</p>}
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button variant="outline" size="sm">
+                                <Pencil className="h-4 w-4" />
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                              <DialogHeader>
+                                <DialogTitle>Edit Project</DialogTitle>
+                              </DialogHeader>
+                              <ProjectForm
+                                project={project}
+                                onSuccess={() => queryClient.invalidateQueries({ queryKey: ["admin-projects"] })}
+                              />
+                            </DialogContent>
+                          </Dialog>
+                          <Button variant="destructive" size="sm" onClick={() => deleteProjectMutation.mutate(project.id)}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* CASE STUDIES TAB */}
+        <TabsContent value="case-studies">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle>Manage Case Studies</CardTitle>
+                <CardDescription>Detailed project documentation with videos and documents</CardDescription>
+              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Case Study
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Add New Case Study</DialogTitle>
+                  </DialogHeader>
+                  <CaseStudyForm
+                    projects={projects || []}
+                    onSuccess={() => queryClient.invalidateQueries({ queryKey: ["admin-case-studies"] })}
+                  />
+                </DialogContent>
+              </Dialog>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {caseStudies?.map((study: any) => (
+                  <Card key={study.id}>
+                    <CardContent className="pt-6">
+                      <div className="flex justify-between items-start">
+                        <div className="flex-1">
+                          <h3 className="font-bold text-lg">{study.title}</h3>
+                          <p className="text-sm text-muted-foreground">Project: {study.portfolio_projects?.title}</p>
+                          <div className="mt-2 space-y-1 text-sm">
+                            {study.video_urls && study.video_urls.length > 0 && <p>🎥 Videos: {study.video_urls.length}</p>}
+                            {study.document_urls && study.document_urls.length > 0 && <p>📄 Documents: {study.document_urls.length}</p>}
+                            {study.image_gallery && study.image_gallery.length > 0 && <p>🖼️ Images: {study.image_gallery.length}</p>}
+                          </div>
+                        </div>
+                        <div className="flex gap-2">
+                          <Dialog>
+                            <DialogTrigger asChild>
+                              <Button variant="outline" size="sm">
+                                <Pencil className="h-4 w-4" />
+                              </Button>
+                            </DialogTrigger>
+                            <DialogContent className="max-w-3xl max-h-[80vh] overflow-y-auto">
+                              <DialogHeader>
+                                <DialogTitle>Edit Case Study</DialogTitle>
+                              </DialogHeader>
+                              <CaseStudyForm
+                                caseStudy={study}
+                                projects={projects || []}
+                                onSuccess={() => queryClient.invalidateQueries({ queryKey: ["admin-case-studies"] })}
+                              />
+                            </DialogContent>
+                          </Dialog>
+                          <Button variant="destructive" size="sm" onClick={() => deleteCaseStudyMutation.mutate(study.id)}>
+                            <Trash2 className="h-4 w-4" />
+                          </Button>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* SKILLS TAB */}
+        <TabsContent value="skills">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle>Manage Skills</CardTitle>
+                <CardDescription>Add and organize your skills</CardDescription>
+              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Skill
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Add New Skill</DialogTitle>
+                  </DialogHeader>
+                  <SkillForm onSuccess={() => queryClient.invalidateQueries({ queryKey: ["admin-skills"] })} />
+                </DialogContent>
+              </Dialog>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {skills?.map((skill) => (
+                  <Card key={skill.id}>
+                    <CardContent className="pt-6 flex justify-between items-center">
+                      <div>
+                        <h3 className="font-bold text-lg">{skill.name}</h3>
+                        <p className="text-sm text-muted-foreground">{skill.description}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" size="sm">
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                            <DialogHeader>
+                              <DialogTitle>Edit Skill</DialogTitle>
+                            </DialogHeader>
+                            <SkillForm skill={skill} onSuccess={() => queryClient.invalidateQueries({ queryKey: ["admin-skills"] })} />
+                          </DialogContent>
+                        </Dialog>
+                        <Button variant="destructive" size="sm" onClick={() => deleteSkillMutation.mutate(skill.id)}>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* CERTIFICATIONS TAB */}
+        <TabsContent value="certifications">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle>Manage Certifications</CardTitle>
+                <CardDescription>Add and organize your certifications</CardDescription>
+              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Certification
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Add New Certification</DialogTitle>
+                  </DialogHeader>
+                  <CertificationForm onSuccess={() => queryClient.invalidateQueries({ queryKey: ["admin-certifications"] })} />
+                </DialogContent>
+              </Dialog>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {certifications?.map((cert) => (
+                  <Card key={cert.id}>
+                    <CardContent className="pt-6 flex justify-between items-center">
+                      <div>
+                        <h3 className="font-bold text-lg">{cert.name}</h3>
+                        <p className="text-sm text-muted-foreground">{cert.issuer}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" size="sm">
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                            <DialogHeader>
+                              <DialogTitle>Edit Certification</DialogTitle>
+                            </DialogHeader>
+                            <CertificationForm
+                              certification={cert}
+                              onSuccess={() => queryClient.invalidateQueries({ queryKey: ["admin-certifications"] })}
+                            />
+                          </DialogContent>
+                        </Dialog>
+                        <Button variant="destructive" size="sm" onClick={() => deleteCertificationMutation.mutate(cert.id)}>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* EXPERIENCE TAB */}
+        <TabsContent value="experience">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle>Manage Experience</CardTitle>
+                <CardDescription>Add and organize your work experience</CardDescription>
+              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Experience
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Add New Experience</DialogTitle>
+                  </DialogHeader>
+                  <ExperienceForm onSuccess={() => queryClient.invalidateQueries({ queryKey: ["admin-experience"] })} />
+                </DialogContent>
+              </Dialog>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {experience?.map((exp) => (
+                  <Card key={exp.id}>
+                    <CardContent className="pt-6 flex justify-between items-center">
+                      <div>
+                        <h3 className="font-bold text-lg">{exp.position}</h3>
+                        <p className="text-sm text-muted-foreground">{exp.company}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" size="sm">
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                            <DialogHeader>
+                              <DialogTitle>Edit Experience</DialogTitle>
+                            </DialogHeader>
+                            <ExperienceForm
+                              experience={exp}
+                              onSuccess={() => queryClient.invalidateQueries({ queryKey: ["admin-experience"] })}
+                            />
+                          </DialogContent>
+                        </Dialog>
+                        <Button variant="destructive" size="sm" onClick={() => deleteExperienceMutation.mutate(exp.id)}>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* ARTICLES TAB */}
+        <TabsContent value="articles">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle>Manage Articles</CardTitle>
+                <CardDescription>Add and organize your articles</CardDescription>
+              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add Article
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Add New Article</DialogTitle>
+                  </DialogHeader>
+                  <ArticleForm onSuccess={() => queryClient.invalidateQueries({ queryKey: ["admin-articles"] })} />
+                </DialogContent>
+              </Dialog>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {articles?.map((article) => (
+                  <Card key={article.id}>
+                    <CardContent className="pt-6 flex justify-between items-center">
+                      <div>
+                        <h3 className="font-bold text-lg">{article.title}</h3>
+                        <p className="text-sm text-muted-foreground">{article.summary}</p>
+                      </div>
+                      <div className="flex gap-2">
+                        <Dialog>
+                          <DialogTrigger asChild>
+                            <Button variant="outline" size="sm">
+                              <Pencil className="h-4 w-4" />
+                            </Button>
+                          </DialogTrigger>
+                          <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                            <DialogHeader>
+                              <DialogTitle>Edit Article</DialogTitle>
+                            </DialogHeader>
+                            <ArticleForm article={article} onSuccess={() => queryClient.invalidateQueries({ queryKey: ["admin-articles"] })} />
+                          </DialogContent>
+                        </Dialog>
+                        <Button variant="destructive" size="sm" onClick={() => deleteArticleMutation.mutate(article.id)}>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* CV TAB */}
+        <TabsContent value="cv">
+          <Card>
+            <CardHeader className="flex flex-row items-center justify-between">
+              <div>
+                <CardTitle>Manage CV Files</CardTitle>
+                <CardDescription>Upload and manage your CV versions</CardDescription>
+              </div>
+              <Dialog>
+                <DialogTrigger asChild>
+                  <Button>
+                    <Plus className="mr-2 h-4 w-4" />
+                    Add CV
+                  </Button>
+                </DialogTrigger>
+                <DialogContent className="max-w-2xl max-h-[80vh] overflow-y-auto">
+                  <DialogHeader>
+                    <DialogTitle>Add New CV</DialogTitle>
+                  </DialogHeader>
+                  <CvForm onSuccess={() => queryClient.invalidateQueries({ queryKey: ["admin-cv-files"] })} />
+                </DialogContent>
+              </Dialog>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {cvFiles?.map((cv) => (
+                  <Card key={cv.id}>
+                    <CardContent className="pt-6 flex justify-between items-center">
+                      <div>
+                        <h3 className="font-bold text-lg">Version {cv.version}</h3>
+                        <p className="text-sm text-muted-foreground">{cv.description}</p>
+                        <a href={cv.file_url} target="_blank" rel="noreferrer" className="text-blue-600 underline">
+                          View CV
+                        </a>
+                      </div>
+                      <div className="flex gap-2">
+                        <Button variant="destructive" size="sm" onClick={() => deleteCvMutation.mutate(cv.id)}>
+                          <Trash2 className="h-4 w-4" />
+                        </Button>
+                      </div>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* CONTACTS TAB */}
+        <TabsContent value="contacts">
+          <Card>
+            <CardHeader>
+              <CardTitle>Contact Submissions</CardTitle>
+              <CardDescription>View messages sent through the contact form</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="space-y-4">
+                {contactSubmissions?.map((contact) => (
+                  <Card key={contact.id}>
+                    <CardContent className="pt-6">
+                      <p>
+                        <strong>Name:</strong> {contact.name}
+                      </p>
+                      <p>
+                        <strong>Email:</strong> {contact.email}
+                      </p>
+                      <p>
+                        <strong>Message:</strong> {contact.message}
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Sent at: {new Date(contact.created_at).toLocaleString()}
+                      </p>
+                    </CardContent>
+                  </Card>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+
+        {/* ANALYTICS TAB */}
+        <TabsContent value="analytics">
+          <Card>
+            <CardHeader>
+              <CardTitle>Site Analytics</CardTitle>
+              <CardDescription>View recent site analytics data</CardDescription>
+            </CardHeader>
+            <CardContent>
+              <div className="overflow-x-auto">
+                <table className="w-full table-auto border-collapse border border-gray-300">
+                  <thead>
+                    <tr>
+                      <th className="border border-gray-300 px-4 py-2">Date</th>
+                      <th className="border border-gray-300 px-4 py-2">Page Views</th>
+                      <th className="border border-gray-300 px-4 py-2">Unique Visitors</th>
+                      <th className="border border-gray-300 px-4 py-2">Bounce Rate</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {analytics?.map((entry) => (
+                      <tr key={entry.id}>
+                        <td className="border border-gray-300 px-4 py-2">{new Date(entry.created_at).toLocaleDateString()}</td>
+                        <td className="border border-gray-300 px-4 py-2">{entry.page_views}</td>
+                        <td className="border border-gray-300 px-4 py-2">{entry.unique_visitors}</td>
+                        <td className="border border-gray-300 px-4 py-2">{entry.bounce_rate}%</td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
+              </div>
+            </CardContent>
+          </Card>
+        </TabsContent>
+      </Tabs>
     </div>
+  );
+}
+
+// Additional forms for Skills, Certifications, Experience, Articles, CV
+
+function SkillForm({ skill, onSuccess }: { skill?: any; onSuccess: () => void }) {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    defaultValues: skill || {
+      name: "",
+      description: "",
+      sort_order: 0,
+      is_published: true,
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      if (skill) {
+        const { error } = await supabase.from("portfolio_skills").update(data).eq("id", skill.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from("portfolio_skills").insert(data);
+        if (error) throw error;
+      }
+    },
+    onSuccess: () => {
+      toast({ title: `Skill ${skill ? "updated" : "added"} successfully` });
+      queryClient.invalidateQueries({ queryKey: ["admin-skills"] });
+      onSuccess();
+      reset();
+    },
+  });
+
+  async function onSubmit(data: any) {
+    await mutation.mutateAsync(data);
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <Label htmlFor="name">Name</Label>
+        <Input id="name" {...register("name", { required: "Name is required" })} />
+        {errors.name && <p className="text-destructive text-sm">{errors.name.message}</p>}
+      </div>
+      <div>
+        <Label htmlFor="description">Description</Label>
+        <Textarea id="description" {...register("description")} />
+      </div>
+      <div>
+        <Label htmlFor="sort_order">Sort Order</Label>
+        <Input type="number" id="sort_order" {...register("sort_order", { valueAsNumber: true })} />
+      </div>
+      <div className="flex items-center space-x-2">
+        <Controller
+          control={useForm().control}
+          name="is_published"
+          defaultValue={skill?.is_published ?? true}
+          render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
+        />
+        <Label>Published</Label>
+      </div>
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Plus className="mr-2 h-4 w-4" />}
+        {skill ? "Update Skill" : "Add Skill"}
+      </Button>
+    </form>
+  );
+}
+
+function CertificationForm({ certification, onSuccess }: { certification?: any; onSuccess: () => void }) {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    defaultValues: certification || {
+      name: "",
+      issuer: "",
+      issue_date: "",
+      expiration_date: "",
+      credential_url: "",
+      sort_order: 0,
+      is_published: true,
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      if (certification) {
+        const { error } = await supabase.from("portfolio_certifications").update(data).eq("id", certification.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from("portfolio_certifications").insert(data);
+        if (error) throw error;
+      }
+    },
+    onSuccess: () => {
+      toast({ title: `Certification ${certification ? "updated" : "added"} successfully` });
+      queryClient.invalidateQueries({ queryKey: ["admin-certifications"] });
+      onSuccess();
+      reset();
+    },
+  });
+
+  async function onSubmit(data: any) {
+    await mutation.mutateAsync(data);
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <Label htmlFor="name">Name</Label>
+        <Input id="name" {...register("name", { required: "Name is required" })} />
+        {errors.name && <p className="text-destructive text-sm">{errors.name.message}</p>}
+      </div>
+      <div>
+        <Label htmlFor="issuer">Issuer</Label>
+        <Input id="issuer" {...register("issuer")} />
+      </div>
+      <div>
+        <Label htmlFor="issue_date">Issue Date</Label>
+        <Input type="date" id="issue_date" {...register("issue_date")} />
+      </div>
+      <div>
+        <Label htmlFor="expiration_date">Expiration Date</Label>
+        <Input type="date" id="expiration_date" {...register("expiration_date")} />
+      </div>
+      <div>
+        <Label htmlFor="credential_url">Credential URL</Label>
+        <Input id="credential_url" {...register("credential_url")} />
+      </div>
+      <div>
+        <Label htmlFor="sort_order">Sort Order</Label>
+        <Input type="number" id="sort_order" {...register("sort_order", { valueAsNumber: true })} />
+      </div>
+      <div className="flex items-center space-x-2">
+        <Controller
+          control={useForm().control}
+          name="is_published"
+          defaultValue={certification?.is_published ?? true}
+          render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
+        />
+        <Label>Published</Label>
+      </div>
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Plus className="mr-2 h-4 w-4" />}
+        {certification ? "Update Certification" : "Add Certification"}
+      </Button>
+    </form>
+  );
+}
+
+function ExperienceForm({ experience, onSuccess }: { experience?: any; onSuccess: () => void }) {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    defaultValues: experience || {
+      position: "",
+      company: "",
+      start_date: "",
+      end_date: "",
+      description: "",
+      sort_order: 0,
+      is_published: true,
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      if (experience) {
+        const { error } = await supabase.from("portfolio_experience").update(data).eq("id", experience.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from("portfolio_experience").insert(data);
+        if (error) throw error;
+      }
+    },
+    onSuccess: () => {
+      toast({ title: `Experience ${experience ? "updated" : "added"} successfully` });
+      queryClient.invalidateQueries({ queryKey: ["admin-experience"] });
+      onSuccess();
+      reset();
+    },
+  });
+
+  async function onSubmit(data: any) {
+    await mutation.mutateAsync(data);
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <Label htmlFor="position">Position</Label>
+        <Input id="position" {...register("position", { required: "Position is required" })} />
+        {errors.position && <p className="text-destructive text-sm">{errors.position.message}</p>}
+      </div>
+      <div>
+        <Label htmlFor="company">Company</Label>
+        <Input id="company" {...register("company")} />
+      </div>
+      <div>
+        <Label htmlFor="start_date">Start Date</Label>
+        <Input type="date" id="start_date" {...register("start_date")} />
+      </div>
+      <div>
+        <Label htmlFor="end_date">End Date</Label>
+        <Input type="date" id="end_date" {...register("end_date")} />
+      </div>
+      <div>
+        <Label htmlFor="description">Description</Label>
+        <Textarea id="description" {...register("description")} />
+      </div>
+      <div>
+        <Label htmlFor="sort_order">Sort Order</Label>
+        <Input type="number" id="sort_order" {...register("sort_order", { valueAsNumber: true })} />
+      </div>
+      <div className="flex items-center space-x-2">
+        <Controller
+          control={useForm().control}
+          name="is_published"
+          defaultValue={experience?.is_published ?? true}
+          render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
+        />
+        <Label>Published</Label>
+      </div>
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Plus className="mr-2 h-4 w-4" />}
+        {experience ? "Update Experience" : "Add Experience"}
+      </Button>
+    </form>
+  );
+}
+
+function ArticleForm({ article, onSuccess }: { article?: any; onSuccess: () => void }) {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    defaultValues: article || {
+      title: "",
+      summary: "",
+      content: "",
+      sort_order: 0,
+      is_published: true,
+    },
+  });
+
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      if (article) {
+        const { error } = await supabase.from("portfolio_articles").update(data).eq("id", article.id);
+        if (error) throw error;
+      } else {
+        const { error } = await supabase.from("portfolio_articles").insert(data);
+        if (error) throw error;
+      }
+    },
+    onSuccess: () => {
+      toast({ title: `Article ${article ? "updated" : "added"} successfully` });
+      queryClient.invalidateQueries({ queryKey: ["admin-articles"] });
+      onSuccess();
+      reset();
+    },
+  });
+
+  async function onSubmit(data: any) {
+    await mutation.mutateAsync(data);
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <Label htmlFor="title">Title</Label>
+        <Input id="title" {...register("title", { required: "Title is required" })} />
+        {errors.title && <p className="text-destructive text-sm">{errors.title.message}</p>}
+      </div>
+      <div>
+        <Label htmlFor="summary">Summary</Label>
+        <Textarea id="summary" {...register("summary")} />
+      </div>
+      <div>
+        <Label htmlFor="content">Content</Label>
+        <Textarea id="content" {...register("content")} />
+      </div>
+      <div>
+        <Label htmlFor="sort_order">Sort Order</Label>
+        <Input type="number" id="sort_order" {...register("sort_order", { valueAsNumber: true })} />
+      </div>
+      <div className="flex items-center space-x-2">
+        <Controller
+          control={useForm().control}
+          name="is_published"
+          defaultValue={article?.is_published ?? true}
+          render={({ field }) => <Switch checked={field.value} onCheckedChange={field.onChange} />}
+        />
+        <Label>Published</Label>
+      </div>
+      <Button type="submit" disabled={isSubmitting}>
+        {isSubmitting ? <Loader2 className="mr-2 h-4 w-4 animate-spin" /> : <Plus className="mr-2 h-4 w-4" />}
+        {article ? "Update Article" : "Add Article"}
+      </Button>
+    </form>
+  );
+}
+
+function CvForm({ onSuccess }: { onSuccess: () => void }) {
+  const { toast } = useToast();
+  const queryClient = useQueryClient();
+  const [file, setFile] = useState<File | null>(null);
+  const [uploading, setUploading] = useState(false);
+  const {
+    register,
+    handleSubmit,
+    reset,
+    formState: { errors, isSubmitting },
+  } = useForm({
+    defaultValues: {
+      version: "",
+      description: "",
+    },
+  });
+
+  const uploadFile = async (file: File) => {
+    const fileExt = file.name.split(".").pop();
+    const fileName = `cv_${Date.now()}.${fileExt}`;
+    const filePath = `cv/${fileName}`;
+
+    const { error: uploadError } = await supabase.storage.from("cv_files").upload(filePath, file, {
+      cacheControl: "3600",
+      upsert: false,
+    });
+
+    if (uploadError) {
+      throw uploadError;
+    }
+
+    const { data } = supabase.storage.from("cv_files").getPublicUrl(filePath);
+    return data.publicUrl;
+  };
+
+  const mutation = useMutation({
+    mutationFn: async (data: any) => {
+      if (!file) throw new Error("File is required");
+      setUploading(true);
+      const fileUrl = await uploadFile(file);
+      setUploading(false);
+
+      const insertData = {
+        version: data.version,
+        description: data.description,
+        file_url: fileUrl,
+      };
+
+      const { error } = await supabase.from("cv_management").insert(insertData);
+      if (error) throw error;
+    },
+    onSuccess: () => {
+      toast({ title: "CV uploaded successfully" });
+      queryClient.invalidateQueries({ queryKey: ["admin-cv-files"] });
+      onSuccess();
+      reset();
+      setFile(null);
+    },
+  });
+
+  async function onSubmit(data: any) {
+    await mutation.mutateAsync(data);
+  }
+
+  return (
+    <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+      <div>
+        <Label htmlFor="version">Version</Label>
+        <Input id="version" {...register("version", { required: "Version is required" })} />
+        {errors.version && <p className="text-destructive text-sm">{errors.version.message}</p>}
+      </div>
+      <div>
+        <Label htmlFor="description">Description</Label>
+        <Textarea id="description" {...register("description")} />
+      </div>
+      <div>
+        <Label htmlFor="file">CV File (PDF)</Label>
+        <Input
+          type="file"
+          id="file"
+          accept="application/pdf"
+          onChange={(e) => {
+            if (e.target.files && e.target.files.length > 0) {
+              setFile(e.target.files[0]);
+            }
+          }}
+        />
+      </div>
+      <Button type="submit" disabled={isSubmitting || uploading}>
+        {(isSubmitting || uploading) && <Loader2 className="mr-2 h-4 w-4 animate-spin" />}
+        Upload CV
+      </Button>
+    </form>
   );
 }
