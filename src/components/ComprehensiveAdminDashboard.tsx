@@ -65,7 +65,7 @@ function ProjectForm({ project, onSuccess }: { project?: any; onSuccess: () => v
       <div>
         <Label htmlFor="title">Title</Label>
         <Input id="title" {...register("title", { required: "Title is required" })} />
-        {errors.title && <p className="text-destructive text-sm">{errors.title.message}</p>}
+        {errors.title?.message && <p className="text-destructive text-sm">{String(errors.title.message)}</p>}
       </div>
       <div>
         <Label htmlFor="subtitle">Subtitle</Label>
@@ -174,7 +174,7 @@ function CaseStudyForm({
       <div>
         <Label htmlFor="title">Title</Label>
         <Input id="title" {...register("title", { required: "Title is required" })} />
-        {errors.title && <p className="text-destructive text-sm">{errors.title.message}</p>}
+        {errors.title?.message && <p className="text-destructive text-sm">{String(errors.title.message)}</p>}
       </div>
       <div>
         <Label htmlFor="project_id">Project</Label>
@@ -712,8 +712,8 @@ export default function ComprehensiveAdminDashboard() {
                   <Card key={exp.id}>
                     <CardContent className="pt-6 flex justify-between items-center">
                       <div>
-                        <h3 className="font-bold text-lg">{exp.position}</h3>
-                        <p className="text-sm text-muted-foreground">{exp.company}</p>
+                        <h3 className="font-bold text-lg">{exp.title}</h3>
+                        <p className="text-sm text-muted-foreground">{exp.organization}</p>
                       </div>
                       <div className="flex gap-2">
                         <Dialog>
@@ -774,7 +774,7 @@ export default function ComprehensiveAdminDashboard() {
                     <CardContent className="pt-6 flex justify-between items-center">
                       <div>
                         <h3 className="font-bold text-lg">{article.title}</h3>
-                        <p className="text-sm text-muted-foreground">{article.summary}</p>
+                        <p className="text-sm text-muted-foreground">{article.excerpt}</p>
                       </div>
                       <div className="flex gap-2">
                         <Dialog>
@@ -832,10 +832,10 @@ export default function ComprehensiveAdminDashboard() {
                     <CardContent className="pt-6 flex justify-between items-center">
                       <div>
                         <h3 className="font-bold text-lg">Version {cv.version}</h3>
-                        <p className="text-sm text-muted-foreground">{cv.description}</p>
-                        <a href={cv.file_url} target="_blank" rel="noreferrer" className="text-blue-600 underline">
-                          View CV
-                        </a>
+                        <p className="text-sm text-muted-foreground">{cv.filename}</p>
+                        <p className="text-xs text-muted-foreground">
+                          Uploaded: {new Date(cv.upload_date).toLocaleDateString()}
+                        </p>
                       </div>
                       <div className="flex gap-2">
                         <Button variant="destructive" size="sm" onClick={() => deleteCvMutation.mutate(cv.id)}>
@@ -863,7 +863,7 @@ export default function ComprehensiveAdminDashboard() {
                   <Card key={contact.id}>
                     <CardContent className="pt-6">
                       <p>
-                        <strong>Name:</strong> {contact.name}
+                        <strong>Name:</strong> {contact.first_name} {contact.last_name}
                       </p>
                       <p>
                         <strong>Email:</strong> {contact.email}
@@ -890,27 +890,28 @@ export default function ComprehensiveAdminDashboard() {
               <CardDescription>View recent site analytics data</CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="overflow-x-auto">
-                <table className="w-full table-auto border-collapse border border-gray-300">
-                  <thead>
-                    <tr>
-                      <th className="border border-gray-300 px-4 py-2">Date</th>
-                      <th className="border border-gray-300 px-4 py-2">Page Views</th>
-                      <th className="border border-gray-300 px-4 py-2">Unique Visitors</th>
-                      <th className="border border-gray-300 px-4 py-2">Bounce Rate</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    {analytics?.map((entry) => (
-                      <tr key={entry.id}>
-                        <td className="border border-gray-300 px-4 py-2">{new Date(entry.created_at).toLocaleDateString()}</td>
-                        <td className="border border-gray-300 px-4 py-2">{entry.page_views}</td>
-                        <td className="border border-gray-300 px-4 py-2">{entry.unique_visitors}</td>
-                        <td className="border border-gray-300 px-4 py-2">{entry.bounce_rate}%</td>
+              <div className="space-y-4">
+                <p className="text-muted-foreground">Recent site activity:</p>
+                <div className="overflow-x-auto">
+                  <table className="w-full table-auto border-collapse border border-gray-300">
+                    <thead>
+                      <tr>
+                        <th className="border border-gray-300 px-4 py-2">Date</th>
+                        <th className="border border-gray-300 px-4 py-2">Event Type</th>
+                        <th className="border border-gray-300 px-4 py-2">IP Address</th>
                       </tr>
-                    ))}
-                  </tbody>
-                </table>
+                    </thead>
+                    <tbody>
+                      {analytics?.map((entry) => (
+                        <tr key={entry.id}>
+                          <td className="border border-gray-300 px-4 py-2">{new Date(entry.created_at).toLocaleString()}</td>
+                          <td className="border border-gray-300 px-4 py-2">{entry.event_type}</td>
+                          <td className="border border-gray-300 px-4 py-2">{String(entry.ip_address || 'N/A')}</td>
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </CardContent>
           </Card>
@@ -966,7 +967,7 @@ function SkillForm({ skill, onSuccess }: { skill?: any; onSuccess: () => void })
       <div>
         <Label htmlFor="name">Name</Label>
         <Input id="name" {...register("name", { required: "Name is required" })} />
-        {errors.name && <p className="text-destructive text-sm">{errors.name.message}</p>}
+        {errors.name?.message && <p className="text-destructive text-sm">{String(errors.name.message)}</p>}
       </div>
       <div>
         <Label htmlFor="description">Description</Label>
@@ -1040,7 +1041,7 @@ function CertificationForm({ certification, onSuccess }: { certification?: any; 
       <div>
         <Label htmlFor="name">Name</Label>
         <Input id="name" {...register("name", { required: "Name is required" })} />
-        {errors.name && <p className="text-destructive text-sm">{errors.name.message}</p>}
+        {errors.name?.message && <p className="text-destructive text-sm">{String(errors.name.message)}</p>}
       </div>
       <div>
         <Label htmlFor="issuer">Issuer</Label>
@@ -1089,13 +1090,14 @@ function ExperienceForm({ experience, onSuccess }: { experience?: any; onSuccess
     formState: { errors, isSubmitting },
   } = useForm({
     defaultValues: experience || {
-      position: "",
-      company: "",
+      title: "",
+      organization: "",
       start_date: "",
       end_date: "",
       description: "",
+      type: "work",
       sort_order: 0,
-      is_published: true,
+      is_active: true,
     },
   });
 
@@ -1124,13 +1126,13 @@ function ExperienceForm({ experience, onSuccess }: { experience?: any; onSuccess
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
       <div>
-        <Label htmlFor="position">Position</Label>
-        <Input id="position" {...register("position", { required: "Position is required" })} />
-        {errors.position && <p className="text-destructive text-sm">{errors.position.message}</p>}
+        <Label htmlFor="title">Title</Label>
+        <Input id="title" {...register("title", { required: "Title is required" })} />
+        {errors.title?.message && <p className="text-destructive text-sm">{String(errors.title.message)}</p>}
       </div>
       <div>
-        <Label htmlFor="company">Company</Label>
-        <Input id="company" {...register("company")} />
+        <Label htmlFor="organization">Organization</Label>
+        <Input id="organization" {...register("organization")} />
       </div>
       <div>
         <Label htmlFor="start_date">Start Date</Label>
@@ -1176,7 +1178,7 @@ function ArticleForm({ article, onSuccess }: { article?: any; onSuccess: () => v
   } = useForm({
     defaultValues: article || {
       title: "",
-      summary: "",
+      excerpt: "",
       content: "",
       sort_order: 0,
       is_published: true,
@@ -1210,11 +1212,11 @@ function ArticleForm({ article, onSuccess }: { article?: any; onSuccess: () => v
       <div>
         <Label htmlFor="title">Title</Label>
         <Input id="title" {...register("title", { required: "Title is required" })} />
-        {errors.title && <p className="text-destructive text-sm">{errors.title.message}</p>}
+        {errors.title?.message && <p className="text-destructive text-sm">{String(errors.title.message)}</p>}
       </div>
       <div>
-        <Label htmlFor="summary">Summary</Label>
-        <Textarea id="summary" {...register("summary")} />
+        <Label htmlFor="excerpt">Excerpt</Label>
+        <Textarea id="excerpt" {...register("excerpt")} />
       </div>
       <div>
         <Label htmlFor="content">Content</Label>
@@ -1263,7 +1265,7 @@ function CvForm({ onSuccess }: { onSuccess: () => void }) {
     const fileName = `cv_${Date.now()}.${fileExt}`;
     const filePath = `cv/${fileName}`;
 
-    const { error: uploadError } = await supabase.storage.from("cv_files").upload(filePath, file, {
+    const { error: uploadError } = await supabase.storage.from("cv-files").upload(filePath, file, {
       cacheControl: "3600",
       upsert: false,
     });
@@ -1272,21 +1274,21 @@ function CvForm({ onSuccess }: { onSuccess: () => void }) {
       throw uploadError;
     }
 
-    const { data } = supabase.storage.from("cv_files").getPublicUrl(filePath);
-    return data.publicUrl;
+    return { filePath, fileName };
   };
 
   const mutation = useMutation({
     mutationFn: async (data: any) => {
       if (!file) throw new Error("File is required");
       setUploading(true);
-      const fileUrl = await uploadFile(file);
+      const { filePath, fileName } = await uploadFile(file);
       setUploading(false);
 
       const insertData = {
-        version: data.version,
-        description: data.description,
-        file_url: fileUrl,
+        filename: fileName,
+        file_path: filePath,
+        file_size: file.size,
+        version: parseInt(data.version) || 1,
       };
 
       const { error } = await supabase.from("cv_management").insert(insertData);
