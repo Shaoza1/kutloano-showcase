@@ -161,32 +161,35 @@ export default function Navigation({ profile }: NavigationProps) {
         </div>
 
         {/* Mobile Navigation */}
-        <motion.div
-          initial={false}
-          animate={{ height: isOpen ? "auto" : 0 }}
-          className="md:hidden overflow-hidden glass border-t border-border/50"
-        >
-          <div className="container mx-auto px-6 py-4 space-y-4">
-            {navItems.map((item) => (
-              <motion.button
-                key={item.label}
-                onClick={() => scrollToSection(item.href)}
-                className={`block w-full text-left py-2 text-sm font-medium transition-colors ${
-                  activeSection === item.href.substring(1)
-                    ? "text-primary"
-                    : "text-muted-foreground hover:text-foreground"
-                }`}
-                whileTap={{ scale: 0.98 }}
-              >
-                {item.label}
-              </motion.button>
-            ))}
+        {isOpen && (
+          <motion.div
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.2 }}
+            className="md:hidden glass border-t border-border/50"
+          >
+            <div className="container mx-auto px-6 py-4 space-y-4">
+              {navItems.map((item) => (
+                <button
+                  key={item.label}
+                  onClick={() => scrollToSection(item.href)}
+                  className={`block w-full text-left py-3 text-sm font-medium transition-colors touch-manipulation ${
+                    activeSection === item.href.substring(1)
+                      ? "text-primary"
+                      : "text-muted-foreground hover:text-foreground"
+                  }`}
+                >
+                  {item.label}
+                </button>
+              ))}
             
-            <Button 
-              size="sm" 
-              variant="outline" 
-              className="w-full"
-              onClick={async () => {
+              <Button 
+                size="sm" 
+                variant="outline" 
+                className="w-full touch-manipulation"
+                onClick={async () => {
+                  setIsOpen(false);
                 try {
                   const response = await supabase.functions.invoke('cv-upload');
                   if (response.error) throw response.error;
@@ -220,8 +223,9 @@ export default function Navigation({ profile }: NavigationProps) {
               <Download className="w-4 h-4 mr-2" />
               Download CV
             </Button>
-          </div>
-        </motion.div>
+            </div>
+          </motion.div>
+        )}
       </motion.nav>
 
       {/* Spacer for fixed navigation */}

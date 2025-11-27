@@ -55,21 +55,21 @@ export type Database = {
           created_at: string
           download_type: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           user_agent: string | null
         }
         Insert: {
           created_at?: string
           download_type?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_agent?: string | null
         }
         Update: {
           created_at?: string
           download_type?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_agent?: string | null
         }
         Relationships: []
@@ -489,7 +489,7 @@ export type Database = {
           created_at: string | null
           id: string
           interaction_type: string
-          ip_address: unknown | null
+          ip_address: unknown
           metadata: Json | null
           project_id: string
           visitor_session: string | null
@@ -498,7 +498,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           interaction_type: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           metadata?: Json | null
           project_id: string
           visitor_session?: string | null
@@ -507,7 +507,7 @@ export type Database = {
           created_at?: string | null
           id?: string
           interaction_type?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           metadata?: Json | null
           project_id?: string
           visitor_session?: string | null
@@ -520,7 +520,7 @@ export type Database = {
           event_data: Json | null
           event_type: string
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           user_agent: string | null
         }
         Insert: {
@@ -528,7 +528,7 @@ export type Database = {
           event_data?: Json | null
           event_type: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_agent?: string | null
         }
         Update: {
@@ -536,7 +536,7 @@ export type Database = {
           event_data?: Json | null
           event_type?: string
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           user_agent?: string | null
         }
         Relationships: []
@@ -550,12 +550,12 @@ export type Database = {
           created_at: string | null
           device_type: string | null
           id: string
-          ip_address: unknown | null
+          ip_address: unknown
           os: string | null
           page_views: number | null
           referrer: string | null
           session_id: string | null
-          time_on_site: unknown | null
+          time_on_site: unknown
           updated_at: string | null
           user_agent: string | null
         }
@@ -567,12 +567,12 @@ export type Database = {
           created_at?: string | null
           device_type?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           os?: string | null
           page_views?: number | null
           referrer?: string | null
           session_id?: string | null
-          time_on_site?: unknown | null
+          time_on_site?: unknown
           updated_at?: string | null
           user_agent?: string | null
         }
@@ -584,12 +584,12 @@ export type Database = {
           created_at?: string | null
           device_type?: string | null
           id?: string
-          ip_address?: unknown | null
+          ip_address?: unknown
           os?: string | null
           page_views?: number | null
           referrer?: string | null
           session_id?: string | null
-          time_on_site?: unknown | null
+          time_on_site?: unknown
           updated_at?: string | null
           user_agent?: string | null
         }
@@ -601,7 +601,7 @@ export type Database = {
     }
     Functions: {
       get_active_cv_info: {
-        Args: Record<PropertyKey, never>
+        Args: never
         Returns: {
           filename: string
           upload_date: string
