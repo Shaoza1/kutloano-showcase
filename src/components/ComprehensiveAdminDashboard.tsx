@@ -14,6 +14,7 @@ import { Loader2, Plus, Pencil, Trash2, Upload, Eye, Download, BarChart } from "
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import * as React from "react";
 import { useForm, Controller } from "react-hook-form";
+import CourseManagement from "@/components/CourseManagement";
 
 function ProjectForm({ project, onSuccess }: { project?: any; onSuccess: () => void }) {
   const { toast } = useToast();
@@ -411,9 +412,10 @@ export default function ComprehensiveAdminDashboard() {
       <h1 className="text-4xl font-bold mb-8">Portfolio Admin Dashboard</h1>
 
       <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-9">
+        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-10">
           <TabsTrigger value="projects">Projects</TabsTrigger>
           <TabsTrigger value="case-studies">Case Studies</TabsTrigger>
+          <TabsTrigger value="courses">Courses</TabsTrigger>
           <TabsTrigger value="skills">Skills</TabsTrigger>
           <TabsTrigger value="certifications">Certs</TabsTrigger>
           <TabsTrigger value="experience">Experience</TabsTrigger>
@@ -562,6 +564,11 @@ export default function ComprehensiveAdminDashboard() {
               </div>
             </CardContent>
           </Card>
+        </TabsContent>
+
+        {/* COURSES TAB */}
+        <TabsContent value="courses">
+          <CourseManagement />
         </TabsContent>
 
         {/* SKILLS TAB */}

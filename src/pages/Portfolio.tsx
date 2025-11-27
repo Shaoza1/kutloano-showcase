@@ -6,6 +6,7 @@ import Navigation from "@/components/Navigation";
 import Hero from "@/components/Hero";
 import SkillsMatrix from "@/components/SkillsMatrix";
 import ProjectShowcase from "@/components/ProjectShowcase";
+import CoursesLabs from "@/components/CoursesLabs";
 import Education from "@/components/Education";
 import Blog from "@/components/Blog";
 import Contact from "@/components/Contact";
@@ -84,6 +85,9 @@ export default function Portfolio() {
           
           {/* Featured Projects */}
           <ProjectShowcase projects={projectsData.featured} />
+          
+          {/* Courses & Labs */}
+          <CoursesLabs />
           
           {/* Education & Certifications */}
           <Education profile={profileData} />

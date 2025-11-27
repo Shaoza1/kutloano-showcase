@@ -22,6 +22,7 @@ export default function Navigation({ profile }: NavigationProps) {
     { label: "About", href: "#hero" },
     { label: "Skills", href: "#skills" },
     { label: "Projects", href: "#projects" },
+    { label: "Courses", href: "#courses" },
     { label: "Education", href: "#education" },
     { label: "Contact", href: "#contact" },
   ];
