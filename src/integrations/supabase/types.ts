@@ -295,6 +295,72 @@ export type Database = {
         }
         Relationships: []
       }
+      portfolio_courses: {
+        Row: {
+          completion_date: string | null
+          course_type: string | null
+          cover_image_url: string | null
+          created_at: string
+          description: string | null
+          document_name: string | null
+          document_size: number | null
+          document_type: string | null
+          document_url: string | null
+          duration: string | null
+          id: string
+          is_featured: boolean | null
+          is_published: boolean | null
+          provider: string
+          skills_learned: string[] | null
+          sort_order: number | null
+          subtitle: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          completion_date?: string | null
+          course_type?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          document_name?: string | null
+          document_size?: number | null
+          document_type?: string | null
+          document_url?: string | null
+          duration?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          provider: string
+          skills_learned?: string[] | null
+          sort_order?: number | null
+          subtitle?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          completion_date?: string | null
+          course_type?: string | null
+          cover_image_url?: string | null
+          created_at?: string
+          description?: string | null
+          document_name?: string | null
+          document_size?: number | null
+          document_type?: string | null
+          document_url?: string | null
+          duration?: string | null
+          id?: string
+          is_featured?: boolean | null
+          is_published?: boolean | null
+          provider?: string
+          skills_learned?: string[] | null
+          sort_order?: number | null
+          subtitle?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       portfolio_experience: {
         Row: {
           achievements: string[] | null
