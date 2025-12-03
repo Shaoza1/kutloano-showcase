@@ -83,7 +83,7 @@ export default function AdminDashboard() {
   const [authKey, setAuthKey] = useState('');
   const { toast } = useToast();
 
-  const ADMIN_KEY = 'portfolio_admin_2024'; // In production, use proper authentication
+  const ADMIN_KEY = 'kmportfolio@123'; // In production, use proper authentication
 
   useEffect(() => {
     if (isAuthenticated) {
