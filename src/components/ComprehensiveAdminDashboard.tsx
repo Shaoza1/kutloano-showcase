@@ -10,7 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Switch } from "@/components/ui/switch";
 import { useToast } from "@/hooks/use-toast";
-import { Loader2, Plus, Pencil, Trash2, Upload, Eye, Download, BarChart } from "lucide-react";
+import { Loader2, Plus, Pencil, Trash2, Upload, Eye, Download, BarChart, FolderOpen, BookOpen, GraduationCap, Award, Briefcase, FileText, FileUp, Mail, TrendingUp, LayoutDashboard } from "lucide-react";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import * as React from "react";
 import { useForm, Controller } from "react-hook-form";
@@ -408,22 +408,66 @@ export default function ComprehensiveAdminDashboard() {
   });
 
   return (
-    <div className="container mx-auto py-10">
-      <h1 className="text-4xl font-bold mb-8">Portfolio Admin Dashboard</h1>
+    <div className="min-h-screen bg-gradient-to-br from-background via-background to-muted/30">
+      {/* Header Section */}
+      <div className="border-b bg-card/50 backdrop-blur-sm sticky top-0 z-10">
+        <div className="container mx-auto px-4 py-6">
+          <div className="flex items-center gap-3">
+            <div className="p-2 rounded-xl bg-primary/10">
+              <LayoutDashboard className="h-8 w-8 text-primary" />
+            </div>
+            <div>
+              <h1 className="text-2xl md:text-3xl font-bold tracking-tight">Portfolio Admin</h1>
+              <p className="text-sm text-muted-foreground">Manage your portfolio content</p>
+            </div>
+          </div>
+        </div>
+      </div>
 
-      <Tabs value={activeTab} onValueChange={setActiveTab}>
-        <TabsList className="grid w-full grid-cols-4 lg:grid-cols-10">
-          <TabsTrigger value="projects">Projects</TabsTrigger>
-          <TabsTrigger value="case-studies">Case Studies</TabsTrigger>
-          <TabsTrigger value="courses">Courses</TabsTrigger>
-          <TabsTrigger value="skills">Skills</TabsTrigger>
-          <TabsTrigger value="certifications">Certs</TabsTrigger>
-          <TabsTrigger value="experience">Experience</TabsTrigger>
-          <TabsTrigger value="articles">Articles</TabsTrigger>
-          <TabsTrigger value="cv">CV</TabsTrigger>
-          <TabsTrigger value="contacts">Contacts</TabsTrigger>
-          <TabsTrigger value="analytics">Analytics</TabsTrigger>
-        </TabsList>
+      <div className="container mx-auto px-4 py-6">
+        <Tabs value={activeTab} onValueChange={setActiveTab}>
+          <TabsList className="flex flex-wrap h-auto gap-1 p-1 bg-muted/50 rounded-xl mb-6">
+            <TabsTrigger value="projects" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
+              <FolderOpen className="h-4 w-4" />
+              <span className="hidden sm:inline">Projects</span>
+            </TabsTrigger>
+            <TabsTrigger value="case-studies" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
+              <BookOpen className="h-4 w-4" />
+              <span className="hidden sm:inline">Case Studies</span>
+            </TabsTrigger>
+            <TabsTrigger value="courses" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
+              <GraduationCap className="h-4 w-4" />
+              <span className="hidden sm:inline">Courses</span>
+            </TabsTrigger>
+            <TabsTrigger value="skills" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
+              <Award className="h-4 w-4" />
+              <span className="hidden sm:inline">Skills</span>
+            </TabsTrigger>
+            <TabsTrigger value="certifications" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
+              <Award className="h-4 w-4" />
+              <span className="hidden sm:inline">Certs</span>
+            </TabsTrigger>
+            <TabsTrigger value="experience" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
+              <Briefcase className="h-4 w-4" />
+              <span className="hidden sm:inline">Experience</span>
+            </TabsTrigger>
+            <TabsTrigger value="articles" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
+              <FileText className="h-4 w-4" />
+              <span className="hidden sm:inline">Articles</span>
+            </TabsTrigger>
+            <TabsTrigger value="cv" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
+              <FileUp className="h-4 w-4" />
+              <span className="hidden sm:inline">CV</span>
+            </TabsTrigger>
+            <TabsTrigger value="contacts" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
+              <Mail className="h-4 w-4" />
+              <span className="hidden sm:inline">Contacts</span>
+            </TabsTrigger>
+            <TabsTrigger value="analytics" className="flex items-center gap-1.5 px-3 py-2 text-xs sm:text-sm data-[state=active]:bg-background data-[state=active]:shadow-sm rounded-lg">
+              <TrendingUp className="h-4 w-4" />
+              <span className="hidden sm:inline">Analytics</span>
+            </TabsTrigger>
+          </TabsList>
 
         {/* PROJECTS TAB */}
         <TabsContent value="projects">
@@ -924,6 +968,7 @@ export default function ComprehensiveAdminDashboard() {
           </Card>
         </TabsContent>
       </Tabs>
+      </div>
     </div>
   );
 }
