@@ -10,7 +10,6 @@ import { Label } from "@/components/ui/label";
 import { Mail, MessageSquare, Send, Github, Linkedin, Calendar, Download, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase, SUPABASE_URL } from "@/integrations/supabase/client";
-import { useAnalytics } from "@/hooks/useAnalytics";
 
 interface ContactProps {
   profile: {
@@ -24,11 +23,9 @@ interface ContactProps {
 export default function Contact({ profile }: ContactProps) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
-  const { trackCVDownload, trackContactFormSubmit } = useAnalytics();
 
   const handleCVDownload = async () => {
     try {
-      trackCVDownload();
       const res = await fetch(`${SUPABASE_URL}/functions/v1/cv-upload`, { method: 'GET' });
       if (!res.ok) throw new Error('Failed to fetch CV');
       const blob = await res.blob();
