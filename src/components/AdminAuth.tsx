@@ -8,80 +8,77 @@ import { Lock, LogOut } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import ComprehensiveAdminDashboard from "./ComprehensiveAdminDashboard";
 
-const ADMIN_PASSWORD = "kutloano2024";
 const ADMIN_EMAIL = "kutloano.moshao111@gmail.com";
-const AUTH_KEY = "portfolio_admin_auth";
+const ADMIN_PASSWORD = "kutloano2024";
 
 export default function AdminAuth() {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [email, setEmail] = useState(ADMIN_EMAIL);
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
   const { toast } = useToast();
 
   useEffect(() => {
-    const authStatus = localStorage.getItem(AUTH_KEY);
-    if (authStatus === "authenticated") {
-      setIsAuthenticated(true);
-    }
+    // Check if user is already logged in
+    const checkAuth = async () => {
+      const { data: { session } } = await supabase.auth.getSession();
+      if (session?.user?.email === ADMIN_EMAIL) {
+        setIsAuthenticated(true);
+      }
+    };
+    checkAuth();
   }, []);
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
 
-    if (password === ADMIN_PASSWORD) {
-      try {
-        // First try to sign in with existing session
-        const { data: { session } } = await supabase.auth.getSession();
-        
-        if (!session) {
-          // Sign in to Supabase with admin credentials
-          const { data, error } = await supabase.auth.signInWithPassword({
-            email: ADMIN_EMAIL,
-            password: ADMIN_PASSWORD,
+    try {
+      const { data, error } = await supabase.auth.signInWithPassword({
+        email,
+        password,
+      });
+
+      if (error) {
+        if (error.message.includes('Invalid login credentials')) {
+          // Try to sign up the user first
+          const { error: signUpError } = await supabase.auth.signUp({
+            email,
+            password,
           });
-
-          if (error) {
-            console.error('Supabase auth failed:', error);
-            toast({
-              title: "Supabase Authentication Failed",
-              description: "Using local mode. Certificates will use localStorage.",
-              variant: "destructive",
-            });
-          } else {
-            console.log('Supabase auth successful:', data.user?.email);
-            toast({ 
-              title: "Full Access Enabled", 
-              description: "Connected to Supabase. Certificates will be saved permanently." 
-            });
+          
+          if (signUpError) {
+            throw signUpError;
           }
+          
+          toast({
+            title: "Account created",
+            description: "Please check your email to confirm your account, then try logging in again.",
+          });
+        } else {
+          throw error;
         }
-
-        localStorage.setItem(AUTH_KEY, "authenticated");
+      } else {
         setIsAuthenticated(true);
-      } catch (error) {
-        console.error('Auth error:', error);
-        localStorage.setItem(AUTH_KEY, "authenticated");
-        setIsAuthenticated(true);
-        toast({ 
-          title: "Local Access Only", 
-          description: "Using offline mode. Save the JSON backup for permanent storage." 
+        toast({
+          title: "Login successful",
+          description: "Welcome to the admin dashboard",
         });
       }
-    } else {
+    } catch (error: any) {
       toast({
-        title: "Access denied",
-        description: "Invalid password",
+        title: "Authentication failed",
+        description: error.message,
         variant: "destructive",
       });
     }
+    
     setLoading(false);
     setPassword("");
   };
 
   const handleLogout = async () => {
     await supabase.auth.signOut();
-    localStorage.removeItem(AUTH_KEY);
     setIsAuthenticated(false);
     toast({ title: "Logged out", description: "You have been logged out" });
   };
@@ -114,11 +111,21 @@ export default function AdminAuth() {
           </div>
           <CardTitle className="text-2xl">Admin Access</CardTitle>
           <CardDescription>
-            Enter password to access portfolio management
+            Sign in to access portfolio management
           </CardDescription>
         </CardHeader>
         <CardContent>
           <form onSubmit={handleLogin} className="space-y-4">
+            <div>
+              <Label htmlFor="email">Email</Label>
+              <Input
+                id="email"
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
             <div>
               <Label htmlFor="password">Password</Label>
               <Input
@@ -126,12 +133,12 @@ export default function AdminAuth() {
                 type="password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter admin password"
+                placeholder="Enter password"
                 required
               />
             </div>
             <Button type="submit" className="w-full" disabled={loading}>
-              {loading ? "Authenticating..." : "Access Dashboard"}
+              {loading ? "Signing in..." : "Sign In"}
             </Button>
           </form>
         </CardContent>

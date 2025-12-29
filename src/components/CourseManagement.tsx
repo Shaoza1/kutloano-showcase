@@ -12,7 +12,6 @@ import { Loader2, Plus, Pencil, Trash2, FileText, Download } from "lucide-react"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
 import { useForm, Controller } from "react-hook-form";
 import { Badge } from "@/components/ui/badge";
-import { saveCourseData, loadCourseData } from "@/lib/courseData";
 
 interface CourseFormProps {
   course?: any;
@@ -48,42 +47,18 @@ function CourseForm({ course, onSuccess }: CourseFormProps) {
 
   const uploadDocument = async (file: File) => {
     const fileName = `${Date.now()}_${file.name}`;
+    const filePath = `courses/${fileName}`;
     
-    // Try Supabase upload first if authenticated
-    try {
-      const { data: { session } } = await supabase.auth.getSession();
-      
-      if (session?.user?.email === 'kutloano.moshao111@gmail.com') {
-        const filePath = `courses/${fileName}`;
-        const { error: uploadError } = await supabase.storage
-          .from("course-documents")
-          .upload(filePath, file, {
-            cacheControl: "3600",
-            upsert: false,
-          });
+    const { error: uploadError } = await supabase.storage
+      .from("course-documents")
+      .upload(filePath, file, {
+        cacheControl: "3600",
+        upsert: false,
+      });
 
-        if (!uploadError) {
-          console.log('✅ File uploaded to Supabase storage');
-          return { filePath, fileName: file.name, fileData: null };
-        }
-      }
-    } catch (error) {
-      console.warn('Supabase upload failed, using base64:', error);
-    }
+    if (uploadError) throw uploadError;
     
-    // Fallback to base64 for permanent local storage
-    return new Promise<{ filePath: string; fileName: string; fileData: string }>((resolve) => {
-      const reader = new FileReader();
-      reader.onload = () => {
-        console.log('💾 File converted to base64 for local storage');
-        resolve({
-          filePath: fileName,
-          fileName: file.name,
-          fileData: reader.result as string
-        });
-      };
-      reader.readAsDataURL(file);
-    });
+    return { filePath, fileName: file.name };
   };
 
   const mutation = useMutation({
@@ -93,20 +68,26 @@ function CourseForm({ course, onSuccess }: CourseFormProps) {
       if (file) {
         setUploading(true);
         try {
-          const { filePath, fileName, fileData } = await uploadDocument(file);
+          const fileName = `${Date.now()}_${file.name}`;
+          const filePath = `courses/${fileName}`;
+          
+          const { error: uploadError } = await supabase.storage
+            .from("course-documents")
+            .upload(filePath, file, {
+              cacheControl: "3600",
+              upsert: false,
+            });
+
+          if (uploadError) throw uploadError;
+          
           documentData = {
             document_url: filePath,
-            document_name: fileName,
+            document_name: file.name,
             document_type: file.name.split(".").pop(),
             document_size: file.size,
           };
-          
-          // Only add base64 data if we're using local storage
-          if (fileData) {
-            documentData.document_data = fileData;
-          }
         } catch (error) {
-          console.warn('File upload failed, continuing without file');
+          throw new Error(`File upload failed: ${error.message}`);
         }
         setUploading(false);
       }
@@ -114,51 +95,23 @@ function CourseForm({ course, onSuccess }: CourseFormProps) {
       const submitData = {
         ...data,
         ...documentData,
-        id: course?.id || Date.now().toString(),
         skills_learned: Array.isArray(data.skills_learned) 
           ? data.skills_learned 
           : data.skills_learned?.split(',').map((s: string) => s.trim()).filter(Boolean) || [],
       };
 
-      // Try Supabase first if authenticated
-      try {
-        const { data: { session } } = await supabase.auth.getSession();
-        
-        if (session?.user?.email === 'kutloano.moshao111@gmail.com') {
-          if (course) {
-            const { error } = await supabase
-              .from("portfolio_courses")
-              .update(submitData)
-              .eq("id", course.id);
-            if (error) throw error;
-          } else {
-            const { error } = await supabase
-              .from("portfolio_courses")
-              .insert(submitData);
-            if (error) throw error;
-          }
-          console.log('✅ Saved to Supabase successfully');
-          return; // Success, exit early
-        }
-      } catch (error) {
-        console.warn('Supabase save failed, using local storage:', error);
-      }
-      // Fallback to local storage
-      const existingCourses = await loadCourseData();
-      let updatedCourses;
-      
       if (course) {
-        const index = existingCourses.findIndex((c: any) => c.id === course.id);
-        if (index !== -1) {
-          existingCourses[index] = submitData;
-        }
-        updatedCourses = existingCourses;
+        const { error } = await supabase
+          .from("portfolio_courses")
+          .update(submitData)
+          .eq("id", course.id);
+        if (error) throw error;
       } else {
-        updatedCourses = [...existingCourses, submitData];
+        const { error } = await supabase
+          .from("portfolio_courses")
+          .insert(submitData);
+        if (error) throw error;
       }
-      
-      saveCourseData(updatedCourses);
-      console.log('💾 Saved to local storage with JSON backup');
     },
     onSuccess: () => {
       toast({ title: `Course ${course ? "updated" : "added"} successfully` });
@@ -304,17 +257,12 @@ export default function CourseManagement() {
   const { data: courses, isLoading } = useQuery({
     queryKey: ["admin-courses"],
     queryFn: async () => {
-      try {
-        const { data, error } = await supabase
-          .from("portfolio_courses")
-          .select("*")
-          .order("completion_date", { ascending: false });
-        if (error) throw error;
-        return data || [];
-      } catch (error) {
-        // Fallback to our data utility
-        return await loadCourseData();
-      }
+      const { data, error } = await supabase
+        .from("portfolio_courses")
+        .select("*")
+        .order("completion_date", { ascending: false });
+      if (error) throw error;
+      return data || [];
     },
   });
 
