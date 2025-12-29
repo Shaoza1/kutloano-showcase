@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import CourseCard from "./CourseCard";
 import { Loader2 } from "lucide-react";
-import { loadCourseData } from "@/lib/courseData";
+import { supabase } from '@/integrations/supabase/client';
 
 interface Course {
   id: string;
@@ -22,8 +22,6 @@ interface Course {
   document_name: string | null;
   document_type: string | null;
   document_size: number | null;
-  document_data?: string | null;
-  certificate_image?: string | null; // Path to certificate image
   cover_image_url: string | null;
   is_featured: boolean;
   is_published?: boolean;
@@ -33,24 +31,27 @@ export default function CoursesLabs() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProvider, setSelectedProvider] = useState<string>("all");
-  const [key, setKey] = useState(0); // Force re-render key
 
   useEffect(() => {
-    // Only fetch on client-side
-    if (typeof window !== 'undefined') {
-      fetchCourses();
-    } else {
-      setLoading(false);
-    }
+    fetchCourses();
   }, []);
 
   const fetchCourses = async () => {
     try {
-      const courseData = await loadCourseData();
-      const publishedCourses = courseData.filter((course: Course) => course.is_published !== false);
-      setCourses(publishedCourses);
+      const { data, error } = await supabase
+        .from('portfolio_courses')
+        .select('*')
+        .eq('is_published', true)
+        .order('sort_order', { ascending: true });
+
+      if (error) {
+        console.error('Error loading courses:', error);
+        setCourses([]);
+      } else {
+        setCourses(data || []);
+      }
     } catch (error) {
-      console.error('Error loading courses:', error);
+      console.error('Failed to load courses:', error);
       setCourses([]);
     } finally {
       setLoading(false);
@@ -69,7 +70,6 @@ export default function CoursesLabs() {
 
   const handleProviderChange = (provider: string) => {
     setSelectedProvider(provider);
-    setKey(prev => prev + 1); // Force re-render
   };
 
   const containerVariants = {
@@ -134,7 +134,6 @@ export default function CoursesLabs() {
         {/* Courses Grid */}
         {!loading && filteredCourses.length > 0 && (
           <motion.div
-            key={key} // Force re-render with key
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"

@@ -32,47 +32,25 @@ interface CourseCardProps {
 
 export default function CourseCard({ course }: CourseCardProps) {
   const handleDownload = async () => {
-    if (!course.document_url && !course.document_data) return;
+    if (!course.document_url) return;
 
     try {
-      if (course.document_data) {
-        // Handle base64 data
-        const link = document.createElement('a');
-        link.href = course.document_data;
-        link.download = course.document_name || `${course.title}.${course.document_type}`;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-      } else {
-        // Handle Supabase URL
-        const documentUrl = `${SUPABASE_URL}/storage/v1/object/public/course-documents/${course.document_url}`;
-        const response = await fetch(documentUrl);
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = course.document_name || `${course.title}.${course.document_type}`;
-        document.body.appendChild(a);
-        a.click();
-        document.body.removeChild(a);
-        window.URL.revokeObjectURL(url);
-      }
+      // Handle direct file path
+      const link = document.createElement('a');
+      link.href = course.document_url;
+      link.download = course.document_name || `${course.title}.${course.document_type}`;
+      link.target = '_blank';
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     } catch (error) {
       console.error('Error downloading document:', error);
     }
   };
 
   const handlePreview = () => {
-    if (!course.document_url && !course.document_data) return;
-    
-    if (course.document_data) {
-      // Handle base64 data
-      window.open(course.document_data, '_blank');
-    } else {
-      // Handle Supabase URL
-      const documentUrl = `${SUPABASE_URL}/storage/v1/object/public/course-documents/${course.document_url}`;
-      window.open(documentUrl, '_blank');
-    }
+    if (!course.document_url) return;
+    window.open(course.document_url, '_blank');
   };
 
   const formatFileSize = (bytes: number | null) => {
@@ -104,20 +82,13 @@ export default function CourseCard({ course }: CourseCardProps) {
         <CardContent className="p-0">
           {/* Certificate Image, Cover Image, or Default */}
           <div className="h-40 relative overflow-hidden bg-gradient-to-br from-primary/20 via-accent/20 to-muted">
-            {course.certificate_image ? (
-              <embed 
-                src={course.certificate_image} 
-                type="application/pdf"
-                className="w-full h-full object-cover"
-                title={`${course.title} Certificate`}
-              />
-            ) : course.cover_image_url ? (
+            {course.cover_image_url ? (
               <img 
                 src={course.cover_image_url} 
                 alt={course.title}
                 className="w-full h-full object-cover"
               />
-            ) : course.document_data && course.document_type === 'pdf' ? (
+            ) : course.document_url && course.document_type === 'pdf' ? (
               <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100">
                 <div className="text-center">
                   <FileText className="w-12 h-12 text-red-600 mx-auto mb-2" />
@@ -209,7 +180,7 @@ export default function CourseCard({ course }: CourseCardProps) {
             )}
 
             {/* Document Actions */}
-            {(course.document_url || course.document_data) && (
+            {course.document_url && (
               <div className="pt-4 border-t border-border/50 space-y-2">
                 <div className="flex items-center gap-2 text-xs text-muted-foreground mb-2">
                   {getFileIcon(course.document_type)}
