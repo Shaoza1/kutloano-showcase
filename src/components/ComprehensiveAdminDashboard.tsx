@@ -14,6 +14,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useForm, Controller } from "react-hook-form";
 import { Badge } from "@/components/ui/badge";
 import CourseManagement from "@/components/CourseManagement";
+import CVManagement from "@/components/CVManagement";
 
 function ProjectForm({ project, onSuccess }: { project?: any; onSuccess: () => void }) {
   const { toast } = useToast();
@@ -510,7 +511,7 @@ export default function ComprehensiveAdminDashboard() {
                 <CardDescription>Upload and manage your resume documents</CardDescription>
               </CardHeader>
               <CardContent>
-                <p className="text-muted-foreground">CV management coming soon...</p>
+                <CVManagement />
               </CardContent>
             </Card>
           </TabsContent>
