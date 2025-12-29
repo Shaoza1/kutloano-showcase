@@ -30,7 +30,7 @@ ON public.portfolio_courses
 FOR ALL
 USING ((auth.jwt() ->> 'email'::text) = 'kutloano.moshao111@gmail.com'::text);
 
--- Anyone can view published courses
+-- Anyone can view published courses (remove auth requirement)
 CREATE POLICY "Anyone can view published courses"
 ON public.portfolio_courses
 FOR SELECT
