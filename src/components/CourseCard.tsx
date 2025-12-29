@@ -35,7 +35,6 @@ export default function CourseCard({ course }: CourseCardProps) {
     if (!course.document_url) return;
 
     try {
-      // Handle direct file path
       const link = document.createElement('a');
       link.href = course.document_url;
       link.download = course.document_name || `${course.title}.${course.document_type}`;
