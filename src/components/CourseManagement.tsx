@@ -13,7 +13,6 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogTrigger } from 
 import { useForm, Controller } from "react-hook-form";
 import { Badge } from "@/components/ui/badge";
 import { saveCourseData, loadCourseData } from "@/lib/courseData";
-import StorageInstructions from "./StorageInstructions";
 
 interface CourseFormProps {
   course?: any;
@@ -340,7 +339,6 @@ export default function CourseManagement() {
 
   return (
     <div className="space-y-6">
-      <StorageInstructions />
       <Card>
       <CardHeader className="flex flex-row items-center justify-between">
         <div>
