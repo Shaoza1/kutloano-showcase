@@ -88,11 +88,11 @@ export default function CourseCard({ course }: CourseCardProps) {
                 className="w-full h-full object-cover"
               />
             ) : course.document_url && course.document_type === 'pdf' ? (
-              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-red-50 to-red-100">
+              <div className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-green-50">
                 <div className="text-center">
-                  <FileText className="w-12 h-12 text-red-600 mx-auto mb-2" />
-                  <p className="text-sm font-medium text-red-800">PDF Certificate</p>
-                  <p className="text-xs text-red-600">{course.document_name}</p>
+                  <FileText className="w-12 h-12 text-blue-600 mx-auto mb-2" />
+                  <p className="text-sm font-medium text-blue-800">Certificate</p>
+                  <p className="text-xs text-green-600">Click to view</p>
                 </div>
               </div>
             ) : (
