@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Download, FileText, Award, Calendar, Clock } from "lucide-react";
+import { Download, FileText, Award, Calendar, Clock, Eye, Shield } from "lucide-react";
 import { SUPABASE_URL } from "@/integrations/supabase/client";
 import { format } from "date-fns";
 
@@ -88,14 +88,14 @@ export default function CourseCard({ course }: CourseCardProps) {
                 className="w-full h-full object-cover"
               />
             ) : course.document_url && course.document_type === 'pdf' ? (
-              <div 
-                className="w-full h-full flex items-center justify-center bg-gradient-to-br from-blue-50 to-green-50 cursor-pointer hover:from-blue-100 hover:to-green-100 transition-colors"
-                onClick={handlePreview}
-              >
-                <div className="text-center">
-                  <FileText className="w-12 h-12 text-blue-600 mx-auto mb-2" />
-                  <p className="text-sm font-medium text-blue-800">Certificate</p>
-                  <p className="text-xs text-green-600">Click to view</p>
+              <div className="w-full h-full flex flex-col items-center justify-center bg-gradient-to-br from-slate-50 to-blue-50 border-2 border-dashed border-blue-200">
+                <div className="text-center p-4">
+                  <Shield className="w-16 h-16 text-blue-600 mx-auto mb-3" />
+                  <p className="text-sm font-semibold text-slate-700 mb-2">Digital Certificate</p>
+                  <div className="flex items-center justify-center gap-1 bg-gradient-to-r from-primary to-accent px-3 py-1 rounded-full">
+                    <Eye className="w-4 h-4 text-white" />
+                    <p className="text-sm text-white font-semibold">Click 'Preview' Button Below To View</p>
+                  </div>
                 </div>
               </div>
             ) : (
