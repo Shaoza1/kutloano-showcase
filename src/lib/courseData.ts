@@ -1,6 +1,9 @@
 // Utility functions for course data management
 
 export const saveCourseData = (courses: any[]) => {
+  // Client-side only
+  if (typeof window === 'undefined') return;
+  
   // Save to localStorage
   localStorage.setItem('portfolio_courses', JSON.stringify(courses));
   
@@ -38,12 +41,15 @@ export const loadCourseData = async (): Promise<any[]> => {
     console.log('JSON file not available, using localStorage');
   }
   
-  // Fallback to localStorage
-  try {
-    const localData = localStorage.getItem('portfolio_courses');
-    return localData ? JSON.parse(localData) : [];
-  } catch (error) {
-    console.error('Error loading course data:', error);
-    return [];
+  // Fallback to localStorage (client-side only)
+  if (typeof window !== 'undefined') {
+    try {
+      const localData = localStorage.getItem('portfolio_courses');
+      return localData ? JSON.parse(localData) : [];
+    } catch (error) {
+      console.error('Error loading course data:', error);
+    }
   }
+  
+  return [];
 };

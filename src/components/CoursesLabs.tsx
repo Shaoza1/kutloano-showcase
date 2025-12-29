@@ -36,7 +36,12 @@ export default function CoursesLabs() {
   const [key, setKey] = useState(0); // Force re-render key
 
   useEffect(() => {
-    fetchCourses();
+    // Only fetch on client-side
+    if (typeof window !== 'undefined') {
+      fetchCourses();
+    } else {
+      setLoading(false);
+    }
   }, []);
 
   const fetchCourses = async () => {
