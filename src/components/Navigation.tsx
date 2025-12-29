@@ -4,7 +4,7 @@ import { motion } from "framer-motion";
 import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Menu, X, Download } from "lucide-react";
-import { supabase, SUPABASE_URL } from "@/integrations/supabase/client";
+import { downloadLatestCV } from "@/lib/cvUtils";
 
 interface NavigationProps {
   profile: {
@@ -111,32 +111,9 @@ export default function Navigation({ profile }: NavigationProps) {
                 className="ml-4"
                 onClick={async () => {
                   try {
-                    const res = await fetch(`${SUPABASE_URL}/functions/v1/cv-upload`, {
-                      method: 'GET',
-                    });
-                    if (!res.ok) throw new Error('Failed to fetch CV');
-                    const blob = await res.blob();
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'Kutloano_Moshao_CV.pdf';
-                    a.click();
-                    window.URL.revokeObjectURL(url);
+                    await downloadLatestCV();
                   } catch (error) {
                     console.error('Failed to download CV:', error);
-                    // Fallback to generated CV
-                    try {
-                      const response = await fetch(`${SUPABASE_URL}/functions/v1/generate-cv-pdf`);
-                      const blob = await response.blob();
-                      const url = window.URL.createObjectURL(blob);
-                      const a = document.createElement('a');
-                      a.href = url;
-                      a.download = 'Kutloano_Moshao_CV.pdf';
-                      a.click();
-                      window.URL.revokeObjectURL(url);
-                    } catch (fallbackError) {
-                      console.error('Fallback also failed:', fallbackError);
-                    }
                   }
                 }}
               >
@@ -191,35 +168,12 @@ export default function Navigation({ profile }: NavigationProps) {
                 className="w-full touch-manipulation"
                 onClick={async () => {
                   setIsOpen(false);
-                try {
-                  const response = await supabase.functions.invoke('cv-upload');
-                  if (response.error) throw response.error;
-                  
-                  // Create download link
-                  const blob = new Blob([response.data], { type: 'application/pdf' });
-                  const url = window.URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = 'Kutloano_Moshao_CV.pdf';
-                  a.click();
-                  window.URL.revokeObjectURL(url);
-                } catch (error) {
-                  console.error('Failed to download CV:', error);
-                  // Fallback to HTML CV
                   try {
-                    const response = await fetch('https://zoigdqeywprtgtlfleua.supabase.co/functions/v1/generate-cv-pdf');
-                    const blob = await response.blob();
-                    const url = window.URL.createObjectURL(blob);
-                    const a = document.createElement('a');
-                    a.href = url;
-                    a.download = 'Kutloano_Moshao_CV.html';
-                    a.click();
-                    window.URL.revokeObjectURL(url);
-                  } catch (fallbackError) {
-                    console.error('Fallback also failed:', fallbackError);
+                    await downloadLatestCV();
+                  } catch (error) {
+                    console.error('Failed to download CV:', error);
                   }
-                }
-              }}
+                }}
             >
               <Download className="w-4 h-4 mr-2" />
               Download CV

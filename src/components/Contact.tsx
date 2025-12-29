@@ -9,7 +9,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
 import { Mail, MessageSquare, Send, Github, Linkedin, Calendar, Download, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase, SUPABASE_URL } from "@/integrations/supabase/client";
+import { downloadLatestCV } from "@/lib/cvUtils";
 
 interface ContactProps {
   profile: {
@@ -26,42 +26,18 @@ export default function Contact({ profile }: ContactProps) {
 
   const handleCVDownload = async () => {
     try {
-      const res = await fetch(`${SUPABASE_URL}/functions/v1/cv-upload`, { method: 'GET' });
-      if (!res.ok) throw new Error('Failed to fetch CV');
-      const blob = await res.blob();
-      const url = window.URL.createObjectURL(blob);
-      const a = document.createElement('a');
-      a.href = url;
-      a.download = 'Kutloano_Moshao_CV.pdf';
-      document.body.appendChild(a);
-      a.click();
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
-      
+      await downloadLatestCV();
       toast({
         title: "CV Downloaded!",
         description: "Your CV has been downloaded successfully.",
       });
     } catch (error) {
       console.error('CV download error:', error);
-      try {
-        const response = await fetch(`${SUPABASE_URL}/functions/v1/generate-cv-pdf`);
-        const blob = await response.blob();
-        const url = window.URL.createObjectURL(blob);
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'Kutloano_Moshao_CV.pdf';
-        document.body.appendChild(a);
-        a.click();
-        window.URL.revokeObjectURL(url);
-        document.body.removeChild(a);
-      } catch (fallbackError) {
-        toast({
-          title: "Download Error",
-          description: "Failed to download CV. Please try again.",
-          variant: "destructive",
-        });
-      }
+      toast({
+        title: "Download Error",
+        description: "Failed to download CV. Please try again.",
+        variant: "destructive",
+      });
     }
   };
 

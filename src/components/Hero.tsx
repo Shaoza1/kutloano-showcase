@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Download, ChevronDown, Github, Linkedin, Mail } from "lucide-react";
 import heroBackground from "@/assets/hero-bg.jpg";
-import { SUPABASE_URL } from "@/integrations/supabase/client";
+import { downloadLatestCV } from "@/lib/cvUtils";
 
 interface HeroProps {
   profile: {
@@ -141,15 +141,7 @@ export default function Hero({ profile }: HeroProps) {
               className="group"
               onClick={async () => {
                 try {
-                  const res = await fetch(`${SUPABASE_URL}/functions/v1/cv-upload`, { method: 'GET' });
-                  if (!res.ok) throw new Error('Failed to fetch CV');
-                  const blob = await res.blob();
-                  const url = window.URL.createObjectURL(blob);
-                  const a = document.createElement('a');
-                  a.href = url;
-                  a.download = 'Kutloano_Moshao_CV.pdf';
-                  a.click();
-                  window.URL.revokeObjectURL(url);
+                  await downloadLatestCV();
                 } catch (error) {
                   console.error('Failed to download CV:', error);
                 }
