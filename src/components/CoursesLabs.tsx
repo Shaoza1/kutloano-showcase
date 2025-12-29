@@ -38,6 +38,7 @@ export default function CoursesLabs() {
 
   const fetchCourses = async () => {
     try {
+      console.log('Fetching courses from Supabase...');
       const { data, error } = await supabase
         .from('portfolio_courses')
         .select('*')
@@ -48,6 +49,8 @@ export default function CoursesLabs() {
         console.error('Error loading courses:', error);
         setCourses([]);
       } else {
+        console.log('Courses loaded:', data?.length, 'records');
+        console.log('First course:', data?.[0]);
         setCourses(data || []);
       }
     } catch (error) {

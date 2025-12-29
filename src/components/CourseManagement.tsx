@@ -348,8 +348,7 @@ export default function CourseManagement() {
                           size="sm"
                           variant="ghost"
                           onClick={() => {
-                            const url = `${SUPABASE_URL}/storage/v1/object/public/course-documents/${course.document_url}`;
-                            window.open(url, '_blank');
+                            window.open(course.document_url, '_blank');
                           }}
                         >
                           <Download className="w-3 h-3" />
