@@ -1,11 +1,10 @@
 -- Insert certificate data directly into portfolio_courses table
 INSERT INTO public.portfolio_courses (
-  id, title, subtitle, description, provider, course_type, completion_date, 
+  title, subtitle, description, provider, course_type, completion_date, 
   duration, skills_learned, document_name, document_type, document_size, 
   document_url, is_featured, is_published, sort_order
 ) VALUES 
 (
-  'python-essentials-1',
   'Python Essentials 1',
   'PCAP - Programming Essentials in Python',
   'Comprehensive Python programming fundamentals covering syntax, data structures, and object-oriented programming concepts.',
@@ -23,7 +22,6 @@ INSERT INTO public.portfolio_courses (
   1
 ),
 (
-  'cybersecurity-essentials',
   'Introduction To Cybersecurity',
   'Network Security Fundamentals',
   'Essential cybersecurity concepts including threat analysis, risk management, and security protocols.',
@@ -41,7 +39,6 @@ INSERT INTO public.portfolio_courses (
   2
 ),
 (
-  'packet-tracer',
   'Getting Started with Cisco Packet Tracer',
   'Network Simulation and Modeling',
   'Hands-on experience with Cisco Packet Tracer for network simulation, configuration, and troubleshooting.',
@@ -59,7 +56,6 @@ INSERT INTO public.portfolio_courses (
   3
 ),
 (
-  'virtual-internship-sokul',
   'Virtual Internship Program',
   'Sokul Automation - 360 Hours',
   'Completed 360 hours of live delivery and work experience at Sokul Automation. Developed remote work, group work, and presentation skills while completing project-based virtual internship.',
@@ -77,7 +73,6 @@ INSERT INTO public.portfolio_courses (
   4
 ),
 (
-  'virtual-internship-report',
   'Virtual Internship Report',
   'End of Program Documentation',
   'Comprehensive report documenting the virtual internship experience, project outcomes, and skills development during the 360-hour program.',
@@ -95,7 +90,6 @@ INSERT INTO public.portfolio_courses (
   5
 ),
 (
-  'botho-award-feb-june-2022',
   'Academic Excellence Award',
   'Feb-June 2022 Semester',
   'Academic excellence award received for outstanding performance during the Feb-June 2022 semester at Botho University.',
@@ -113,7 +107,6 @@ INSERT INTO public.portfolio_courses (
   6
 ),
 (
-  'botho-award-jan-june-2024',
   'Academic Excellence Award',
   'Jan-June 2024 Semester',
   'Academic excellence award received for outstanding performance during the Jan-June 2024 semester at Botho University.',
@@ -131,7 +124,6 @@ INSERT INTO public.portfolio_courses (
   7
 ),
 (
-  'botho-award-july-dec-2024',
   'Academic Excellence Award',
   'July-Dec 2024 Semester',
   'Academic excellence award received for outstanding performance during the July-Dec 2024 semester at Botho University.',
