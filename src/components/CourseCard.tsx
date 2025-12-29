@@ -109,18 +109,22 @@ export default function CourseCard({ course }: CourseCardProps) {
             <div className="absolute inset-0 bg-gradient-to-t from-background/80 to-transparent" />
             
             {/* Badges */}
-            <div className="absolute top-3 left-3 flex gap-2">
-              {course.is_featured && (
-                <Badge variant="secondary" className="glass">
-                  <Award className="w-3 h-3 mr-1" />
-                  Featured
-                </Badge>
-              )}
-              {course.course_type && (
-                <Badge variant="outline" className="glass text-xs">
-                  {course.course_type}
-                </Badge>
-              )}
+            <div className="absolute top-3 left-0 right-0 flex justify-between items-center px-3">
+              <div className="flex gap-2">
+                {course.is_featured && (
+                  <Badge variant="secondary" className="glass">
+                    <Award className="w-3 h-3 mr-1" />
+                    Featured
+                  </Badge>
+                )}
+              </div>
+              <div className="flex gap-2">
+                {course.course_type && (
+                  <Badge variant="outline" className="glass text-xs">
+                    {course.course_type}
+                  </Badge>
+                )}
+              </div>
             </div>
           </div>
 
