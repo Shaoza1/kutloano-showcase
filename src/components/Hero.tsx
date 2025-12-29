@@ -79,7 +79,7 @@ export default function Hero({ profile }: HeroProps) {
               <Badge
                 key={cert.name}
                 variant="secondary"
-                className="glass text-xs px-3 py-1 font-medium"
+                className="glass text-xs px-3 py-1 font-medium text-foreground"
               >
                 {cert.name}
               </Badge>

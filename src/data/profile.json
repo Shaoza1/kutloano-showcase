@@ -1,85 +1,144 @@
 {
   "name": "Kutloano Moshao",
   "shortName": "Moshao",
-  "title": "BSc Hons (Computing) • Full-Stack & AI-Curious Developer",
-  "tagline": "Building intelligent, user-centered solutions with modern web technologies and AI integration",
+  "title": "BSc Hons (Computing) • Full-Stack Developer & AI Innovator",
+  "tagline": "Building intelligent solutions for real-world impact with modern web technologies and AI integration",
   "university": "Botho University",
   "degree": "BSc Hons in Computing",
-  "graduationDate": "November 2025",
-  "location": "Lesotho",
+  "graduationDate": "April 2026",
+  "graduationCeremony": "April 2026",
+  "location": "Maseru, Lesotho",
   "email": "kutloano.moshao111@gmail.com",
-  "phone": "+267 xxx xxx xxx",
+  "phone": "+266 5758 6176",
   "github": "https://github.com/kutloanom",
-  "linkedin": "www.linkedin.com/in/kutloano-moshao-3b9178372",
+  "linkedin": "https://www.linkedin.com/in/kutloano-moshao-1aa5003a1/",
   "portfolio": "https://kutloano-portfolio.vercel.app",
   
-  "bio": "Passionate full-stack developer with a strong foundation in modern web technologies and emerging AI applications. Currently completing my Honours in Computing, I specialize in creating scalable web applications, progressive web apps, and intelligent systems that solve real-world problems.",
+  "bio": "UNDP AI Hackathon Finalist and full-stack developer with expertise in agricultural technology. Creator of AgroSense, an AI-powered platform for smart agriculture. Specializing in AI-powered web applications, offline-first PWAs, and scalable solutions that address real-world challenges in Lesotho and beyond.",
   
   "skills": {
     "frontend": [
-      { "name": "React", "level": 85, "category": "frontend" },
-      { "name": "Vue.js", "level": 75, "category": "frontend" },
+      { "name": "React", "level": 90, "category": "frontend" },
+      { "name": "TypeScript", "level": 85, "category": "frontend" },
       { "name": "Tailwind CSS", "level": 90, "category": "frontend" },
-      { "name": "TypeScript", "level": 80, "category": "frontend" },
-      { "name": "Progressive Web Apps", "level": 85, "category": "frontend" }
+      { "name": "Progressive Web Apps", "level": 90, "category": "frontend" },
+      { "name": "Vite", "level": 85, "category": "frontend" },
+      { "name": "Capacitor", "level": 80, "category": "frontend" }
     ],
     "backend": [
-      { "name": "Python/Flask", "level": 85, "category": "backend" },
-      { "name": "Node.js", "level": 70, "category": "backend" },
+      { "name": "Node.js", "level": 85, "category": "backend" },
+      { "name": "Express.js", "level": 85, "category": "backend" },
+      { "name": "PHP", "level": 80, "category": "backend" },
       { "name": "MySQL", "level": 80, "category": "backend" },
-      { "name": "Supabase", "level": 75, "category": "backend" },
-      { "name": "JWT Authentication", "level": 85, "category": "backend" }
+      { "name": "PostgreSQL", "level": 85, "category": "backend" },
+      { "name": "Supabase", "level": 90, "category": "backend" }
     ],
     "ai": [
-      { "name": "Machine Learning", "level": 70, "category": "ai" },
-      { "name": "CNN/Computer Vision", "level": 75, "category": "ai" },
-      { "name": "Natural Language Processing", "level": 65, "category": "ai" },
-      { "name": "TensorFlow/Keras", "level": 70, "category": "ai" },
-      { "name": "Data Analysis", "level": 80, "category": "ai" }
+      { "name": "OpenAI GPT-4", "level": 85, "category": "ai" },
+      { "name": "Google Gemini", "level": 80, "category": "ai" },
+      { "name": "Computer Vision", "level": 85, "category": "ai" },
+      { "name": "Natural Language Processing", "level": 80, "category": "ai" },
+      { "name": "TensorFlow.js", "level": 75, "category": "ai" },
+      { "name": "HuggingFace", "level": 75, "category": "ai" }
     ],
-    "tools": [
-      { "name": "Git/GitHub", "level": 85, "category": "tools" },
-      { "name": "Docker", "level": 65, "category": "tools" },
-      { "name": "Vercel/Netlify", "level": 80, "category": "tools" },
-      { "name": "Figma", "level": 70, "category": "tools" },
-      { "name": "VS Code", "level": 90, "category": "tools" }
+    "cloud": [
+      { "name": "AWS IoT Core", "level": 80, "category": "cloud" },
+      { "name": "AWS Lambda", "level": 75, "category": "cloud" },
+      { "name": "Vercel", "level": 90, "category": "cloud" },
+      { "name": "Render.com", "level": 85, "category": "cloud" },
+      { "name": "Git/GitHub", "level": 90, "category": "cloud" }
     ]
   },
   
   "certifications": [
     {
-      "name": "Cisco Intro to Cybersecurity",
+      "name": "Python Essentials 1",
       "issuer": "Cisco Networking Academy",
       "date": "2025",
-      "badgeUrl": "/badges/cisco-cybersecurity.png"
+      "description": "Fundamentals of Python programming, data structures, algorithms, OOP",
+      "badge": "/badges/Python Essentials 1.png"
     },
     {
-      "name": "Python Essentials 1",
+      "name": "Introduction to Cybersecurity",
       "issuer": "Cisco Networking Academy", 
       "date": "2025",
-      "badgeUrl": "/badges/cisco-python.png"
+      "description": "Network security fundamentals, threat detection and mitigation, data privacy",
+      "badge": "/badges/introduction-to-cybersecurity.png"
+    },
+    {
+      "name": "Getting Started with Cisco Packet Tracer",
+      "issuer": "Cisco Networking Academy",
+      "date": "2025",
+      "description": "Network simulation and modeling using Cisco Packet Tracer"
+    }
+  ],
+  
+  "experience": [
+    {
+      "title": "AWS IoT Intern",
+      "company": "Sokul Automation",
+      "location": "Maseru, Lesotho",
+      "duration": "July - October 2024",
+      "type": "internship",
+      "description": "Developed IoT solutions using AWS services, implemented real-time sensor data processing pipelines, and built cloud-based monitoring dashboards.",
+      "technologies": ["AWS IoT Core", "AWS Lambda", "DynamoDB", "Python", "MQTT", "Node-RED"]
+    },
+    {
+      "title": "Sales & Marketing Executive",
+      "company": "IMZ Marketing",
+      "location": "Maseru, Lesotho",
+      "duration": "2018 - 2019",
+      "type": "full-time",
+      "description": "Consistently exceeded sales targets through consultative selling, specialized in credit solutions and financial products, built strong client relationships.",
+      "achievements": ["Consistently exceeded sales targets", "Specialized in credit solutions", "Built strong client retention strategies"]
     }
   ],
   
   "education": {
     "modules": [
-      "Advanced Database Systems",
-      "Web Application Development", 
-      "Machine Learning Fundamentals",
-      "Software Engineering Principles",
-      "Computer Networks & Security",
-      "Mobile Application Development",
-      "Data Structures & Algorithms",
-      "Human-Computer Interaction",
-      "Project Management in IT",
-      "Research Methods in Computing"
+      "Introduction to Computer",
+      "Mathematica for Computing",
+      "Communication and Study Skills",
+      "Querying and Managing Database",
+      "Operating System and Hardware",
+      "Discrete Mathematics",
+      "Database Management using Oracle",
+      "Linux Essentials",
+      "Web Design and Development",
+      "Programming using Java",
+      "Computer System Architecture",
+      "Introduction to Programming using C++",
+      "Data Structure and Algorithm",
+      "IT Project Management",
+      "Advanced Java",
+      "Software Engineering",
+      "Programming using .Net 1 (C#)",
+      "Cloud Computing",
+      "Artificial Intelligence",
+      "Interaction Design",
+      "Essentials of Entrepreneurship",
+      "Project"
     ]
   },
   
+  "achievements": [
+    {
+      "title": "UNDP AI Language Innovation Hackathon Finalist",
+      "date": "December 2024",
+      "description": "Advanced to Phase 2 finals with AgroSense platform. Gained valuable experience in business model development, scalability planning, and government partnership strategies.",
+      "location": "UNIPOD, Lerotholi Polytechnic, Maseru"
+    },
+    {
+      "title": "AgroSense Production Deployment",
+      "date": "2024",
+      "description": "Successfully deployed smart agriculture platform with AI-powered crop disease detection and Sesotho language support."
+    }
+  ],
+  
   "stats": {
-    "projectsCompleted": 8,
-    "technologiesMastered": 15,
-    "certificationsEarned": 2,
-    "yearsExperience": 3
+    "projectsCompleted": 12,
+    "technologiesMastered": 20,
+    "certificationsEarned": 3,
+    "yearsExperience": 4
   }
 }

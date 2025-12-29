@@ -19,6 +19,7 @@ interface EducationProps {
       name: string;
       issuer: string;
       date: string;
+      badge?: string;
     }>;
   };
 }
@@ -130,7 +131,7 @@ export default function Education({ profile }: EducationProps) {
                     >
                       <div className="flex items-start justify-between mb-4">
                         <div className="flex-1">
-                          <h4 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
+                          <h4 className="font-semibold text-lg mb-2 text-foreground group-hover:text-primary transition-colors">
                             {cert.name}
                           </h4>
                           <p className="text-muted-foreground mb-2">{cert.issuer}</p>
@@ -139,9 +140,17 @@ export default function Education({ profile }: EducationProps) {
                           </Badge>
                         </div>
                         
-                        {/* Certification Badge Placeholder */}
-                        <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center">
-                          <Award className="w-8 h-8 text-primary" />
+                        {/* Certification Badge */}
+                        <div className="w-16 h-16 bg-gradient-to-br from-primary/20 to-accent/20 rounded-xl flex items-center justify-center overflow-hidden">
+                          {cert.badge ? (
+                            <img 
+                              src={cert.badge} 
+                              alt={`${cert.name} Badge`}
+                              className="w-full h-full object-cover rounded-xl"
+                            />
+                          ) : (
+                            <Award className="w-8 h-8 text-primary" />
+                          )}
                         </div>
                       </div>
                       

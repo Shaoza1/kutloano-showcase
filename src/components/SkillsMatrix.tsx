@@ -17,7 +17,7 @@ interface SkillsMatrixProps {
     frontend: Skill[];
     backend: Skill[];
     ai: Skill[];
-    tools: Skill[];
+    cloud: Skill[];
   };
 }
 
@@ -29,34 +29,21 @@ export default function SkillsMatrix({ skills }: SkillsMatrixProps) {
     { id: "frontend", label: "Frontend", color: "hero" },
     { id: "backend", label: "Backend", color: "secondary" },
     { id: "ai", label: "AI/ML", color: "accent" },
-    { id: "tools", label: "Tools", color: "outline" },
+    { id: "cloud", label: "Cloud", color: "outline" },
   ];
 
   const allSkills = [
     ...skills.frontend,
     ...skills.backend,
     ...skills.ai,
-    ...skills.tools,
+    ...skills.cloud,
   ];
 
-  const filteredSkills = activeCategory === "all" 
-    ? allSkills 
-    : allSkills.filter(skill => skill.category === activeCategory);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: { opacity: 1, y: 0 },
-  };
+  let filteredSkills = allSkills;
+  if (activeCategory === "frontend") filteredSkills = skills.frontend;
+  if (activeCategory === "backend") filteredSkills = skills.backend;
+  if (activeCategory === "ai") filteredSkills = skills.ai;
+  if (activeCategory === "cloud") filteredSkills = skills.cloud;
 
   return (
     <section id="skills" className="py-24 bg-muted/20">
@@ -76,7 +63,6 @@ export default function SkillsMatrix({ skills }: SkillsMatrixProps) {
           </p>
         </motion.div>
 
-        {/* Category Filter */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
@@ -97,18 +83,19 @@ export default function SkillsMatrix({ skills }: SkillsMatrixProps) {
           ))}
         </motion.div>
 
-        {/* Skills Grid */}
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
+          key={activeCategory}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.3 }}
           className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6"
         >
           {filteredSkills.map((skill, index) => (
             <motion.div
-              key={`${skill.name}-${skill.category}`}
-              variants={itemVariants}
+              key={`${skill.name}-${activeCategory}`}
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ delay: index * 0.1 }}
               whileHover={{ scale: 1.05 }}
               className="group"
             >
@@ -118,15 +105,11 @@ export default function SkillsMatrix({ skills }: SkillsMatrixProps) {
                     <h3 className="font-semibold text-lg mb-2 group-hover:text-primary transition-colors">
                       {skill.name}
                     </h3>
-                    <Badge 
-                      variant="secondary" 
-                      className="text-xs capitalize"
-                    >
+                    <Badge variant="secondary" className="text-xs capitalize">
                       {skill.category}
                     </Badge>
                   </div>
                   
-                  {/* Progress Bar */}
                   <div className="space-y-2">
                     <div className="flex justify-between text-sm">
                       <span className="text-muted-foreground">Proficiency</span>
@@ -135,30 +118,13 @@ export default function SkillsMatrix({ skills }: SkillsMatrixProps) {
                     <div className="h-2 bg-muted rounded-full overflow-hidden">
                       <motion.div
                         initial={{ width: 0 }}
-                        whileInView={{ width: `${skill.level}%` }}
-                        transition={{ 
-                          duration: 1, 
-                          delay: index * 0.1,
-                          ease: "easeOut"
-                        }}
-                        viewport={{ once: true }}
-                        className="h-full gradient-primary rounded-full relative"
-                      >
-                        <motion.div
-                          animate={{ x: [-100, 100] }}
-                          transition={{
-                            duration: 2,
-                            repeat: Infinity,
-                            ease: "linear",
-                            delay: index * 0.1
-                          }}
-                          className="absolute inset-0 bg-white/20 w-20 transform -skew-x-12"
-                        />
-                      </motion.div>
+                        animate={{ width: `${skill.level}%` }}
+                        transition={{ duration: 1, delay: index * 0.1, ease: "easeOut" }}
+                        className="h-full gradient-primary rounded-full"
+                      />
                     </div>
                   </div>
                   
-                  {/* Skill Level Indicator */}
                   <div className="mt-4 text-right">
                     <span className="text-xs font-medium text-muted-foreground">
                       {skill.level >= 80 ? "Expert" : 
@@ -169,42 +135,6 @@ export default function SkillsMatrix({ skills }: SkillsMatrixProps) {
                 </CardContent>
               </Card>
             </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Stats Overview */}
-        <motion.div
-          initial={{ opacity: 0, y: 30 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          viewport={{ once: true }}
-          className="mt-16 grid grid-cols-2 md:grid-cols-4 gap-8"
-        >
-          {[
-            { label: "Technologies", value: allSkills.length },
-            { label: "Expert Level", value: allSkills.filter(s => s.level >= 80).length },
-            { label: "Categories", value: Object.keys(skills).length },
-            { label: "Avg Proficiency", value: Math.round(allSkills.reduce((acc, s) => acc + s.level, 0) / allSkills.length) + "%" },
-          ].map((stat, index) => (
-            <div key={stat.label} className="text-center">
-              <motion.div
-                initial={{ scale: 0 }}
-                whileInView={{ scale: 1 }}
-                transition={{ 
-                  duration: 0.6, 
-                  delay: index * 0.1,
-                  type: "spring",
-                  stiffness: 100
-                }}
-                viewport={{ once: true }}
-                className="text-3xl md:text-4xl font-bold text-gradient mb-2"
-              >
-                {stat.value}
-              </motion.div>
-              <div className="text-muted-foreground text-sm font-medium">
-                {stat.label}
-              </div>
-            </div>
           ))}
         </motion.div>
       </div>

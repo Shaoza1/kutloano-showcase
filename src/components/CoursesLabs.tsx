@@ -1,12 +1,12 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import CourseCard from "./CourseCard";
-import { supabase } from "@/integrations/supabase/client";
 import { Loader2 } from "lucide-react";
+import { loadCourseData } from "@/lib/courseData";
 
 interface Course {
   id: string;
@@ -22,14 +22,18 @@ interface Course {
   document_name: string | null;
   document_type: string | null;
   document_size: number | null;
+  document_data?: string | null;
+  certificate_image?: string | null; // Path to certificate image
   cover_image_url: string | null;
   is_featured: boolean;
+  is_published?: boolean;
 }
 
 export default function CoursesLabs() {
   const [courses, setCourses] = useState<Course[]>([]);
   const [loading, setLoading] = useState(true);
   const [selectedProvider, setSelectedProvider] = useState<string>("all");
+  const [key, setKey] = useState(0); // Force re-render key
 
   useEffect(() => {
     fetchCourses();
@@ -37,29 +41,31 @@ export default function CoursesLabs() {
 
   const fetchCourses = async () => {
     try {
-      const { data, error } = await supabase
-        .from('portfolio_courses')
-        .select('*')
-        .eq('is_published', true)
-        .order('completion_date', { ascending: false });
-
-      if (error) throw error;
-      setCourses(data || []);
+      const courseData = await loadCourseData();
+      const publishedCourses = courseData.filter((course: Course) => course.is_published !== false);
+      setCourses(publishedCourses);
     } catch (error) {
-      console.error('Error fetching courses:', error);
+      console.error('Error loading courses:', error);
+      setCourses([]);
     } finally {
       setLoading(false);
     }
   };
 
-  const providers = [
-    "all",
-    ...new Set(courses.map(c => c.provider))
-  ];
+  const providers = useMemo(() => {
+    const uniqueProviders = [...new Set(courses.map(c => c.provider))];
+    return ["all", ...uniqueProviders];
+  }, [courses]);
 
-  const filteredCourses = selectedProvider === "all"
-    ? courses
-    : courses.filter(c => c.provider === selectedProvider);
+  const filteredCourses = useMemo(() => {
+    if (selectedProvider === "all") return courses;
+    return courses.filter(c => c.provider === selectedProvider);
+  }, [courses, selectedProvider]);
+
+  const handleProviderChange = (provider: string) => {
+    setSelectedProvider(provider);
+    setKey(prev => prev + 1); // Force re-render
+  };
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -105,7 +111,7 @@ export default function CoursesLabs() {
               key={provider}
               variant={selectedProvider === provider ? "gradient" : "outline"}
               size="sm"
-              onClick={() => setSelectedProvider(provider)}
+              onClick={() => handleProviderChange(provider)}
               className="capitalize"
             >
               {provider === "all" ? "All Providers" : provider}
@@ -123,6 +129,7 @@ export default function CoursesLabs() {
         {/* Courses Grid */}
         {!loading && filteredCourses.length > 0 && (
           <motion.div
+            key={key} // Force re-render with key
             variants={containerVariants}
             initial="hidden"
             whileInView="visible"
@@ -144,6 +151,9 @@ export default function CoursesLabs() {
         {!loading && filteredCourses.length === 0 && (
           <div className="text-center py-12">
             <p className="text-muted-foreground">No courses found</p>
+            <p className="text-sm text-muted-foreground mt-2">
+              Courses found in storage: {courses.length}
+            </p>
           </div>
         )}
       </div>

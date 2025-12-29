@@ -5,13 +5,13 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import Portfolio from "./pages/Portfolio";
 import NotFound from "./pages/NotFound";
-import ComprehensiveAdminDashboard from "./components/ComprehensiveAdminDashboard";
+import AdminAuth from "./components/AdminAuth";
 
 const queryClient = new QueryClient();
 
 const router = createBrowserRouter([
   { path: "/", element: <Portfolio /> },
-  { path: "/admin", element: <ComprehensiveAdminDashboard /> },
+  { path: "/admin", element: <AdminAuth /> },
   { path: "*", element: <NotFound /> },
 ]);
 const App = () => (

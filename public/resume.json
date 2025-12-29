@@ -4,15 +4,15 @@
     "label": "Full-Stack & AI-Curious Developer",
     "image": "",
     "email": "kutloano.moshao111@gmail.com",
-    "phone": "+267 xxx xxx xxx",
+    "phone": "+266 5758 6176",
     "url": "https://kutloano-portfolio.vercel.app",
     "summary": "Passionate full-stack developer with a strong foundation in modern web technologies and emerging AI applications. Currently completing my Honours in Computing, I specialize in creating scalable web applications, progressive web apps, and intelligent systems that solve real-world problems.",
     "location": {
       "address": "",
       "postalCode": "",
       "city": "",
-      "countryCode": "BW",
-      "region": "Botswana"
+      "countryCode": "LS",
+      "region": "Lesotho"
     },
     "profiles": [
       {
@@ -22,24 +22,38 @@
       },
       {
         "network": "LinkedIn",
-        "username": "kutloano-moshao-3b9178372",
-        "url": "www.linkedin.com/in/kutloano-moshao-3b9178372"
+        "username": "kutloano-moshao-1aa5003a1",
+        "url": "https://www.linkedin.com/in/kutloano-moshao-1aa5003a1/"
       }
     ]
   },
   "work": [
     {
-      "name": "Freelance Developer",
-      "position": "Full-Stack Developer",
+      "name": "Sokul Automation",
+      "position": "AWS IoT Intern",
       "url": "",
-      "startDate": "2022-01-01",
-      "endDate": "",
-      "summary": "Developing custom web applications and AI-powered solutions for various clients.",
+      "startDate": "2024-07-01",
+      "endDate": "2024-10-01",
+      "summary": "Developed IoT solutions using AWS services, implemented real-time sensor data processing pipelines, and built cloud-based monitoring dashboards.",
       "highlights": [
-        "Built 8+ production-ready applications using modern web technologies",
-        "Specialized in PWA development with offline-first architecture",
-        "Implemented machine learning solutions for agricultural and business applications",
-        "Achieved 95%+ client satisfaction through iterative development and clear communication"
+        "Developed IoT solutions using AWS IoT Core, Lambda, and DynamoDB",
+        "Implemented real-time sensor data processing pipelines",
+        "Built cloud-based monitoring dashboards with Python and Node-RED",
+        "Worked with MQTT protocols for device communication"
+      ]
+    },
+    {
+      "name": "IMZ Marketing",
+      "position": "Sales & Marketing Executive",
+      "url": "",
+      "startDate": "2018-01-01",
+      "endDate": "2019-12-01",
+      "summary": "Consistently exceeded sales targets through consultative selling, specialized in credit solutions and financial products, built strong client relationships.",
+      "highlights": [
+        "Consistently exceeded sales targets through consultative selling",
+        "Specialized in credit solutions and financial products",
+        "Built strong client relationships and retention strategies",
+        "Developed expertise in financial services sector"
       ]
     }
   ],
@@ -78,6 +92,12 @@
       "date": "2025-01-01",
       "issuer": "Cisco Networking Academy",
       "url": ""
+    },
+    {
+      "name": "Getting Started with Cisco Packet Tracer",
+      "date": "2025-01-01",
+      "issuer": "Cisco Networking Academy",
+      "url": ""
     }
   ],
   "skills": [
@@ -104,54 +124,54 @@
   ],
   "projects": [
     {
-      "name": "AgroSense - Smart Agriculture Advisor",
-      "description": "AI-powered PWA for modern farming with CNN-based disease detection, offline capabilities, and real-time weather integration",
+      "name": "AgroSense - Smart Agriculture Platform",
+      "description": "AI-powered agricultural platform with crop disease detection, Sesotho voice commands, and offline-first architecture for rural connectivity.",
       "highlights": [
-        "92% disease detection accuracy using custom CNN models",
-        "Offline-first architecture with <2s latency",
-        "Helped 200+ farmers improve yields by 23%",
-        "Reduced pesticide usage by 35% in pilot program"
+        "UNDP AI Hackathon finalist with validated business model",
+        "AI crop disease detection using GPT-4 Vision and Gemini",
+        "Offline-first PWA architecture for reliable rural connectivity",
+        "Sesotho language support with fuzzy keyword matching"
       ],
-      "keywords": ["React", "Flask", "TensorFlow", "PWA", "Firebase", "Computer Vision"],
-      "startDate": "2024-01-01",
-      "endDate": "2024-05-01",
-      "url": "https://agrosense-demo.vercel.app",
-      "roles": ["Full-Stack Developer", "ML Engineer"],
-      "entity": "Personal Project",
+      "keywords": ["React 18", "TypeScript", "Node.js", "Supabase", "OpenAI GPT-4", "Google Gemini", "Capacitor", "PWA"],
+      "startDate": "2024-11-01",
+      "endDate": "2024-12-01",
+      "url": "https://agrosense-client-kappa.vercel.app/",
+      "roles": ["Lead Developer", "AI Researcher"],
+      "entity": "UNDP Hackathon Project",
       "type": "application"
     },
     {
-      "name": "Store Management System",
-      "description": "Enterprise-grade inventory and sales platform with barcode scanning, role-based access control, and real-time analytics",
+      "name": "E-Commerce Platform",
+      "description": "Full-stack e-commerce solution with product catalog, shopping cart, user authentication, order management, and admin dashboard.",
       "highlights": [
-        "99.8% inventory accuracy with automated tracking",
-        "Support for 100+ concurrent users",
-        "Reduced checkout time by 60%",
-        "Comprehensive audit trails and reporting"
+        "Complete retail functionality with secure user management",
+        "Product catalog with search and filtering capabilities",
+        "Shopping cart with session management",
+        "Admin dashboard for product and user management"
       ],
-      "keywords": ["Python", "Flask", "MySQL", "JWT", "Barcode API", "Bootstrap"],
-      "startDate": "2024-02-01",
-      "endDate": "2024-05-01",
-      "url": "https://store-mgmt-demo.herokuapp.com",
-      "roles": ["Backend Developer", "Database Designer"],
-      "entity": "Client Project",
-      "type": "application"
-    },
-    {
-      "name": "Todo PWA Redesign",
-      "description": "Complete overhaul of Vue.js todo application with Kanban boards, calendar integration, and modern UI/UX",
-      "highlights": [
-        "185% increase in user engagement",
-        "67% improvement in task completion rates",
-        "240% increase in mobile usage",
-        "96/100 performance score"
-      ],
-      "keywords": ["Vue.js", "PWA", "IndexedDB", "Tailwind CSS", "Vuex"],
+      "keywords": ["PHP", "MySQL", "HTML", "CSS", "JavaScript", "Bootstrap"],
       "startDate": "2024-03-01",
-      "endDate": "2024-05-01",
-      "url": "https://todo-pwa-redesign.netlify.app",
-      "roles": ["Frontend Developer", "UX Designer"],
-      "entity": "Redesign Project",
+      "endDate": "2024-06-01",
+      "url": "",
+      "roles": ["Full-Stack Developer"],
+      "entity": "Botho University Project",
+      "type": "application"
+    },
+    {
+      "name": "AWS IoT Solutions",
+      "description": "Industrial IoT monitoring systems using AWS IoT Core, Lambda, and DynamoDB for real-time sensor data processing.",
+      "highlights": [
+        "Real-time sensor data processing pipelines",
+        "Cloud-based monitoring dashboards",
+        "MQTT protocol implementation for device communication",
+        "AWS Lambda functions for data processing"
+      ],
+      "keywords": ["AWS IoT Core", "AWS Lambda", "DynamoDB", "Python", "MQTT", "Node-RED"],
+      "startDate": "2024-07-01",
+      "endDate": "2024-10-01",
+      "url": "",
+      "roles": ["IoT Developer"],
+      "entity": "Sokul Automation Internship",
       "type": "application"
     }
   ],
@@ -161,7 +181,7 @@
       "fluency": "Native speaker"
     },
     {
-      "language": "Setswana",
+      "language": "Sesotho",
       "fluency": "Native speaker"
     }
   ],

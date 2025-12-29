@@ -2,262 +2,219 @@
   "featured": [
     {
       "id": "agrosense",
-      "title": "AgroSense - Smart Agriculture Advisor",
-      "subtitle": "AI-Powered PWA for Modern Farming",
-      "description": "Intelligent agricultural advisory system combining computer vision, machine learning, and real-time data to help farmers optimize crop management and increase yields.",
-      "longDescription": "AgroSense revolutionizes traditional farming by providing AI-driven insights for crop health monitoring, pest detection, and weather-based recommendations. The application uses CNN models for image analysis, NLP for processing agricultural data, and offline-first architecture for reliable field use.",
-      "technologies": ["React", "Flask", "TensorFlow", "PWA", "Supabase", "PouchDB", "CNN", "NLP"],
-      "category": ["AI", "PWA", "Web"],
+      "title": "AgroSense - Smart Agriculture Platform",
+      "subtitle": "AI-Powered Agricultural Advisor for Lesotho Farmers",
+      "description": "AI-powered agricultural platform with crop disease detection, Sesotho voice commands, and offline-first architecture for rural connectivity.",
+      "longDescription": "AgroSense is a comprehensive agricultural platform designed specifically for Lesotho smallholder farmers. The system combines AI crop disease detection using GPT-4 Vision and Gemini, Sesotho language support with fuzzy keyword matching, weather integration, and offline-first PWA architecture for reliable rural connectivity.",
+      "technologies": ["React 18", "TypeScript", "Node.js", "Supabase", "OpenAI GPT-4", "Google Gemini", "Capacitor", "PWA"],
+      "category": ["AI", "PWA", "Production"],
       "status": "Production",
-      "year": "2024",
-      "duration": "4 months",
-      "team": "Solo Developer",
+      "year": "2025",
+      "duration": "2 months development",
+      "team": "Lead Developer & Researcher",
       
-      "problem": "Farmers in rural areas lack access to real-time agricultural expertise and struggle with crop disease identification, leading to reduced yields and increased pesticide use.",
+      "problem": "Lesotho smallholder farmers lack access to agricultural expertise, struggle with crop disease identification, and face connectivity challenges in rural areas, leading to reduced yields and food security issues.",
       
-      "solution": "Developed an offline-capable PWA that uses computer vision to identify plant diseases, provides personalized farming recommendations, and delivers weather-based alerts even without internet connectivity.",
+      "solution": "Developed an AI-powered platform with offline-first architecture that provides crop disease detection, Sesotho voice commands, weather integration, and farm management tools specifically designed for Lesotho's agricultural context.",
       
       "approach": [
-        "Conducted field research with local farmers to understand pain points",
-        "Trained CNN models on agricultural image datasets for disease detection", 
-        "Implemented offline-first architecture using PouchDB for data synchronization",
-        "Integrated weather APIs and developed predictive algorithms for crop recommendations",
-        "Designed mobile-first UI optimized for outdoor use and low-light conditions"
+        "Conducted field research with farmers in Maseru & Leribe districts",
+        "Implemented multi-AI provider system (GPT-4, Gemini, Cohere) with fallback strategies", 
+        "Built offline-first PWA with service workers and IndexedDB synchronization",
+        "Integrated OpenWeather API with localized agricultural recommendations",
+        "Designed Sesotho-first interface with fuzzy keyword matching for voice commands",
+        "Deployed scalable infrastructure on Vercel and Render with high uptime"
       ],
       
       "challenges": [
         {
-          "challenge": "Offline functionality in remote areas",
-          "solution": "Implemented PouchDB with sync strategies and cached model inference"
+          "challenge": "Rural connectivity and offline functionality",
+          "solution": "Implemented offline-first architecture with high sync success rate and offline availability"
         },
         {
-          "challenge": "Accurate disease detection across crop varieties", 
-          "solution": "Created ensemble CNN models and continuous learning pipeline"
+          "challenge": "Multi-language AI accuracy for Sesotho speakers", 
+          "solution": "Built fuzzy keyword matching system and multi-provider AI fallback achieving high accuracy"
         },
         {
-          "challenge": "User adoption among non-tech-savvy farmers",
-          "solution": "Designed intuitive camera-first interface with voice guidance"
+          "challenge": "Farmer adoption and usability for non-tech users",
+          "solution": "Designed intuitive voice-first interface with high usability score"
         }
       ],
       
       "keyFeatures": [
-        "Real-time crop disease detection using camera",
-        "Offline-capable PWA with background sync",
-        "Personalized farming recommendations",
-        "Weather integration and alerts",
-        "Multi-language support for local farmers",
-        "Historical data tracking and analytics"
+        "AI crop disease detection using camera with high accuracy",
+        "Sesotho voice commands with fuzzy keyword matching",
+        "Offline-first PWA with background sync",
+        "Weather integration with agricultural recommendations",
+        "Multi-channel notifications (Push, Email, SMS via WASMS)",
+        "Farm management tools and historical tracking",
+        "Extension officer network and community features",
+        "Mobile app via Capacitor for Android/iOS"
       ],
       
       "results": {
         "metrics": [
-          { "label": "Disease Detection Accuracy", "value": "92%" },
-          { "label": "Offline Mode Latency", "value": "<2s" },
-          { "label": "User Retention Rate", "value": "78%" },
-          { "label": "Data Sync Success", "value": "99.1%" }
+          { "label": "UNDP Hackathon", "value": "Finalist" },
+          { "label": "AI Accuracy", "value": "High" },
+          { "label": "System Uptime", "value": "99.9%" },
+          { "label": "Response Time", "value": "<200ms" }
         ],
-        "impact": "Helped 200+ farmers in pilot program improve crop yields by average 23% while reducing pesticide usage by 35%"
+        "impact": "UNDP AI Hackathon finalist with validated business model for government partnership and nationwide scaling potential."
       },
       
       "links": {
-        "live": "https://agrosense-demo.vercel.app",
-        "github": "https://github.com/kutloanom/agrosense-pwa",
-        "demo": "https://youtu.be/demo-video-id"
+        "live": "https://agrosense-client-kappa.vercel.app/",
+        "github": "https://github.com/pieter255/AgroSense"
       },
       
       "images": [
-        "/projects/agrosense/hero.png",
-        "/projects/agrosense/disease-detection.png", 
-        "/projects/agrosense/dashboard.png",
-        "/projects/agrosense/offline-mode.png"
+        "/projects/agrosense/Pasted image.png",
+        "/projects/agrosense/Pasted image (2).png",
+        "/projects/agrosense/Pasted image (3).png",
+        "/projects/agrosense/Pasted image (4).png",
+        "/projects/agrosense/Pasted image (5).png",
+        "/projects/agrosense/Pasted image (6).png"
       ],
       
       "architecture": {
-        "frontend": "React PWA with Service Workers",
-        "backend": "Flask API with TensorFlow Serving",
-        "database": "Supabase + PouchDB for offline sync",
-        "ai": "Custom CNN models trained on agricultural datasets",
-        "deployment": "Vercel (Frontend) + Google Cloud Run (API)"
+        "frontend": "React 18 + TypeScript + Tailwind CSS + Vite",
+        "backend": "Node.js + Express + TypeScript",
+        "database": "Supabase (PostgreSQL) with RLS policies",
+        "ai": "OpenAI GPT-4 Vision, Google Gemini, Cohere, Groq, HuggingFace",
+        "mobile": "Capacitor for Android/iOS deployment",
+        "deployment": "Vercel (frontend) + Render (backend) + Supabase (database)"
+      },
+      
+      "scalability": {
+        "phase1": "500 users - M157,000/year",
+        "phase3": "5,000 users - M650,000/year",
+        "sustainability": "Government partnership (M1M/year) + Freemium model + Strategic partnerships (M2-3M/year)"
       }
     },
     
     {
-      "id": "store-management",
-      "title": "Store Management System",
-      "subtitle": "Enterprise-Grade Inventory & Sales Platform",
-      "description": "Comprehensive retail management system with barcode scanning, role-based access control, and real-time inventory tracking built with Python and MySQL.",
-      "longDescription": "Full-stack enterprise solution for retail businesses featuring advanced inventory management, sales analytics, customer relationship management, and multi-user role-based access. Designed for scalability and real-world business operations.",
-      "technologies": ["Python", "Flask", "MySQL", "JWT", "Barcode API", "Chart.js", "Bootstrap"],
-      "category": ["Backend", "Enterprise", "Web"],
-      "status": "Production Ready", 
+      "id": "sesotho-ai",
+      "title": "Sesotho AI Platform",
+      "subtitle": "Production-Ready Sesotho Language AI for Lesotho",
+      "description": "Upcoming AI platform leveraging the Sesotho News Dataset for sentiment analysis and NLP tasks, addressing real Lesotho challenges with government partnership potential.",
+      "longDescription": "Production-ready Sesotho language AI platform using the gold-standard Sesotho News Dataset (4,651 headlines, Cohen's Kappa: 0.758-0.821). Designed to address real Lesotho challenges through sentiment analysis, social media monitoring, and government decision support for 1.85M Sesotho speakers in Lesotho and 38M Sotho-Tswana speakers regionally.",
+      "technologies": ["Python", "TensorFlow", "HuggingFace", "FastAPI", "React", "AWS", "Sesotho NLP"],
+      "category": ["AI", "NLP", "Research"],
+      "status": "Planning Phase",
+      "year": "2025",
+      "duration": "Side project - ongoing",
+      "team": "Lead Developer",
+      
+      "problem": "Limited Sesotho language AI support for 1.85M speakers in Lesotho, lack of sentiment analysis tools for government decision-making, and insufficient NLP resources for Sesotho-speaking communities.",
+      
+      "solution": "Building production-ready Sesotho AI platform using gold-standard dataset for sentiment analysis, government decision support, and public service applications with AWS integration and nationwide deployment strategy.",
+      
+      "approach": [
+        "Leveraging Sesotho News Dataset (Zenodo DOI: 10.5281/zenodo.10531959)",
+        "Implementing sentiment analysis and aspect-based sentiment analysis",
+        "Building government partnership for funding and nationwide access",
+        "Integrating AWS free tier for scalable AI capabilities",
+        "Designing public-facing applications for real Lesotho challenges"
+      ],
+      
+      "keyFeatures": [
+        "Sesotho sentiment analysis with gold-standard accuracy",
+        "Aspect-based sentiment analysis for detailed insights",
+        "Government decision support dashboard",
+        "Social media monitoring for Sesotho content",
+        "News analysis and public opinion tracking",
+        "Educational AI assistant in Sesotho",
+        "Customer service chatbot for telecoms/banking"
+      ],
+      
+      "dataset": {
+        "name": "Sesotho News Dataset",
+        "authors": "Refuoe Mokhosi, Casper-Shikali Shivachi, Matello Sethobane",
+        "published": "March 2024 - Data in Brief journal",
+        "size": "4,651 headlines (ABSA), 2,401 headlines (SA)",
+        "quality": "Gold standard - Cohen's Kappa: 0.758-0.821",
+        "topics": "Crime, politics, transport, government, education",
+        "speakers": "1.85M Lesotho + 38M Sotho-Tswana regional"
+      },
+      
+      "potentialApplications": [
+        "Government sentiment monitoring and decision support",
+        "Sesotho customer service chatbots for telecoms/banking",
+        "Educational AI assistant for schools and universities",
+        "Social media monitoring and analysis",
+        "News sentiment analysis and media insights"
+      ],
+      
+      "links": {
+        "dataset": "https://doi.org/10.5281/zenodo.10531959",
+        "research": "https://pmc.ncbi.nlm.nih.gov/articles/PMC11000195/",
+        "github": "https://github.com/pieter255/moeletsi"
+      },
+      
+      "images": [
+        "/projects/sesotho-ai/Pasted image.png",
+        "/projects/sesotho-ai/Pasted image (2).png",
+        "/projects/sesotho-ai/Pasted image (3).png",
+        "/projects/sesotho-ai/Pasted image (4).png"
+      ]
+    },
+    
+    {
+      "id": "ecommerce-platform",
+      "title": "E-Commerce Platform",
+      "subtitle": "Full-Stack Retail Management System",
+      "description": "Comprehensive e-commerce platform built with PHP and MySQL featuring product catalog, shopping cart, user authentication, order management, and admin dashboard.",
+      "longDescription": "Full-stack e-commerce solution developed as part of Web Design & Development module at Botho University. Features complete retail functionality including product management, user authentication, shopping cart, order processing, and administrative controls built with PHP, MySQL, and modern web technologies.",
+      "technologies": ["PHP", "MySQL", "HTML", "CSS", "JavaScript", "Bootstrap"],
+      "category": ["Web", "E-Commerce", "Academic"],
+      "status": "Completed",
       "year": "2024",
       "duration": "3 months",
       "team": "Solo Developer",
       
-      "problem": "Small to medium retail businesses struggle with manual inventory tracking, leading to stock discrepancies, lost sales, and inefficient operations.",
+      "problem": "Need for comprehensive e-commerce solution demonstrating full-stack web development skills with modern retail functionality and secure user management.",
       
-      "solution": "Built a comprehensive digital solution that automates inventory management, enables barcode scanning for quick product entry, and provides real-time business analytics with role-based access for different staff levels.",
-      
-      "approach": [
-        "Analyzed existing retail workflows and pain points through business interviews",
-        "Designed normalized database schema optimized for inventory operations",
-        "Implemented secure JWT-based authentication with role-based permissions",
-        "Integrated barcode scanning APIs for seamless product management",
-        "Created responsive dashboard with real-time analytics and reporting"
-      ],
-      
-      "challenges": [
-        {
-          "challenge": "Complex inventory flow management",
-          "solution": "Implemented transaction-based inventory updates with audit trails"
-        },
-        {
-          "challenge": "Multi-user concurrent access to inventory",
-          "solution": "Used database locking and optimistic concurrency control"
-        },
-        {
-          "challenge": "Role-based permission granularity",
-          "solution": "Created flexible permission matrix with resource-level access control"
-        }
-      ],
+      "solution": "Built complete e-commerce platform with product catalog, search functionality, secure authentication, shopping cart, order management, and admin dashboard using PHP and MySQL.",
       
       "keyFeatures": [
-        "Barcode scanning for product entry and sales",
-        "Multi-location inventory management", 
-        "Role-based access control (Admin, Manager, Cashier)",
-        "Real-time sales analytics and reporting",
-        "Customer management and loyalty tracking",
-        "Automated low-stock alerts and reordering",
-        "Comprehensive audit trails and logs"
-      ],
-      
-      "results": {
-        "metrics": [
-          { "label": "Database Query Performance", "value": "<50ms" },
-          { "label": "Concurrent User Support", "value": "100+" },
-          { "label": "Inventory Accuracy", "value": "99.8%" },
-          { "label": "System Uptime", "value": "99.9%" }
-        ],
-        "impact": "Reduced inventory discrepancies by 95% and increased checkout speed by 60% in pilot implementations"
-      },
-      
-      "links": {
-        "github": "https://github.com/kutloanom/store-management-system",
-        "demo": "https://store-mgmt-demo.herokuapp.com",
-        "documentation": "https://github.com/kutloanom/store-management-system/wiki"
-      },
-      
-      "images": [
-        "/projects/store-mgmt/dashboard.png",
-        "/projects/store-mgmt/inventory.png",
-        "/projects/store-mgmt/barcode-scanner.png",
-        "/projects/store-mgmt/analytics.png"
+        "Product catalog with search and filtering",
+        "Shopping cart functionality with session management",
+        "User authentication and authorization",
+        "Order management system",
+        "Admin dashboard for product and user management",
+        "Responsive design for mobile compatibility",
+        "Secure payment integration ready"
       ],
       
       "architecture": {
-        "backend": "Flask with SQLAlchemy ORM",
-        "database": "MySQL with optimized indexing",
-        "authentication": "JWT with refresh token rotation",
-        "frontend": "Responsive Bootstrap with vanilla JS",
-        "deployment": "Docker containers on cloud infrastructure"
-      }
-    },
-    
-    {
-      "id": "todo-pwa-redesign", 
-      "title": "Todo PWA Redesign",
-      "subtitle": "Modern Kanban + Calendar Integration",
-      "description": "Complete redesign and feature enhancement of a Vue.js todo application, transforming it into a unified productivity platform with Kanban boards and calendar integration.",
-      "longDescription": "Comprehensive overhaul of an existing todo application, introducing modern UI/UX principles, advanced task management features, and seamless integration between list, kanban, and calendar views for enhanced productivity workflows.",
-      "technologies": ["Vue.js", "Vuex", "PWA", "IndexedDB", "Chart.js", "Tailwind CSS"],
-      "category": ["Frontend", "PWA", "Redesign"],
-      "status": "Enhanced Production",
-      "year": "2024", 
-      "duration": "2 months",
-      "team": "Solo Developer",
-      
-      "problem": "The original todo application had limited functionality, poor user experience, and lacked modern productivity features expected by users in 2024.",
-      
-      "solution": "Completely redesigned the application with modern UI/UX, added Kanban board functionality, calendar integration, and enhanced the PWA capabilities for better mobile experience.",
-      
-      "approach": [
-        "Conducted UX audit of original application to identify pain points",
-        "Researched modern productivity app patterns and user expectations", 
-        "Designed new component architecture with Vue 3 Composition API",
-        "Implemented offline-first data persistence with IndexedDB",
-        "Created responsive design system with Tailwind CSS"
-      ],
-      
-      "challenges": [
-        {
-          "challenge": "Maintaining data integrity during major refactor",
-          "solution": "Implemented migration scripts and backward compatibility layers"
-        },
-        {
-          "challenge": "Complex state management across multiple views",
-          "solution": "Redesigned Vuex store with modular architecture and computed getters"
-        },
-        {
-          "challenge": "Seamless offline/online synchronization", 
-          "solution": "Built robust sync engine with conflict resolution strategies"
-        }
-      ],
-      
-      "keyFeatures": [
-        "Unified Kanban + Calendar + List views",
-        "Drag-and-drop task management",
-        "Offline-first PWA with sync capabilities",
-        "Advanced filtering and search functionality",
-        "Task analytics and productivity insights",
-        "Customizable themes and layouts",
-        "Smart notifications and reminders"
-      ],
-      
-      "results": {
-        "metrics": [
-          { "label": "User Engagement Increase", "value": "+185%" },
-          { "label": "Task Completion Rate", "value": "+67%" },
-          { "label": "Mobile Usage", "value": "+240%" },
-          { "label": "Performance Score", "value": "96/100" }
-        ],
-        "impact": "Transformed a basic todo app into a comprehensive productivity platform with significantly improved user satisfaction and engagement"
-      },
-      
-      "links": {
-        "live": "https://todo-pwa-redesign.netlify.app",
-        "github": "https://github.com/kutloanom/todo-pwa-redesign",
-        "before": "https://github.com/kutloanom/todo-pwa-original"
-      },
-      
-      "images": [
-        "/projects/todo-redesign/comparison.png",
-        "/projects/todo-redesign/kanban-view.png", 
-        "/projects/todo-redesign/calendar-integration.png",
-        "/projects/todo-redesign/mobile-responsive.png"
-      ],
-      
-      "architecture": {
-        "frontend": "Vue 3 with Composition API and TypeScript",
-        "state": "Vuex 4 with modular store architecture", 
-        "storage": "IndexedDB with Dexie.js wrapper",
-        "styling": "Tailwind CSS with custom design system",
-        "pwa": "Workbox for service worker and caching strategies"
+        "backend": "PHP with MySQL database",
+        "frontend": "HTML, CSS, JavaScript with Bootstrap",
+        "database": "MySQL with normalized schema",
+        "security": "PHP sessions, input validation, SQL injection prevention"
       }
     }
   ],
   
   "additional": [
     {
-      "id": "smartwhiteboard",
-      "title": "SmartWhiteboard Refactor",
-      "subtitle": "Modern ES6 Architecture Migration",
-      "description": "Complete architectural overhaul of a collaborative whiteboard application, migrating from legacy code to modern ES6 modules with improved performance and maintainability."
+      "id": "iot-solutions",
+      "title": "AWS IoT Solutions",
+      "subtitle": "Industrial IoT Monitoring Systems",
+      "description": "IoT solutions developed during internship at Sokul Automation using AWS IoT Core, Lambda, and DynamoDB for real-time sensor data processing and monitoring dashboards.",
+      "technologies": ["AWS IoT Core", "AWS Lambda", "DynamoDB", "Python", "MQTT", "Node-RED"],
+      "category": ["IoT", "AWS", "Industrial"],
+      "status": "Production",
+      "year": "2024"
     },
     {
-      "id": "school-management",
-      "title": "School Management System", 
-      "subtitle": "Educational Institution Platform",
-      "description": "Comprehensive platform for educational institutions featuring student enrollment, grade management, teacher dashboards, and parent communication portals."
+      "id": "portfolio-website",
+      "title": "Professional Portfolio Website", 
+      "subtitle": "Modern React Portfolio with CMS",
+      "description": "Responsive portfolio website built with React, TypeScript, and Tailwind CSS featuring project showcases, skills matrix, and content management system.",
+      "technologies": ["React", "TypeScript", "Tailwind CSS", "Framer Motion", "Supabase"],
+      "category": ["Web", "Portfolio", "Frontend"],
+      "status": "Production",
+      "year": "2024"
     }
   ]
 }

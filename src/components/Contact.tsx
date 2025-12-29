@@ -7,7 +7,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Label } from "@/components/ui/label";
-import { Mail, MessageSquare, Send, Github, Linkedin, Calendar, Download } from "lucide-react";
+import { Mail, MessageSquare, Send, Github, Linkedin, Calendar, Download, Phone } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 import { supabase, SUPABASE_URL } from "@/integrations/supabase/client";
 import { useAnalytics } from "@/hooks/useAnalytics";
@@ -82,26 +82,23 @@ export default function Contact({ profile }: ContactProps) {
         message: formData.get('message') as string,
       };
 
-      const { error } = await supabase.functions.invoke('submit-contact', {
-        body: data
-      });
-
-      if (error) {
-        throw error;
-      }
-
-      trackContactFormSubmit();
+      // Direct mailto link - guaranteed to work
+      const emailBody = `From: ${data.firstName} ${data.lastName}\nEmail: ${data.email}\n\nMessage:\n${data.message}`;
+      const mailtoLink = `mailto:kutloano.moshao111@gmail.com?subject=${encodeURIComponent(data.subject)}&body=${encodeURIComponent(emailBody)}`;
+      
+      window.location.href = mailtoLink;
+      
       toast({
-        title: "Message sent!",
-        description: "Thank you for your message. I'll get back to you soon.",
+        title: "Email client opened",
+        description: "Your email app has opened. Click Send to deliver your message.",
       });
       
       (e.target as HTMLFormElement).reset();
     } catch (error: any) {
       console.error('Contact form error:', error);
       toast({
-        title: "Error sending message",
-        description: "Please try again or contact me directly via email.",
+        title: "Error",
+        description: "Please email me directly at kutloano.moshao111@gmail.com",
         variant: "destructive",
       });
     } finally {
@@ -172,17 +169,59 @@ export default function Contact({ profile }: ContactProps) {
                 whileHover={{ scale: 1.02 }}
                 className="group"
               >
-                <Card className="glass border-0 hover-lift cursor-pointer">
+                <Card className="glass border-0 hover-lift cursor-pointer" onClick={() => window.location.href = 'tel:+26657586176'}>
                   <CardContent className="p-6">
                     <div className="flex items-center gap-4">
                       <div className="p-3 gradient-primary rounded-2xl">
-                        <Calendar className="w-6 h-6 text-primary-foreground" />
+                        <Phone className="w-6 h-6 text-primary-foreground" />
                       </div>
                       <div>
                         <h4 className="font-semibold group-hover:text-primary transition-colors">
-                          Schedule a Meeting
+                          Direct Call
                         </h4>
-                        <p className="text-muted-foreground">Book a time that works for you</p>
+                        <p className="text-muted-foreground">+266 5758 6176</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="group"
+              >
+                <Card className="glass border-0 hover-lift cursor-pointer" onClick={() => window.open('https://wa.me/26657586176', '_blank')}>
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 gradient-primary rounded-2xl">
+                        <MessageSquare className="w-6 h-6 text-primary-foreground" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold group-hover:text-primary transition-colors">
+                          WhatsApp Business
+                        </h4>
+                        <p className="text-muted-foreground">+266 5758 6176</p>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              <motion.div
+                whileHover={{ scale: 1.02 }}
+                className="group"
+              >
+                <Card className="glass border-0 hover-lift cursor-pointer" onClick={() => window.open('https://t.me/+26657586176', '_blank')}>
+                  <CardContent className="p-6">
+                    <div className="flex items-center gap-4">
+                      <div className="p-3 gradient-primary rounded-2xl">
+                        <Send className="w-6 h-6 text-primary-foreground" />
+                      </div>
+                      <div>
+                        <h4 className="font-semibold group-hover:text-primary transition-colors">
+                          Telegram
+                        </h4>
+                        <p className="text-muted-foreground">+266 5758 6176</p>
                       </div>
                     </div>
                   </CardContent>
@@ -262,7 +301,7 @@ export default function Contact({ profile }: ContactProps) {
                         name="firstName"
                         required
                         className="glass border-0"
-                        placeholder="John"
+                        placeholder="Write your first name"
                       />
                     </div>
                     <div className="space-y-2">
@@ -272,7 +311,7 @@ export default function Contact({ profile }: ContactProps) {
                         name="lastName"
                         required
                         className="glass border-0"
-                        placeholder="Doe"
+                        placeholder="Write your last name"
                       />
                     </div>
                   </div>
@@ -285,7 +324,7 @@ export default function Contact({ profile }: ContactProps) {
                       type="email"
                       required
                       className="glass border-0"
-                      placeholder="john.doe@example.com"
+                      placeholder="Enter your email address"
                     />
                   </div>
 
@@ -296,7 +335,7 @@ export default function Contact({ profile }: ContactProps) {
                       name="subject"
                       required
                       className="glass border-0"
-                      placeholder="Project collaboration opportunity"
+                      placeholder="What would you like to discuss?"
                     />
                   </div>
 
@@ -307,7 +346,7 @@ export default function Contact({ profile }: ContactProps) {
                       name="message"
                       required
                       className="glass border-0 min-h-[120px] resize-none"
-                      placeholder="Tell me about your project or how we can work together..."
+                      placeholder="Tell me about your project, ideas, or how we can work together..."
                     />
                   </div>
 
