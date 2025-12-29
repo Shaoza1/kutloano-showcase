@@ -8,22 +8,14 @@ import SkillsMatrix from "@/components/SkillsMatrix";
 import ProjectShowcase from "@/components/ProjectShowcase";
 import CoursesLabs from "@/components/CoursesLabs";
 import Education from "@/components/Education";
-import Blog from "@/components/Blog";
 import Contact from "@/components/Contact";
 import Footer from "@/components/Footer";
-import PerformanceMonitor from "@/components/PerformanceMonitor";
 import { ThemeProvider } from "@/components/ThemeProvider";
-import { useAnalytics } from "@/hooks/useAnalytics";
 import profileData from "@/data/profile.json";
 import projectsData from "@/data/projects.json";
 
 export default function Portfolio() {
-  const { trackPageView } = useAnalytics();
-
   useEffect(() => {
-    // Track page view
-    trackPageView('portfolio');
-    
     // Update document title for better SEO and accessibility
     document.title = `${profileData.name} - Full-Stack Developer Portfolio`;
     
@@ -92,14 +84,8 @@ export default function Portfolio() {
           {/* Education & Certifications */}
           <Education profile={profileData} />
           
-          {/* Blog & Insights */}
-          <Blog />
-          
           {/* Contact */}
           <Contact profile={profileData} />
-          
-          {/* Performance Monitor */}
-          <PerformanceMonitor />
         </div>
         
         {/* Footer */}
