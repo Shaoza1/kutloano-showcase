@@ -93,6 +93,100 @@
     },
     
     {
+      "id": "reusability-compass",
+      "title": "Reusability Compass - Platform Insights Analyzer",
+      "subtitle": "GenAI-Powered Platform Adoption Analytics",
+      "description": "Production-grade full-stack application analyzing software platform reusability through automated surveys, GenAI insights, and interactive visualizations.",
+      "longDescription": "Enterprise-grade TypeScript application that transforms platform adoption challenges into actionable insights. Combines automated developer surveys, OpenAI GPT-4 analysis, and interactive D3.js heatmaps to quantify adoption friction and strategic value for platform teams and engineering leadership.",
+      "technologies": ["React 18", "TypeScript", "Node.js", "Express", "OpenAI GPT-4", "Supabase", "D3.js", "Recharts", "shadcn/ui"],
+      "category": ["AI", "Analytics", "Production"],
+      "status": "Production",
+      "year": "2025",
+      "duration": "Portfolio project",
+      "team": "Lead Developer",
+      
+      "problem": "Platform teams lack visibility into component adoption friction, struggle to quantify strategic value of platform investments, and cannot transform qualitative developer feedback into structured insights for data-driven decisions.",
+      
+      "solution": "Built comprehensive analytics platform with automated survey collection, GenAI-powered sentiment analysis, and interactive visualizations that transform developer feedback into executive-ready insights and adoption recommendations.",
+      
+      "approach": [
+        "Designed automated survey system for developer feedback collection",
+        "Integrated OpenAI GPT-4 for sentiment analysis and root cause extraction",
+        "Built interactive D3.js heatmap visualizing many-to-many platform relationships",
+        "Implemented real-time data synchronization with Supabase PostgreSQL",
+        "Created executive dashboard with strategic value assessments",
+        "Deployed production-ready architecture on Vercel and Render"
+      ],
+      
+      "challenges": [
+        {
+          "challenge": "Complex many-to-many relationship visualization",
+          "solution": "Implemented interactive D3.js heatmap with drill-down capabilities and real-time updates"
+        },
+        {
+          "challenge": "Transforming qualitative feedback into quantitative insights",
+          "solution": "Built GenAI pipeline with structured prompts for sentiment, friction scoring, and root cause analysis"
+        },
+        {
+          "challenge": "Real-time data synchronization and lifecycle management",
+          "solution": "Implemented automated survey → AI analysis → visualization pipeline with status tracking"
+        }
+      ],
+      
+      "keyFeatures": [
+        "Automated developer survey collection with clean UI",
+        "OpenAI GPT-4 integration for sentiment analysis and friction scoring",
+        "Interactive D3.js heatmap with many-to-many relationship visualization",
+        "Real-time data synchronization with Supabase PostgreSQL",
+        "Executive dashboard with strategic value assessments",
+        "Automated survey lifecycle management (submitted → analyzed → visualized)",
+        "Root cause extraction and executive summary generation",
+        "Enterprise-grade error handling and fallback mechanisms"
+      ],
+      
+      "results": {
+        "metrics": [
+          { "label": "AI Analysis Pipeline", "value": "Real-time" },
+          { "label": "Survey Processing", "value": "Automated" },
+          { "label": "Visualization", "value": "Interactive" },
+          { "label": "Architecture", "value": "Production-ready" }
+        ],
+        "impact": "Demonstrates enterprise software architecture, GenAI integration, and complex data visualization capabilities for platform engineering challenges."
+      },
+      
+      "links": {
+        "live": "https://reusability-compass.vercel.app",
+        "api": "https://reusability-compass.onrender.com/api/health",
+        "github": "https://github.com/Shaoza1/reusability-compass"
+      },
+      
+      "images": [
+        "/projects/reusability-compass/Pasted image.png",
+        "/projects/reusability-compass/Pasted image (2).png",
+        "/projects/reusability-compass/Pasted image (3).png",
+        "/projects/reusability-compass/Pasted image (4).png",
+        "/projects/reusability-compass/Pasted image (5).png",
+        "/projects/reusability-compass/Pasted image (6).png"
+      ],
+      
+      "architecture": {
+        "frontend": "React 18 + TypeScript + Tailwind CSS + Vite + shadcn/ui",
+        "backend": "Node.js + Express + OpenAI API integration",
+        "database": "Supabase PostgreSQL with Row Level Security",
+        "visualization": "D3.js + Recharts for interactive charts and heatmaps",
+        "ai": "OpenAI GPT-4o-mini for cost-effective analysis",
+        "deployment": "Vercel (frontend) + Render (backend) + Supabase (database)"
+      },
+      
+      "businessImpact": {
+        "platformROI": "Quantifies platform investment returns",
+        "developerExperience": "Improves internal tool adoption",
+        "dataDecisions": "Transforms feedback into actionable insights",
+        "scalability": "Handles enterprise-scale platform ecosystems"
+      }
+    },
+    
+    {
       "id": "sesotho-ai",
       "title": "Sesotho AI Platform",
       "subtitle": "Production-Ready Sesotho Language AI for Lesotho",
