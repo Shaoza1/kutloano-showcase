@@ -14,7 +14,7 @@
   "linkedin": "https://www.linkedin.com/in/kutloano-moshao-1aa5003a1/",
   "portfolio": "https://kutloano-portfolio.vercel.app",
   
-  "bio": "UNDP AI Hackathon Finalist and full-stack developer with expertise in agricultural technology. Creator of AgroSense, an AI-powered platform for smart agriculture. Specializing in AI-powered web applications, offline-first PWAs, and scalable solutions that address real-world challenges in Lesotho and beyond.",
+  "bio": "UNDP AI Hackathon Finalist and full-stack developer with expertise in IoT network management and agricultural technology. Creator of NetWatch Pro (enterprise network monitoring), AgroSense (AI-powered agriculture), and Reusability Compass (platform analytics). Specializing in React + Python integration, network automation, and scalable solutions that address real-world challenges.",
   
   "skills": {
     "frontend": [
@@ -28,6 +28,8 @@
     "backend": [
       { "name": "Node.js", "level": 85, "category": "backend" },
       { "name": "Express.js", "level": 85, "category": "backend" },
+      { "name": "Python", "level": 85, "category": "backend" },
+      { "name": "FastAPI", "level": 80, "category": "backend" },
       { "name": "PHP", "level": 80, "category": "backend" },
       { "name": "MySQL", "level": 80, "category": "backend" },
       { "name": "PostgreSQL", "level": 85, "category": "backend" },
@@ -44,6 +46,8 @@
     "cloud": [
       { "name": "AWS IoT Core", "level": 80, "category": "cloud" },
       { "name": "AWS Lambda", "level": 75, "category": "cloud" },
+      { "name": "Docker", "level": 75, "category": "cloud" },
+      { "name": "Network Automation", "level": 80, "category": "cloud" },
       { "name": "Vercel", "level": 90, "category": "cloud" },
       { "name": "Render.com", "level": 85, "category": "cloud" },
       { "name": "Git/GitHub", "level": 90, "category": "cloud" }
@@ -136,8 +140,8 @@
   ],
   
   "stats": {
-    "projectsCompleted": 13,
-    "technologiesMastered": 20,
+    "projectsCompleted": 14,
+    "technologiesMastered": 22,
     "certificationsEarned": 3,
     "yearsExperience": 4
   }

@@ -187,6 +187,109 @@
     },
     
     {
+      "id": "netwatch-pro",
+      "title": "NetWatch Pro - IoT Network Management Platform",
+      "subtitle": "Enterprise Network Monitoring & Automation",
+      "description": "Comprehensive IoT network management platform combining React frontend with Python backend services, leveraging Cisco certifications for enterprise network automation.",
+      "longDescription": "NetWatch Pro is an enterprise-grade IoT Network Management Platform that demonstrates the integration of Cisco networking certifications with modern full-stack development. Built with React + TypeScript frontend and Python FastAPI backend, it provides real-time network monitoring, automated device discovery, and security threat detection for enterprise environments.",
+      "technologies": ["React 18", "TypeScript", "Python", "FastAPI", "Supabase", "Tailwind CSS", "Docker", "Recharts", "shadcn/ui"],
+      "category": ["IoT", "Networking", "Production"],
+      "status": "Production",
+      "year": "2025",
+      "duration": "Portfolio project",
+      "team": "Lead Developer",
+      
+      "problem": "Enterprise networks lack comprehensive monitoring solutions that combine real-time device discovery, performance monitoring, and security threat detection in a unified platform accessible to both technical and non-technical stakeholders.",
+      
+      "solution": "Built comprehensive IoT network management platform with automated device discovery, real-time performance monitoring, security threat detection, and interactive network topology visualization, leveraging Cisco networking expertise with modern web technologies.",
+      
+      "approach": [
+        "Designed React + TypeScript frontend with professional enterprise UI",
+        "Implemented Python FastAPI backend for network automation and device communication",
+        "Integrated Supabase for real-time data synchronization and storage",
+        "Applied Cisco certification knowledge for network discovery and monitoring algorithms",
+        "Built Docker containerization for scalable deployment architecture",
+        "Created concurrent server startup system for seamless development experience"
+      ],
+      
+      "challenges": [
+        {
+          "challenge": "Seamless integration between React frontend and Python backend services",
+          "solution": "Implemented FastAPI with CORS configuration and React hooks for real-time communication"
+        },
+        {
+          "challenge": "Real-time network device monitoring and data synchronization",
+          "solution": "Built Supabase integration with real-time subscriptions and automated data collection"
+        },
+        {
+          "challenge": "Enterprise-grade security and network automation",
+          "solution": "Applied Cisco cybersecurity principles with Python automation scripts for device management"
+        }
+      ],
+      
+      "keyFeatures": [
+        "Real-time network device discovery and monitoring",
+        "Interactive dashboard with live performance metrics",
+        "Automated device classification and status tracking",
+        "Security monitoring and threat detection framework",
+        "Network topology visualization with device relationships",
+        "Alert management system with configurable thresholds",
+        "Python-powered network automation scripts",
+        "Enterprise-grade UI with dark/light theme support"
+      ],
+      
+      "results": {
+        "metrics": [
+          { "label": "Frontend-Backend Integration", "value": "Seamless" },
+          { "label": "Real-time Monitoring", "value": "Active" },
+          { "label": "Device Discovery", "value": "Automated" },
+          { "label": "Deployment", "value": "Production-ready" }
+        ],
+        "impact": "Demonstrates unique combination of networking expertise with modern full-stack development, showcasing practical application of Cisco certifications in enterprise software."
+      },
+      
+      "links": {
+        "github": "https://github.com/kutloanom/netwatch-pro",
+        "demo": "http://localhost:8080"
+      },
+      
+      "images": [
+        "/projects/NetWatch Pro /Pasted image.png",
+        "/projects/NetWatch Pro /Pasted image (2).png",
+        "/projects/NetWatch Pro /Pasted image (3).png",
+        "/projects/NetWatch Pro /Pasted image (4).png",
+        "/projects/NetWatch Pro /Pasted image (5).png",
+        "/projects/NetWatch Pro /Pasted image (6).png"
+      ],
+      
+      "architecture": {
+        "frontend": "React 18 + TypeScript + Tailwind CSS + Vite + shadcn/ui",
+        "backend": "Python FastAPI + Uvicorn with network automation services",
+        "database": "Supabase PostgreSQL with real-time subscriptions",
+        "visualization": "Recharts for performance charts and network topology",
+        "containerization": "Docker for development and deployment",
+        "deployment": "Concurrent server startup with automated environment setup"
+      },
+      
+      "ciscoIntegration": {
+        "pythonEssentials": "Network automation scripts and device communication protocols",
+        "cybersecurity": "Security monitoring, threat detection, and access control management",
+        "packetTracer": "Network topology visualization and device relationship mapping"
+      },
+      
+      "technicalHighlights": [
+        "Seamless React + Python integration with real-time data flow",
+        "Enterprise-grade network device discovery and monitoring",
+        "Professional UI/UX design with responsive mobile interface",
+        "Docker containerization for scalable deployment",
+        "Comprehensive API documentation with FastAPI",
+        "Real-time data synchronization between frontend and backend",
+        "Production-ready architecture with health monitoring",
+        "Practical application of Cisco networking certifications"
+      ]
+    },
+    
+    {
       "id": "sesotho-ai",
       "title": "Sesotho AI Platform",
       "subtitle": "Production-Ready Sesotho Language AI for Lesotho",
