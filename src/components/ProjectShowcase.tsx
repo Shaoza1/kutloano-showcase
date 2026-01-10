@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ExternalLink, Github, Play, ChevronRight } from "lucide-react";
+import { ExternalLink, Github, Play, ChevronRight, ChevronLeft } from "lucide-react";
 
 interface Project {
   id: string;
@@ -39,6 +39,7 @@ interface ProjectShowcaseProps {
 export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>("all");
   const [selectedProject, setSelectedProject] = useState<Project | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
   
   const categories = [
     "all", 
@@ -239,7 +240,10 @@ export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
       </div>
 
       {/* Project Modal */}
-      <Dialog open={!!selectedProject} onOpenChange={() => setSelectedProject(null)}>
+      <Dialog open={!!selectedProject} onOpenChange={() => {
+        setSelectedProject(null);
+        setCurrentImageIndex(0);
+      }}>
         <DialogContent className="max-w-4xl max-h-[80vh] overflow-y-auto">
           {selectedProject && (
             <>
@@ -251,12 +255,56 @@ export default function ProjectShowcase({ projects }: ProjectShowcaseProps) {
               
               <div className="space-y-6">
                 {selectedProject.images && selectedProject.images.length > 0 ? (
-                  <div className="h-64 rounded-lg overflow-hidden">
-                    <img 
-                      src={selectedProject.images[0]} 
-                      alt={selectedProject.title}
-                      className="w-full h-full object-cover"
-                    />
+                  <div className="relative">
+                    <div className="h-64 rounded-lg overflow-hidden">
+                      <img 
+                        src={selectedProject.images[currentImageIndex]} 
+                        alt={`${selectedProject.title} - Screenshot ${currentImageIndex + 1}`}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                    
+                    {selectedProject.images.length > 1 && (
+                      <>
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
+                          onClick={() => setCurrentImageIndex(prev => 
+                            prev === 0 ? selectedProject.images!.length - 1 : prev - 1
+                          )}
+                        >
+                          <ChevronLeft className="w-4 h-4" />
+                        </Button>
+                        
+                        <Button
+                          variant="ghost"
+                          size="sm"
+                          className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white"
+                          onClick={() => setCurrentImageIndex(prev => 
+                            prev === selectedProject.images!.length - 1 ? 0 : prev + 1
+                          )}
+                        >
+                          <ChevronRight className="w-4 h-4" />
+                        </Button>
+                        
+                        <div className="absolute bottom-2 left-1/2 -translate-x-1/2 flex gap-1">
+                          {selectedProject.images.map((_, index) => (
+                            <button
+                              key={index}
+                              className={`w-2 h-2 rounded-full transition-colors ${
+                                index === currentImageIndex ? 'bg-white' : 'bg-white/50'
+                              }`}
+                              onClick={() => setCurrentImageIndex(index)}
+                            />
+                          ))}
+                        </div>
+                        
+                        <div className="absolute top-2 right-2 bg-black/50 text-white px-2 py-1 rounded text-sm">
+                          {currentImageIndex + 1} / {selectedProject.images.length}
+                        </div>
+                      </>
+                    )}
                   </div>
                 ) : (
                   <div className="h-64 bg-gradient-to-br from-primary/20 to-accent/20 rounded-lg flex items-center justify-center">
