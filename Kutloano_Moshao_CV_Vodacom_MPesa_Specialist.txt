@@ -1,0 +1,129 @@
+KUTLOANO MOSHAO
+Financial Systems Specialist | Full-Stack Developer | M-Pesa & Mobile Money Expert
+
+📧 kutloano.moshao111@gmail.com | 📱 +266 5758 6176 | 📍 Maseru, Lesotho
+🔗 LinkedIn: kutloano-moshao-1aa5003a1 | 💻 GitHub: kutloanom
+🌐 Portfolio: https://kutloano-showcase.vercel.app
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+PROFESSIONAL SUMMARY
+
+Financial Systems Specialist with expertise in mobile money platforms, API integrations, and enterprise system administration. BSc Computing graduate with hands-on experience in database management, server environments, and financial technology solutions. Proven track record in system maintenance, technical requirements analysis, and stakeholder management through production-ready applications serving real users.
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+EDUCATION
+
+BSc (Hons) Computing | Botho University | 2021-2025 (Expected)
+• Specialized modules: Database Systems, System Administration, API Development, Financial Technology
+• Relevant coursework: Mobile Application Development, System Integration, IT Service Management
+• Academic projects: E-commerce platform with payment integration, Financial data analysis systems
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+TECHNICAL EXPERTISE
+
+FINANCIAL SYSTEMS & MOBILE MONEY
+• Mobile Money Platforms: Payment gateway integration, transaction processing, financial APIs
+• Database Management: PostgreSQL, MySQL, Redis - transaction data, user management, reporting
+• System Integration: RESTful APIs, microservices architecture, third-party payment systems
+• Server Administration: Linux environments, cloud infrastructure (AWS, Supabase), system monitoring
+
+IT SERVICE MANAGEMENT
+• System Maintenance: Production system monitoring, performance optimization, capacity planning
+• Technical Documentation: System architecture, API documentation, technical specifications
+• Stakeholder Management: Cross-functional collaboration, technical requirement gathering
+• Problem Resolution: Root cause analysis, system troubleshooting, incident management
+
+DEVELOPMENT & INTEGRATION
+• Languages: Python, JavaScript/TypeScript, PHP, SQL
+• Frameworks: FastAPI, Node.js, React - for financial system interfaces and APIs
+• Cloud Platforms: AWS (IoT Core, Lambda, S3), Supabase, Vercel, Render
+• Integration: Payment gateways, SMS APIs (WASMS), real-time data synchronization
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+RELEVANT EXPERIENCE
+
+AWS IoT Intern | Sokul Automation | 2024
+• Administered and maintained IoT systems with real-time data processing
+• Developed technical requirements for system integrations and capacity management
+• Implemented monitoring solutions using AWS services (IoT Core, Lambda, DynamoDB)
+• Created technical documentation and system architecture diagrams
+• Collaborated with stakeholders on technical solutions and system requirements
+
+Sales Executive | IMZ Marketing | 2023-2024
+• Managed client relationships and facilitated technical discussions
+• Analyzed business requirements and provided technical feasibility assessments
+• Developed customer-facing solutions and maintained service delivery standards
+• Gained experience in business process analysis and stakeholder communication
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+PROJECT PORTFOLIO - FINANCIAL SYSTEMS FOCUS
+
+AgroSense - Payment Integration Platform | 2025 | PRODUCTION
+🌐 https://agrosense-client-kappa.vercel.app/
+• Built financial transaction system with SMS payment integration (WASMS API)
+• Implemented user authentication, payment processing, and transaction history
+• Developed real-time notification system for payment confirmations
+• Technologies: React, Node.js, Supabase, Payment APIs, SMS Integration
+• Impact: UNDP AI Hackathon Finalist - validated for government partnership
+
+NetWatch Pro - Enterprise System Management | 2025 | PRODUCTION  
+🌐 https://net-watch-pro.vercel.app/
+• Developed enterprise system administration platform with real-time monitoring
+• Built API integration framework for multiple system components
+• Implemented capacity management and performance monitoring features
+• Created technical architecture documentation and system inventory management
+• Technologies: React, Python FastAPI, Supabase, Docker, System APIs
+
+Reusability Compass - Analytics Platform | 2025 | PRODUCTION
+🌐 https://reusability-compass.vercel.app
+• Built data analytics platform with automated reporting and insights generation
+• Implemented real-time data processing and visualization for business intelligence
+• Developed API integration for multiple data sources and system components
+• Created executive dashboard for technical and business stakeholder communication
+• Technologies: React, Node.js, OpenAI API, D3.js, Real-time Analytics
+
+E-Commerce Platform with Payment Gateway | 2024 | ACADEMIC
+• Developed complete financial transaction system with secure payment processing
+• Implemented user authentication, order management, and financial reporting
+• Built admin dashboard for transaction monitoring and system administration
+• Technologies: PHP, MySQL, Payment Gateway Integration, Session Management
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+CERTIFICATIONS & ACHIEVEMENTS
+
+• UNDP AI Language Innovation Hackathon Finalist (2025)
+• Cisco Python Essentials 1 - Programming and automation skills
+• Cisco Introduction to Cybersecurity - Security and system protection
+• Cisco Packet Tracer - Network architecture and system design
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+KEY COMPETENCIES FOR M-PESA SYSTEMS
+
+✓ Financial Systems Administration: Experience with payment platforms and transaction processing
+✓ System Integration: Proven API development and third-party system integration experience  
+✓ Database Management: PostgreSQL, MySQL expertise for financial data and transaction records
+✓ Technical Requirements Analysis: Feasibility assessment, impact analysis, cost evaluation
+✓ Capacity Management: System monitoring, performance optimization, growth planning
+✓ Stakeholder Communication: Technical documentation, cross-functional collaboration
+✓ Mobile Money Knowledge: Payment gateway integration, SMS APIs, financial technology
+✓ Problem-Solving: Analytical thinking, root cause analysis, logical troubleshooting
+
+═══════════════════════════════════════════════════════════════════════════════════
+
+LANGUAGES
+• English: Fluent (Business and Technical)
+• Sesotho: Native Speaker
+
+AVAILABILITY
+• Immediate start available
+• Based in Maseru, Lesotho
+• Open to full-time employment and system administration responsibilities
+
+═══════════════════════════════════════════════════════════════════════════════════

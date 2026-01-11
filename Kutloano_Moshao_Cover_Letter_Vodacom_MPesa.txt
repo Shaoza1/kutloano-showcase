@@ -1,0 +1,50 @@
+KUTLOANO MOSHAO
+📧 kutloano.moshao111@gmail.com | 📱 +266 5758 6176 | 📍 Maseru, Lesotho
+
+January 11, 2026
+
+Vodacom Lesotho
+Human Resources Department
+Maseru, Lesotho
+
+RE: APPLICATION FOR SPECIALIST: FINANCIAL SYSTEMS (M-PESA) POSITION
+
+Dear Hiring Manager,
+
+I am writing to express my strong interest in the Specialist: Financial Systems (M-Pesa) position at Vodacom Lesotho. As a BSc Computing graduate with hands-on experience in financial systems, API integrations, and enterprise system administration, I am excited to contribute to Vodacom's M-Pesa platform success in Lesotho.
+
+ALIGNMENT WITH ROLE REQUIREMENTS
+
+My background directly aligns with your key requirements:
+
+**Financial Systems Experience**: Through my production applications, I have developed and maintained financial transaction systems, including payment gateway integrations and SMS-based payment processing (WASMS API) in my AgroSense platform, which advanced to UNDP AI Hackathon finals.
+
+**System Administration & Integration**: My NetWatch Pro enterprise platform demonstrates my ability to administer complex systems, develop technical requirements, and manage system integrations. The platform includes real-time monitoring, capacity management, and comprehensive technical architecture documentation.
+
+**Database & Server Environments**: I have extensive experience with PostgreSQL, MySQL, and cloud server environments (AWS, Supabase), managing transaction data, user authentication, and system performance optimization across multiple production applications.
+
+**IT Service Management**: My AWS IoT internship at Sokul Automation provided hands-on experience in system maintenance, technical requirement analysis, and stakeholder collaboration - directly applicable to M-Pesa system administration.
+
+TECHNICAL CONTRIBUTIONS I CAN MAKE
+
+**Technical Requirements & Feasibility Analysis**: My experience developing TRPs (Technical Requirement Proposals) and conducting feasibility assessments for multiple production systems positions me well to evaluate M-Pesa system enhancements for impact, cost, and integration complexity.
+
+**System Architecture & Documentation**: I have created comprehensive technical and logical architecture documentation for enterprise systems, maintained system inventories, and developed capacity management plans - essential skills for M-Pesa system administration.
+
+**Stakeholder Engagement**: Through my projects and internship experience, I have facilitated technical discussions with diverse stakeholders, ensuring clear communication of technical developments and gaining buy-in for system transitions.
+
+**Mobile Money Understanding**: My work with payment APIs, SMS integration, and financial transaction processing provides relevant mobile money platform knowledge that I can immediately apply to M-Pesa systems.
+
+WHY VODACOM LESOTHO
+
+Vodacom's M-Pesa platform is transforming financial inclusion in Lesotho, and I am passionate about contributing to this impact. My combination of technical expertise, local market understanding, and proven ability to deliver production-ready financial systems makes me well-positioned to support M-Pesa's continued growth and reliability.
+
+My portfolio demonstrates not just theoretical knowledge but practical implementation of financial systems that serve real users. I am particularly excited about the opportunity to apply my skills to a platform that directly impacts Basotho communities' access to financial services.
+
+I am available for immediate employment and eager to discuss how my technical expertise and passion for financial technology can contribute to Vodacom Lesotho's M-Pesa success. Thank you for considering my application.
+
+Sincerely,
+
+Kutloano Moshao
+BSc (Hons) Computing | Financial Systems Specialist
+Portfolio: https://kutloano-showcase.vercel.app

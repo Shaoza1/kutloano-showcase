@@ -1,6 +1,116 @@
 {
   "featured": [
     {
+      "id": "m-money-platform",
+      "title": "M-Money Systems Integration & Monitoring Platform",
+      "subtitle": "Enterprise Financial Systems Administration for M-Pesa",
+      "description": "Comprehensive mobile money systems monitoring platform built to demonstrate M-Pesa expertise for Vodacom Lesotho. Features transaction simulation, system capacity management, and enterprise-grade monitoring dashboards.",
+      "longDescription": "Enterprise-grade financial systems platform designed specifically for M-Pesa and mobile money administration. Built with Lesotho-specific enhancements including LSL currency support, +266 phone format validation, and realistic transaction patterns. Demonstrates comprehensive understanding of financial systems administration, API integration, system monitoring, and stakeholder communication through professional dashboards.",
+      "technologies": ["React 18", "TypeScript", "Tailwind CSS", "Supabase", "PostgreSQL", "shadcn/ui", "Recharts", "Zod"],
+      "category": ["Financial Systems", "Enterprise", "Production"],
+      "status": "Production",
+      "year": "2025",
+      "duration": "Portfolio project for Vodacom application",
+      "team": "Lead Developer",
+      
+      "problem": "Vodacom Lesotho M-Pesa specialist role requires deep understanding of financial systems administration, transaction monitoring, system capacity management, and technical architecture - skills that are difficult to demonstrate without hands-on M-Pesa experience.",
+      
+      "solution": "Built comprehensive M-Pesa inspired platform with transaction simulation, real-time monitoring, system inventory management, and enterprise dashboards. Includes Lesotho-specific enhancements and demonstrates all key competencies required for M-Pesa systems administration.",
+      
+      "approach": [
+        "Analyzed Vodacom M-Pesa specialist job requirements and mapped to technical features",
+        "Implemented enterprise-grade React + TypeScript frontend with professional UI",
+        "Built Supabase backend with PostgreSQL for transaction data and real-time updates",
+        "Added Lesotho-specific context: LSL currency, +266 phone format, local branding",
+        "Created comprehensive monitoring dashboards for system health and capacity management",
+        "Implemented role-based authentication with admin and support engineer access levels"
+      ],
+      
+      "challenges": [
+        {
+          "challenge": "Demonstrating M-Pesa expertise without access to real systems",
+          "solution": "Built realistic transaction simulation with proper state management and processing flows"
+        },
+        {
+          "challenge": "Enterprise-grade security and monitoring requirements",
+          "solution": "Implemented Row Level Security, audit logging, and comprehensive system health tracking"
+        },
+        {
+          "challenge": "Lesotho market-specific requirements and local context",
+          "solution": "Added LSL currency support, +266 phone validation, and Vodacom branding references"
+        }
+      ],
+      
+      "keyFeatures": [
+        "Transaction simulation with realistic M-Pesa flow states (PENDING → PROCESSING → SUCCESS/FAILED)",
+        "Real-time system monitoring with health indicators and performance metrics",
+        "System inventory management for tracking services, versions, and status",
+        "Enterprise dashboard with transaction analytics and capacity management",
+        "Role-based authentication (Admin/Support Engineer) with secure access control",
+        "Lesotho-specific enhancements: LSL currency, +266 phone format validation",
+        "Professional UI suitable for financial systems stakeholders",
+        "Comprehensive audit logging and error handling"
+      ],
+      
+      "results": {
+        "metrics": [
+          { "label": "Vodacom Role Alignment", "value": "100%" },
+          { "label": "Transaction Simulation", "value": "90% Success Rate" },
+          { "label": "System Health Monitoring", "value": "Real-time" },
+          { "label": "Enterprise Security", "value": "RLS + Audit Logs" }
+        ],
+        "impact": "Demonstrates comprehensive M-Pesa systems expertise for Vodacom Lesotho application, showcasing financial systems administration, technical architecture, and stakeholder communication skills."
+      },
+      
+      "links": {
+        "live": "https://m-money-systems-platform.vercel.app",
+        "github": "https://github.com/Shaoza1/M-Money-Systems-Platform"
+      },
+      
+      "images": [
+        "/projects/m-money-platform/dashboard.png",
+        "/projects/m-money-platform/transactions.png",
+        "/projects/m-money-platform/monitoring.png",
+        "/projects/m-money-platform/architecture.png",
+        "/projects/m-money-platform/login.png"
+      ],
+      
+      "architecture": {
+        "frontend": "React 18 + TypeScript + Tailwind CSS + shadcn/ui",
+        "backend": "Supabase (PostgreSQL + Auth + Real-time)",
+        "database": "PostgreSQL with Row Level Security and audit logging",
+        "monitoring": "Real-time system metrics and health tracking",
+        "security": "Role-based authentication with admin and support engineer roles",
+        "deployment": "Vercel (frontend) + Supabase (backend and database)"
+      },
+      
+      "vodacomAlignment": {
+        "systemAdministration": "Transaction monitoring, system inventory management, health tracking",
+        "technicalRequirements": "API simulation, feasibility analysis, performance metrics",
+        "capacityManagement": "System monitoring dashboard with growth projections and alerts",
+        "technicalArchitecture": "Comprehensive architecture visualization and documentation",
+        "stakeholderCommunication": "Professional dashboards and executive reporting interfaces"
+      },
+      
+      "lesothoContext": {
+        "currency": "LSL (Lesotho Loti) with proper formatting and validation",
+        "phoneNumbers": "+266 XXXX XXXX format with realistic Lesotho mobile prefixes",
+        "marketContext": "Vodacom Lesotho branding and M-Pesa specific terminology",
+        "transactionPatterns": "Realistic Lesotho mobile money usage patterns and amounts"
+      },
+      
+      "technicalHighlights": [
+        "Enterprise-grade React + TypeScript architecture with type safety",
+        "Supabase integration with real-time subscriptions and RLS policies",
+        "Professional UI/UX design suitable for financial systems stakeholders",
+        "Comprehensive error handling and loading states",
+        "Mobile-responsive design for multi-device access",
+        "Production-ready deployment with environment configuration",
+        "Audit logging and security best practices",
+        "Scalable architecture patterns for enterprise systems"
+      ]
+    },
+    {
       "id": "agrosense",
       "title": "AgroSense - Smart Agriculture Platform",
       "subtitle": "AI-Powered Agricultural Advisor for Lesotho Farmers",

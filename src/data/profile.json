@@ -14,7 +14,7 @@
   "linkedin": "https://www.linkedin.com/in/kutloano-moshao-1aa5003a1/",
   "portfolio": "https://kutloano-portfolio.vercel.app",
   
-  "bio": "UNDP AI Hackathon Finalist and full-stack developer with expertise in IoT network management and agricultural technology. Creator of NetWatch Pro (enterprise network monitoring), AgroSense (AI-powered agriculture), and Reusability Compass (platform analytics). Specializing in React + Python integration, network automation, and scalable solutions that address real-world challenges.",
+  "bio": "UNDP AI Hackathon Finalist and full-stack developer with expertise in financial systems, IoT network management, and agricultural technology. Creator of M-Money Platform (M-Pesa systems monitoring), NetWatch Pro (enterprise network monitoring), AgroSense (AI-powered agriculture), and Reusability Compass (platform analytics). Specializing in React + TypeScript integration, financial systems administration, and scalable solutions that address real-world challenges.",
   
   "skills": {
     "frontend": [
@@ -140,8 +140,8 @@
   ],
   
   "stats": {
-    "projectsCompleted": 14,
-    "technologiesMastered": 22,
+    "projectsCompleted": 15,
+    "technologiesMastered": 24,
     "certificationsEarned": 3,
     "yearsExperience": 4
   }
