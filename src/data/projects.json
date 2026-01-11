@@ -249,8 +249,9 @@
       },
       
       "links": {
-        "github": "https://github.com/kutloanom/netwatch-pro",
-        "demo": "http://localhost:8080"
+        "live": "https://net-watch-pro.vercel.app/",
+        "api": "https://netwatch-pro.onrender.com",
+        "github": "https://github.com/Shaoza1/NetWatch-Pro"
       },
       
       "images": [
